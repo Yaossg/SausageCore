@@ -1,0 +1,16 @@
+[
+{
+  "modid": "sausage_core",
+  "name": "SausageCore",
+  "description": "Core For Yaossg's mod",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Yaossg"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
