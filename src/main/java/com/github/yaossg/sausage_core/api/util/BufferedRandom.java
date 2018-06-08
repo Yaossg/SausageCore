@@ -1,4 +1,4 @@
-package yaossg.mod.sausage_core.api.util;
+package com.github.yaossg.sausage_core.api.util;
 
 import net.minecraft.util.math.MathHelper;
 
@@ -22,8 +22,14 @@ public class BufferedRandom extends Random { // provide interface
 
     @Override
     public synchronized void setSeed(long seed) {
-        if(seed != 0)
-            random.setSeed(seed);
+        if(seed != 0) {
+            if(random == null) {
+                random = this;
+                super.setSeed(seed);
+            }
+            else
+                random.setSeed(seed);
+        }
         haveGaussianFloat = false;
     }
 
@@ -52,7 +58,7 @@ public class BufferedRandom extends Random { // provide interface
 
     @Override
     public int nextInt() {
-        return random.nextInt();
+        return random != this ? random.nextInt() : super.next(32);
     }
 
     @Override
@@ -77,7 +83,7 @@ public class BufferedRandom extends Random { // provide interface
 
     @Override
     public long nextLong() {
-        return random.nextLong();
+        return random != this ? random.nextLong() : ((long)(super.next(32)) << 32) + super.next(32);
     }
 
     public float nextFloat(int bits) {

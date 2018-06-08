@@ -1,4 +1,4 @@
-package yaossg.mod.sausage_core.api.util;
+package com.github.yaossg.sausage_core.api.util;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,13 +16,13 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public interface IGUIManager {
-    BiFunction<EntityPlayer, TileEntity, Container> getServerBuilder();
+    BiFunction<EntityPlayer, TileEntity, Container> getCommonBuilder();
     Function<Container, GuiContainer> getClientBuilder();
-    default Container getServer(EntityPlayer player, TileEntity tileEntity) {
-        return getServerBuilder().apply(player, tileEntity);
+    default Container getCommon(EntityPlayer player, TileEntity tileEntity) {
+        return getCommonBuilder().apply(player, tileEntity);
     }
     default GuiContainer getClient(EntityPlayer player, TileEntity tileEntity) {
-        return getClient(getServer(player, tileEntity));
+        return getClient(getCommon(player, tileEntity));
     }
     default GuiContainer getClient(Container container) {
         return getClientBuilder().apply(container);
@@ -43,12 +43,12 @@ public interface IGUIManager {
                 .map(gui -> builder.build(gui, player, tileEntity))
                 .findAny().orElse(null);
     }
-    static IGuiHandler handler(Matcher<Container> server, Matcher<GuiContainer> client) {
+    static IGuiHandler handler(Matcher<Container> common, Matcher<GuiContainer> client) {
         return new IGuiHandler() {
             @Nullable
             @Override
             public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-                return server.match(ID, player, world.getTileEntity(new BlockPos(x, y, z)));
+                return common.match(ID, player, world.getTileEntity(new BlockPos(x, y, z)));
             }
             @Nullable
             @Override
@@ -58,7 +58,7 @@ public interface IGUIManager {
         };
     }
     static <T extends Enum<T> & IGUIManager> IGuiHandler buildHandler(T[] values) {
-        return handler((id, player, tileEntity) -> get(values, id, IGUIManager::getServer, player, tileEntity),
+        return handler((id, player, tileEntity) -> get(values, id, IGUIManager::getCommon, player, tileEntity),
                 (id, player, tileEntity) -> get(values, id, IGUIManager::getClient, player, tileEntity));
     }
     static <T extends Enum<T> & IGUIManager> void register(Object mod, T[] values) {

@@ -1,4 +1,4 @@
-package yaossg.mod.sausage_core.api.util;
+package com.github.yaossg.sausage_core.api.util;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;

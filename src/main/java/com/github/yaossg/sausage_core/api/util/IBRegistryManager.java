@@ -1,4 +1,4 @@
-package yaossg.mod.sausage_core.api.util;
+package com.github.yaossg.sausage_core.api.util;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -55,23 +55,23 @@ public class IBRegistryManager {
     }
 
     @SideOnly(Side.CLIENT)
-    public void loadItemsModel() {
+    public void loadModelItems() {
         items.forEach(this::loadModel);
     }
 
     @SideOnly(Side.CLIENT)
-    public void loadBlocksModel() {
+    public void loadModelBlocks() {
         blocks.forEach(this::loadModel);
     }
 
     @SideOnly(Side.CLIENT)
-    public void loadAllModel() {
-        loadItemsModel();
-        loadBlocksModel();
+    public void loadModelAll() {
+        loadModelItems();
+        loadModelBlocks();
     }
 
     @SideOnly(Side.CLIENT)
-    public void loadModel(Item item) {
+    void loadModel(Item item) {
         if (item.getHasSubtypes()) {
             NonNullList<ItemStack> items = NonNullList.create();
             item.getSubItems(tab, items);
@@ -82,7 +82,7 @@ public class IBRegistryManager {
     }
 
     @SideOnly(Side.CLIENT)
-    public void loadModel(Block block) {
+    void loadModel(Block block) {
         NonNullList<ItemStack> blocks = NonNullList.create();
         block.getSubBlocks(tab, blocks);
         blocks.forEach(IBRegistryManager::loadModel);
@@ -93,5 +93,22 @@ public class IBRegistryManager {
         ModelLoader.setCustomModelResourceLocation(stack.getItem(), stack.getMetadata(),
                 new ModelResourceLocation(stack.getItem().getRegistryName(), "inventory"));
     }
+    public static class FBRegistryManager extends IBRegistryManager {
 
+        public FBRegistryManager(String modid) {
+            super(modid, null);
+        }
+
+        @Override
+        @SideOnly(Side.CLIENT)
+        public void loadModelItems() {
+
+        }
+
+        @Override
+        @SideOnly(Side.CLIENT)
+        public void loadModelBlocks() {
+
+        }
+    }
 }

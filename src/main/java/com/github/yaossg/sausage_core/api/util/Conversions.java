@@ -1,4 +1,4 @@
-package yaossg.mod.sausage_core.api.util;
+package com.github.yaossg.sausage_core.api.util;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -13,8 +13,11 @@ public class Conversions {
         return Block.getBlockFromItem(item);
     }
     public static ItemStack state2stack(IBlockState state) {
+        return state2stack(state, 1);
+    }
+    public static ItemStack state2stack(IBlockState state, int count) {
         Item item = block2item(state.getBlock());
-        return new ItemStack(item, 1, item.getHasSubtypes() ? state.getBlock().getMetaFromState(state) : 0);
+        return new ItemStack(item, count, item.getHasSubtypes() ? state.getBlock().getMetaFromState(state) : 0);
     }
     @SuppressWarnings("deprecation")
     public static IBlockState stack2state(ItemStack stack) {
@@ -45,6 +48,32 @@ public class Conversions {
         }
         public static Block block(IBlockState state) {
             return state.getBlock();
+        }
+        public static ItemStack stack(Item item) {
+            return stack(item, 1);
+        }
+        public static ItemStack stack(Block block) {
+            return stack(block, 1);
+        }
+        public static ItemStack stack(ItemStack stack) {
+            return stack.copy();
+        }
+        public static ItemStack stack(IBlockState state) {
+            return stack(state, 1);
+        }
+        public static ItemStack stack(Item item, int count) {
+            return new ItemStack(item, count);
+        }
+        public static ItemStack stack(Block block, int count) {
+            return new ItemStack(block, count);
+        }
+        public static ItemStack stack(ItemStack stack, int count) {
+            ItemStack copy = stack.copy();
+            copy.setCount(count);
+            return copy;
+        }
+        public static ItemStack stack(IBlockState state, int count) {
+            return state2stack(state, count);
         }
     }
 }

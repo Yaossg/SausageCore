@@ -1,9 +1,11 @@
-package yaossg.mod.sausage_core.api.util;
+package com.github.yaossg.sausage_core.api.util;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Streams;
 import net.minecraft.nbt.*;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
@@ -192,8 +194,12 @@ public class NBTs {
             list.appendTag(each);
         return list;
     }
+
     public static Stream<NBTBase> stream(NBTTagList list) {
         return Streams.stream(list);
+    }
+    public static List<NBTBase> list(NBTTagList list) {
+        return Streams.stream(list).collect(Collectors.toList());
     }
     public static Map<String, NBTBase> map(NBTTagCompound compound) {
         return compound.getKeySet().stream().collect(Collectors.toMap(Function.identity(), compound::getTag));
@@ -203,5 +209,36 @@ public class NBTs {
     }
     public static Set<Map.Entry<String, NBTBase>> entrySet(NBTTagCompound compound) {
         return map(compound).entrySet();
+    }
+
+    public static byte unbox(NBTTagByte arg) {
+        return arg.getByte();
+    }
+    public static short unbox(NBTTagShort arg) {
+        return arg.getShort();
+    }
+    public static int unbox(NBTTagInt arg) {
+        return arg.getInt();
+    }
+    public static long unbox(NBTTagLong arg) {
+        return arg.getLong();
+    }
+    public static float unbox(NBTTagFloat arg) {
+        return arg.getFloat();
+    }
+    public static double unbox(NBTTagDouble arg) {
+        return arg.getDouble();
+    }
+    public static String unbox(NBTTagString arg) {
+        return arg.getString();
+    }
+    public static byte[] unbox(NBTTagByteArray arg) {
+        return arg.getByteArray();
+    }
+    public static int[] unbox(NBTTagIntArray arg) {
+        return arg.getIntArray();
+    }
+    public static long[] unbox(NBTTagLongArray arg) {
+        return ReflectionHelper.getPrivateValue(NBTTagLongArray.class, arg, "data");
     }
 }

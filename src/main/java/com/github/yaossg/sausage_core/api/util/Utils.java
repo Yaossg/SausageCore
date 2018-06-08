@@ -1,23 +1,13 @@
-package yaossg.mod.sausage_core.api.util;
+package com.github.yaossg.sausage_core.api.util;
 
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
-import net.minecraft.block.Block;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.Explosion;
-import net.minecraft.world.World;
-import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-
-import java.util.List;
+import org.apache.logging.log4j.Logger;
 
 public class Utils {
     public static float lightLevelOf(int level) {
@@ -43,4 +33,10 @@ public class Utils {
     {
         GameRegistry.registerTileEntity(tileClass, modid + ":" + tileClass.getName().replaceFirst("Tile", ""));
     }
+
+    public static void unstableWarning(Logger logger, String name, String version, String modid) {
+        logger.info(name + " v" + version + " is loading (modid:" + modid + ")");
+        logger.warn("The mod is still unstable and in early development, There are still lots of bugs remaining");
+    }
+
 }

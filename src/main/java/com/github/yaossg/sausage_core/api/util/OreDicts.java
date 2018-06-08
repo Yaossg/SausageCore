@@ -1,4 +1,4 @@
-package yaossg.mod.sausage_core.api.util;
+package com.github.yaossg.sausage_core.api.util;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
@@ -22,10 +22,6 @@ public class OreDicts {
                 .map(OreDictionary::getOres)
                 .flatMap(NonNullList::stream)
                 .findAny()
-                .map(stack -> {
-                    ItemStack copy = stack.copy();
-                    copy.setCount(count);
-                    return copy;
-                });
+                .map(stack -> Conversions.To.stack(stack, count));
     }
 }

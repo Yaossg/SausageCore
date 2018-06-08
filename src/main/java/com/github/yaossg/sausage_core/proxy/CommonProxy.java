@@ -1,4 +1,4 @@
-package yaossg.mod.sausage_core.proxy;
+package com.github.yaossg.sausage_core.proxy;
 
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
