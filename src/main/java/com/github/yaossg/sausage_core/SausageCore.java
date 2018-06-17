@@ -1,6 +1,6 @@
 package com.github.yaossg.sausage_core;
 
-import com.github.yaossg.sausage_core.api.util.Utils;
+import com.github.yaossg.sausage_core.api.util.SausageUtils;
 import com.github.yaossg.sausage_core.proxy.CommonProxy;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -16,7 +16,7 @@ public class SausageCore
 {
     public static final String MODID = "sausage_core";
     public static final String NAME = "SausageCore";
-    public static final String VERSION = "0.1.2";
+    public static final String VERSION = "0.1.3";
 
     @SidedProxy(clientSide = "com.github.yaossg.sausage_core.proxy.ClientProxy",
             serverSide = "com.github.yaossg.sausage_core.proxy.CommonProxy")
@@ -30,7 +30,7 @@ public class SausageCore
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
-        Utils.unstableWarning(logger = event.getModLog(), NAME, VERSION, MODID);
+        SausageUtils.unstableWarning(logger = event.getModLog(), NAME, VERSION, MODID);
         proxy.preInit(event);
     }
 

@@ -19,24 +19,24 @@ public class Explosions {
         }
     }
 
-    public static void createThenApply(World world, Entity entity, BlockPos pos,
-                                       float size, boolean flaming, boolean damagesTerrain) {
-        createThenApply(world, entity, pos, size, flaming, damagesTerrain, true);
+    public static void createToApply(World world, Entity entity, BlockPos pos,
+                                     float size, boolean flaming, boolean damagesTerrain) {
+        createToApply(world, entity, pos, size, flaming, damagesTerrain, true);
     }
 
-    public static void createThenApply(World world, Entity entity, BlockPos pos,
-                                       float size, boolean flaming, boolean damagesTerrain, List<BlockPos> affectedPositions) {
-        createThenApply(world, entity, pos, size, flaming, damagesTerrain, affectedPositions, true);
+    public static void createToApply(World world, Entity entity, BlockPos pos,
+                                     float size, boolean flaming, boolean damagesTerrain, List<BlockPos> affectedPositions) {
+        createToApply(world, entity, pos, size, flaming, damagesTerrain, affectedPositions, true);
     }
 
-    public static void createThenApply(World world, Entity entity, BlockPos pos,
-                                       float size, boolean flaming, boolean damagesTerrain, boolean spawnParticles) {
+    public static void createToApply(World world, Entity entity, BlockPos pos,
+                                     float size, boolean flaming, boolean damagesTerrain, boolean spawnParticles) {
         apply(world, new Explosion(world, entity, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5,
                 size, flaming, damagesTerrain), spawnParticles);
     }
 
-    public static void createThenApply(World world, Entity entity, BlockPos pos,
-                                       float size, boolean flaming, boolean damagesTerrain, List<BlockPos> affectedPositions, boolean spawnParticles) {
+    public static void createToApply(World world, Entity entity, BlockPos pos,
+                                     float size, boolean flaming, boolean damagesTerrain, List<BlockPos> affectedPositions, boolean spawnParticles) {
         apply(world, new Explosion(world, entity, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5,
                 size, flaming, damagesTerrain, affectedPositions), spawnParticles);
     }

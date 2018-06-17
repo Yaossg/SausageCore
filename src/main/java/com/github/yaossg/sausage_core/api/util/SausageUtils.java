@@ -9,7 +9,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.apache.logging.log4j.Logger;
 
-public class Utils {
+public class SausageUtils {
     public static float lightLevelOf(int level) {
         return level / 16f;
     }
@@ -35,8 +35,8 @@ public class Utils {
     }
 
     public static void unstableWarning(Logger logger, String name, String version, String modid) {
-        logger.info(name + " v" + version + " is loading (modid:" + modid + ")");
-        logger.warn("The mod is still unstable and in early development, There are still lots of bugs remaining");
+        logger.info(name + "(modid:" + modid + ") v" + version + " is loading");
+        logger.warn("The mod is still unstable and in early development, bugs are full of the mod");
     }
 
 }

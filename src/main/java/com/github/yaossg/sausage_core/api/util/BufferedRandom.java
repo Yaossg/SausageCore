@@ -73,10 +73,7 @@ public class BufferedRandom extends Random { // provide interface
         int bits = MathHelper.log2(p2);
         int r = next(bits);
         if(r >= bound) {
-            float f = (float)bound / (p2 - bound);
-            r %= bound;
-            r *= f;
-            r %= bound;
+            r = nextInt(bound); // why not try again?
         }
         return r;
     }

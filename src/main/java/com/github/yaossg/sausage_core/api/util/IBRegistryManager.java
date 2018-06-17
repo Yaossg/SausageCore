@@ -12,16 +12,23 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
+import java.util.List;
 import java.util.function.Function;
 
 public class IBRegistryManager {
     public String modid;
+    @Nullable
     public CreativeTabs tab;
-    private NonNullList<Item> items = NonNullList.create();
-    private NonNullList<Block> blocks = NonNullList.create();
+    private List<Item> items = NonNullList.create();
+    private List<Block> blocks = NonNullList.create();
     public static final Function<Block, ItemBlock> defaultItemBlockFactory = ItemBlock::new;
 
-    public IBRegistryManager(String modid, CreativeTabs tab) {
+    public IBRegistryManager(String modid) {
+        this(modid, null);
+    }
+
+    public IBRegistryManager(String modid, @Nullable CreativeTabs tab) {
         this.modid = modid;
         this.tab = tab;
     }
@@ -41,33 +48,33 @@ public class IBRegistryManager {
         return addBlock(block, name, defaultItemBlockFactory);
     }
 
-    public void registerAllItems() {
+    public void registerItems() {
         items.forEach(ForgeRegistries.ITEMS::register);
     }
 
-    public void registerAllBlocks() {
+    public void registerBlocks() {
         blocks.forEach(ForgeRegistries.BLOCKS::register);
     }
 
     public void registerAll() {
-        registerAllItems();
-        registerAllBlocks();
+        registerItems();
+        registerBlocks();
     }
 
     @SideOnly(Side.CLIENT)
-    public void loadModelItems() {
+    public void loadItemsModel() {
         items.forEach(this::loadModel);
     }
 
     @SideOnly(Side.CLIENT)
-    public void loadModelBlocks() {
+    public void loadBlocksModel() {
         blocks.forEach(this::loadModel);
     }
 
     @SideOnly(Side.CLIENT)
-    public void loadModelAll() {
-        loadModelItems();
-        loadModelBlocks();
+    public void loadAllModel() {
+        loadItemsModel();
+        loadBlocksModel();
     }
 
     @SideOnly(Side.CLIENT)
@@ -92,23 +99,5 @@ public class IBRegistryManager {
     static void loadModel(ItemStack stack) {
         ModelLoader.setCustomModelResourceLocation(stack.getItem(), stack.getMetadata(),
                 new ModelResourceLocation(stack.getItem().getRegistryName(), "inventory"));
-    }
-    public static class FBRegistryManager extends IBRegistryManager {
-
-        public FBRegistryManager(String modid) {
-            super(modid, null);
-        }
-
-        @Override
-        @SideOnly(Side.CLIENT)
-        public void loadModelItems() {
-
-        }
-
-        @Override
-        @SideOnly(Side.CLIENT)
-        public void loadModelBlocks() {
-
-        }
     }
 }
