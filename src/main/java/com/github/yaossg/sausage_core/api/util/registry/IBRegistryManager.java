@@ -1,4 +1,4 @@
-package com.github.yaossg.sausage_core.api.util;
+package com.github.yaossg.sausage_core.api.util.registry;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -16,13 +16,12 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.function.Function;
 
-public class IBRegistryManager {
+public final class IBRegistryManager {
     public String modid;
     @Nullable
     public CreativeTabs tab;
-    private List<Item> items = NonNullList.create();
-    private List<Block> blocks = NonNullList.create();
-    public static final Function<Block, ItemBlock> defaultItemBlockFactory = ItemBlock::new;
+    public final List<Item> items = NonNullList.create();
+    public final List<Block> blocks = NonNullList.create();
 
     public IBRegistryManager(String modid) {
         this(modid, null);
@@ -45,7 +44,7 @@ public class IBRegistryManager {
     }
 
     public Block addBlock(Block block, String name) {
-        return addBlock(block, name, defaultItemBlockFactory);
+        return addBlock(block, name, ItemBlock::new);
     }
 
     public void registerItems() {
@@ -79,7 +78,7 @@ public class IBRegistryManager {
 
     @SideOnly(Side.CLIENT)
     void loadModel(Item item) {
-        if (item.getHasSubtypes()) {
+        if(item.getHasSubtypes()) {
             NonNullList<ItemStack> items = NonNullList.create();
             item.getSubItems(tab, items);
             items.forEach(IBRegistryManager::loadModel);
