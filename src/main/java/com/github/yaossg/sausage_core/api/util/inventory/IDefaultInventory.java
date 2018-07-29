@@ -17,7 +17,7 @@ public interface IDefaultInventory extends IInventory {
 
     //returns all itemstackhandlers of this inventory
     default ItemStackHandler[] getItemStackHandlers() {
-        return new ItemStackHandler[]{};
+        return new ItemStackHandler[0];
     }
 
     //returns a tile if it is

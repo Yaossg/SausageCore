@@ -18,29 +18,33 @@ import java.util.function.Function;
 /**
  *
  * default implementation:
- *  <code>
- *     BiFunction<EntityPlayer, TileEntity, Container> common;
- *     Function<Container, GuiContainer> client;
- *
- *     ManaCraftGUIs(BiFunction<EntityPlayer, TileEntity, Container> common, Function<Container, GuiContainer> client) {
- *         this.common = common;
- *         this.client = client;
- *     }
- *
- *     @Override
- *     public BiFunction<EntityPlayer, TileEntity, Container> getCommonBuilder() {
- *         return common;
- *     }
- *
- *     @Override
- *     public Function<Container, GuiContainer> getClientBuilder() {
- *         return client;
- *     }
- *  </code>
+ * <code>
+ enum MyGUIs implements IGUIManager {
+     MyGUI(MyContainer::new, MyGuiContainer::new);
+     BiFunction<EntityPlayer, TileEntity, Container> common;
+     Function<Container, GuiContainer> client;
+     MyGUIs(BiFunction<EntityPlayer, TileEntity, Container> common, Function<Container, GuiContainer> client) {
+        this.common = common;
+         this.client = client;
+     }
+
+     @Override
+     public BiFunction<EntityPlayer, TileEntity, Container> getCommonBuilder() {
+         return common;
+     }
+
+     @Override
+     public Function<Container, GuiContainer> getClientBuilder() {
+         return client;
+     }
+ }
+ * </code>
  * copy this to your Manager
- * then register with <code> IGUIManager.register(ManaCraft.instance, ManaCraftGUIs.values()); </code>
+ * then register with <code> IGUIManager.register(mod, MyGUIs.values()); </code>
  *
  * */
+
+
 public interface IGUIManager {
     BiFunction<EntityPlayer, TileEntity, Container> getCommonBuilder();
 

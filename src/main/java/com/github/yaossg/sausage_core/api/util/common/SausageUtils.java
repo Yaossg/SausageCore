@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -26,9 +27,10 @@ public class SausageUtils {
     /**
      * give an advancement to player
      * all of pre-advancements will be given at the same time
-     * @param player who will be given
+     * @param player who will be given.
      */
-    public static void giveAdvancement(@Nonnull Entity player, @Nonnull String modid, @Nonnull String root, @Nonnull String advance) {
+    @ParametersAreNonnullByDefault
+    public static void giveAdvancement(Entity player, String modid, String root, String advance) {
         if(player.getServer() != null && player instanceof EntityPlayerMP) {
             EntityPlayerMP playerMP = (EntityPlayerMP) player;
             Advancement advancement = player.getServer().getAdvancementManager()

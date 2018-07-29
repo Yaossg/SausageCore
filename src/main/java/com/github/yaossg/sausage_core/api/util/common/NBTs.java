@@ -6,6 +6,7 @@ import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.nbt.*;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -13,6 +14,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class NBTs {
     public static NBTTagByte of(byte arg) {
@@ -239,19 +241,35 @@ public class NBTs {
     }
 
     public static List<NBTBase> list(NBTTagList list) {
-        return Streams.stream(list).collect(Collectors.toList());
+        return stream(list).collect(Collectors.toList());
+    }
+
+    public static Set<String> keySet(NBTTagCompound compound) {
+        return compound.getKeySet();
+    }
+
+    public static Stream<String> keys(NBTTagCompound compound) {
+        return keySet(compound).stream();
     }
 
     public static Map<String, NBTBase> map(NBTTagCompound compound) {
-        return compound.getKeySet().stream().collect(Collectors.toMap(Function.identity(), compound::getTag));
+        return keys(compound).collect(Collectors.toMap(Function.identity(), compound::getTag));
     }
 
     public static Stream<NBTBase> values(NBTTagCompound compound) {
-        return compound.getKeySet().stream().map(compound::getTag);
+        return keys(compound).map(compound::getTag);
+    }
+
+    public static List<NBTBase> valueList(NBTTagCompound compound) {
+        return values(compound).collect(Collectors.toList());
     }
 
     public static Set<Map.Entry<String, NBTBase>> entrySet(NBTTagCompound compound) {
         return map(compound).entrySet();
+    }
+
+    public static Stream<Map.Entry<String, NBTBase>> entries(NBTTagCompound compound) {
+        return entrySet(compound).stream();
     }
 
     public static byte raw(NBTTagByte arg) {
@@ -291,7 +309,6 @@ public class NBTs {
     }
 
     public static long[] raw(NBTTagLongArray arg) {
-        //fucking mojang forget to provide getter
-        return ReflectionHelper.getPrivateValue(NBTTagLongArray.class, arg, "data");
+        return arg.data; //AT
     }
 }

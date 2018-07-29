@@ -21,7 +21,7 @@ import org.apache.logging.log4j.Logger;
 public class SausageCore {
     public static final String MODID = "sausage_core";
     public static final String NAME = "SausageCore";
-    public static final String VERSION = "0.1.5";
+    public static final String VERSION = "@version@";
 
     @SidedProxy(clientSide = "com.github.yaossg.sausage_core.proxy.ClientProxy",
             serverSide = "com.github.yaossg.sausage_core.proxy.CommonProxy")
