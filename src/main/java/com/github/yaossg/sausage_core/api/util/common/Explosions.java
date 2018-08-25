@@ -8,8 +8,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-@MethodsReturnNonnullByDefault
-public class Explosions {
+public final class Explosions {
     public static Explosion apply(World world, Explosion explosion) {
         return apply(world, explosion, true);
     }

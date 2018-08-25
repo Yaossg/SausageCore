@@ -15,7 +15,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class SausageUtils {
+public final class SausageUtils {
     /**
      * used for {@link net.minecraft.block.Block#setLightLevel(float)}
      * convert integer light level to float one.
@@ -29,7 +29,6 @@ public class SausageUtils {
      * all of pre-advancements will be given at the same time
      * @param player who will be given.
      */
-    @ParametersAreNonnullByDefault
     public static void giveAdvancement(Entity player, String modid, String root, String advance) {
         if(player.getServer() != null && player instanceof EntityPlayerMP) {
             EntityPlayerMP playerMP = (EntityPlayerMP) player;
@@ -44,15 +43,15 @@ public class SausageUtils {
     }
 
     /**
-     * @param tileClass is a class whose name begins with "Tile"
+     * @param tileClass is a class whose name starts with "Tile"qa
      */
     public static void registerTile(Class<? extends TileEntity> tileClass, String modid) {
-        GameRegistry.registerTileEntity(tileClass, modid + ":" + tileClass.getName().replaceFirst("Tile", ""));
+        GameRegistry.registerTileEntity(tileClass, modid + ":" + tileClass.getSimpleName().replaceFirst("Tile", ""));
     }
 
     /**
      * used for Yaossg's mod including SausageCore itself
-     * DO NOT use this if you don't like eating sausage
+     * DO NOT use this if you don't like sausage
      * */
     public static void unstableWarning(Logger logger, String name, String version, String modid) {
         logger.info("{} (modid:{}) v{} is loading now", name, modid, version);

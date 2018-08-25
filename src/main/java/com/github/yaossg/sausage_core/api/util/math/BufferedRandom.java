@@ -1,29 +1,39 @@
 package com.github.yaossg.sausage_core.api.util.math;
 
+import com.google.common.math.IntMath;
 import net.minecraft.util.math.MathHelper;
 
 import java.util.Random;
 
 /**
- * byte-saving RNG
+ * byte-saving & {@link java.util.Random} supported RNG
  * */
 public class BufferedRandom extends Random {
-    private Random random; //instance to delegate
-    private int buffer = 0;
-    private int left = 0;
-    private boolean large = false;
-    private int[] largeBuffer;
-    private int largeLeft = 0;
-    public final int largeSize = 0xffffff;
+    protected Random random; //instance to delegate
+    protected int buffer = 0;
+    protected int left = 0;
+    protected boolean large = false;
+    protected int[] largeBuffer;
+    protected int largeLeft = 0;
+    public static final int largeSize = 0xffff;
+
+    private static final BufferedRandom INSTANCE = new BufferedRandom();
+
+    public static BufferedRandom shared() {
+        return INSTANCE;
+    }
+
+    public static BufferedRandom provide() {
+        return new BufferedRandom();
+    }
+
     public static BufferedRandom boxed(Random random) {
         return random instanceof BufferedRandom ? (BufferedRandom) random : new BufferedRandom(random);
     }
 
-    public BufferedRandom() {
-        random = this; //actually redundant
-    }
+    private BufferedRandom() {}
 
-    public BufferedRandom(Random random) {
+    private BufferedRandom(Random random) {
         super(0);
         this.random = random;
     }
@@ -89,23 +99,16 @@ public class BufferedRandom extends Random {
             return 0;
         if(bound == 2)
             return next(1);
-        if(bound > 0x3fffffff)
-            return random != this ? random.nextInt(bound) : super.nextInt(bound);
-        return nextIntInternal(bound, 0);
+        return nextIntInternal(bound);
     }
 
-    private int nextIntInternal(int bound, int times) {
-        int p2 = MathHelper.smallestEncompassingPowerOfTwo(bound);
+    private int nextIntInternal(int bound) {
+        int p2 = IntMath.ceilingPowerOfTwo(bound);
         int bits = MathHelper.log2(p2);
         int r = next(bits);
         if(r >= bound) {
-            if(times > 4) {
-                //It is not but almost a random number with the bound
-                return nextInt(p2 / 2);
-            }
-            //recurrences [0.5, 1.0) times on average
-            //left case is nextInt(3), right case is impossible actually
-            r = nextIntInternal(bound, times + 1); // why not try again?
+            int r2 = next(bits) + r - bound;
+            r = (int) ((bound / (2.0f * p2 - bound)) * r2);
         }
         return r;
     }
@@ -120,7 +123,7 @@ public class BufferedRandom extends Random {
     }
 
     public double nextDouble(int bits) {
-        return (((long) (next(bits)) << Math.max(0, bits - 26)) + next(Math.max(0, bits - 26))) / (1L << bits);
+        return (((long) (next(bits)) << Math.max(0, bits - 26)) + next(Math.max(0, bits - 26))) / (double) (1L << bits);
     }
 
     private boolean hasNextG = false;

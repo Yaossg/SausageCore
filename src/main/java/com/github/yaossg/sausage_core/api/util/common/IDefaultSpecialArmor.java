@@ -21,17 +21,23 @@ public interface IDefaultSpecialArmor extends ISpecialArmor {
         return new ArmorProperties(0, 1, Integer.MAX_VALUE);
     }
     /**
-     * no extra armor value display
+     * no extra armor value display provided
      * */
     @Override
     default int getArmorDisplay(EntityPlayer player, @Nonnull ItemStack armor, int slot) {
         return 0;
     }
     /**
-     * invoke vanilla method, need to override
+     * this implementation invokes vanilla method
      * */
     @Override
     default void damageArmor(EntityLivingBase entity, @Nonnull ItemStack stack, DamageSource source, int damage, int slot) {
-        stack.attemptDamageItem(damage, entity.getRNG(), entity instanceof EntityPlayerMP ? ((EntityPlayerMP) entity) : null);
+        if(stack.attemptDamageItem(damage, entity.getRNG(), entity instanceof EntityPlayerMP ? ((EntityPlayerMP) entity) : null))
+            onArmorBroken(entity, stack, source, damage, slot);
+    }
+
+    default void onArmorBroken(EntityLivingBase entity, @Nonnull ItemStack stack, DamageSource source, int damage, int slot) {
+        entity.renderBrokenItemStack(stack);
+        stack.shrink(1);
     }
 }

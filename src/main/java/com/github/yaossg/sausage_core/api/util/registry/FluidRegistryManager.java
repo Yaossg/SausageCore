@@ -68,7 +68,7 @@ public final class FluidRegistryManager {
     }
 
     public Fluid addFluid(String name, Function<Fluid, Block> blockFactory, BiFunction<String, String, Fluid> fluidFactory) {
-        Fluid fluid = fluidFactory.apply(modid, name);
+        Fluid fluid = fluidFactory.apply(modid, name).setUnlocalizedName(modid + "." + name);
         fluids.put(fluid, blockFactory);
         return fluid;
     }

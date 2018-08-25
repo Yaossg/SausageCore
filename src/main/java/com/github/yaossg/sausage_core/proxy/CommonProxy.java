@@ -3,6 +3,7 @@ package com.github.yaossg.sausage_core.proxy;
 import com.github.yaossg.sausage_core.SausageCore;
 import com.github.yaossg.sausage_core.api.util.registry.IBRegistryManager;
 import com.github.yaossg.sausage_core.crafting.IngredientAddons;
+import com.github.yaossg.sausage_core.worldgen.WorldTypeFastGen;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
@@ -17,6 +18,7 @@ public class CommonProxy {
     public void preInit(FMLPreInitializationEvent event) {
         manager.registerAll();
         IngredientAddons.init();
+        new WorldTypeFastGen();
     }
 
     public void init(FMLInitializationEvent event) {

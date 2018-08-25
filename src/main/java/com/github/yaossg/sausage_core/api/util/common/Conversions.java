@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 /**
  * Conversions among {@link Item}, {@link Block}, {@link ItemStack} and {@link IBlockState}
  */
-public class Conversions {
+public final class Conversions {
 
     public static Item block2item(Block block) {
         return Item.getItemFromBlock(block);

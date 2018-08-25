@@ -29,7 +29,7 @@ public abstract class ContainerBase<T extends TileEntity> extends Container {
      */
     @Override
     protected boolean mergeItemStack(ItemStack stack, int startIndex, int endIndex, boolean reverseDirection) {
-        boolean flag = false;
+        boolean changed = false;
         int i = reverseDirection ? endIndex - 1 : startIndex;
         if(stack.isStackable()) {
             while (!stack.isEmpty()) {
@@ -48,12 +48,12 @@ public abstract class ContainerBase<T extends TileEntity> extends Container {
                         stack.setCount(0);
                         itemstack.setCount(j);
                         slot.onSlotChanged();
-                        flag = true;
+                        changed = true;
                     } else if(itemstack.getCount() < maxSize) {
                         stack.shrink(maxSize - itemstack.getCount());
                         itemstack.setCount(maxSize);
                         slot.onSlotChanged();
-                        flag = true;
+                        changed = true;
                     }
                 }
                 i += reverseDirection ? -1 : 1;
@@ -68,16 +68,16 @@ public abstract class ContainerBase<T extends TileEntity> extends Container {
                 ItemStack itemstack = slot.getStack();
                 if(itemstack.isEmpty() && slot.isItemValid(stack)) {
                     if(stack.getCount() > slot.getSlotStackLimit())
-                        slot.putStack(stack.splitStack(slot.getSlotStackLimit()));
+                        slot.putStack(stack.splitStack(slot.getItemStackLimit(stack)));
                     else slot.putStack(stack.splitStack(stack.getCount()));
                     slot.onSlotChanged();
-                    flag = true;
+                    changed = true;
                     break;
                 }
                 i += reverseDirection ? -1 : 1;
             }
         }
-        return flag;
+        return changed;
     }
 
     @Override

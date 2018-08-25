@@ -15,12 +15,16 @@ import java.util.Optional;
  * */
 public interface IDefaultInventory extends IInventory {
 
-    //returns all itemstackhandlers of this inventory
+    /**
+     * returns all {@link ItemStackHandler}s of this inventory
+     */
     default ItemStackHandler[] getItemStackHandlers() {
         return new ItemStackHandler[0];
     }
 
-    //returns a tile if it is
+    /**
+     * returns its tile
+     * */
     default Optional<TileEntity> getTileEntity() {
         return Optional.empty();
     }
