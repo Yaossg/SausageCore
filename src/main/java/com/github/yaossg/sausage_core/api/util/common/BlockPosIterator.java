@@ -9,6 +9,7 @@ import net.minecraft.util.math.BlockPos;
  * do the same work as {@link BlockPos#getAllInBox(BlockPos, BlockPos)} but NBTSerializable
  * */
 public class BlockPosIterator extends AbstractIterator<BlockPos> {
+
     public BlockPosIterator(BlockPos from, BlockPos to) {
         x1 = from.getX();
         y1 = from.getY();
@@ -20,6 +21,7 @@ public class BlockPosIterator extends AbstractIterator<BlockPos> {
         y = y1;
         z = z1;
     }
+
     public BlockPosIterator(BlockPos from, BlockPos to, BlockPos current) {
         this(from, to);
         x = current.getX();

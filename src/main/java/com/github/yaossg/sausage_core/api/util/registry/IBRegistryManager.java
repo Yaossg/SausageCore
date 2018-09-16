@@ -32,18 +32,18 @@ public final class IBRegistryManager {
         this.tab = tab;
     }
 
-    public <T extends Item>T addItem(T item, String name) {
+    public <T extends Item> T addItem(T item, String name) {
         items.add(item.setUnlocalizedName(modid + "." + name).setRegistryName(name).setCreativeTab(tab));
         return item;
     }
 
-    public <T extends Block>T addBlock(T block, String name, Function<? super T, ItemBlock> itemBlockFactory) {
+    public <T extends Block> T addBlock(T block, String name, Function<? super T, ItemBlock> itemBlockFactory) {
         blocks.add(block.setUnlocalizedName(modid + "." + name).setRegistryName(name).setCreativeTab(tab));
         items.add(itemBlockFactory.apply(block).setRegistryName(block.getRegistryName()));
         return block;
     }
 
-    public <T extends Block>T addBlock(T block, String name) {
+    public <T extends Block> T addBlock(T block, String name) {
         return addBlock(block, name, ItemBlock::new);
     }
 

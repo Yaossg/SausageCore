@@ -52,6 +52,7 @@ public final class SausageUtils {
     }
 
     /**
+     * @deprecated narrow usage
      * @param tileClass is a class whose name starts with "Tile"
      */
     @Deprecated
@@ -71,7 +72,7 @@ public final class SausageUtils {
         checkArgument(!name.isEmpty(), "Unable to get TileEntity's name from \"%s\"", name);
         name = camelToUnderlined(name);
         GameRegistry.registerTileEntity(tileEntityClass, modid + ":" + name);
-        SausageCore.logger.info("{} registerTo a tileEntity ({}) with name {}", modid, tileEntityClass.getName(), name);
+        SausageCore.logger.info("{} register a tileEntity named {} // class:{}", modid, name, tileEntityClass.getName());
     }
 
     /**
@@ -104,6 +105,7 @@ public final class SausageUtils {
 
     private static final Pattern UPPERS = Pattern.compile("[A-Z]+");
     private static final Pattern IDENTIFIER = Pattern.compile("\\p{javaJavaIdentifierStart}+\\p{javaJavaIdentifierPart}*");
+    private static final Pattern UPPER_TAIL = Pattern.compile(".+[A-Z]{2,}");
     /**
      * convert a camel name to a underlined lower case name
      * @apiNote  here are some examples
@@ -114,7 +116,7 @@ public final class SausageUtils {
      * "SUPER" -> "super"
      * "SFItems" -> "sf_items"
      * "ILoveMc" -> "i_love_mc"
-     * "ILoveMC" -> "i_love_m_c" // bad luck :(
+     * "ILoveMC" -> "i_love_mc"
      * "__Me__" -> "__me__"
      * "__me__" -> "__me__"
      * "happy!" -> {@link IllegalArgumentException}
@@ -145,6 +147,7 @@ public final class SausageUtils {
             builder.replace(matcher.start() + offset, matcher.end() + offset, replacement);
             offset += group.length() > 1 ? 2 : 1;
         }
+        if(camel.matches(UPPER_TAIL.pattern())) builder.deleteCharAt(builder.lastIndexOf("_"));
         if(builder.charAt(0) == '_') builder.deleteCharAt(0);
         return _s + builder.toString();
     }
