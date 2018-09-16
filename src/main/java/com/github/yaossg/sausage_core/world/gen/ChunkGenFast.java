@@ -1,4 +1,4 @@
-package com.github.yaossg.sausage_core.worldgen;
+package com.github.yaossg.sausage_core.world.gen;
 
 import com.github.yaossg.sausage_core.api.util.math.BufferedRandom;
 import net.minecraft.block.BlockFalling;
@@ -21,9 +21,10 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 
-/*
- * copy from net.minecraft.world.gen.ChunkGeneratorOverworld but faster
+/**
+ * @deprecated never really fast
  * */
+@Deprecated
 class ChunkGenFast implements IChunkGenerator {
 
     protected static final IBlockState STONE = Blocks.STONE.getDefaultState();
@@ -56,7 +57,7 @@ class ChunkGenFast implements IChunkGenerator {
             ravineGenerator = net.minecraftforge.event.terraingen.TerrainGen.getModdedMapGen(ravineGenerator, net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.RAVINE);
         }
         this.world = worldIn;
-        this.rand = BufferedRandom.boxed(new Random(seed)).setLarge(true);
+        this.rand = BufferedRandom.boxed(new Random(seed));
         this.minLimitPerlinNoise = new NoiseGeneratorOctaves(this.rand, 16);
         this.maxLimitPerlinNoise = new NoiseGeneratorOctaves(this.rand, 16);
         this.mainPerlinNoise = new NoiseGeneratorOctaves(this.rand, 8);

@@ -1,3 +1,6 @@
 ﻿
 item.sausage_core.sausage.name=香肠
-generator.FastGen=快速生成
+generator.sausage_core.tinyBiomes=小型生物群系
+generator.sausage_core.miniature=小型化
+generator.sausage_core.fastGen=快速生成
+

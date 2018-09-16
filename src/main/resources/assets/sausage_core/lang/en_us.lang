@@ -1,3 +1,5 @@
 ﻿
 item.sausage_core.sausage.name=Sausage
-generator.FastGen=Fast Generating
+generator.sausage_core.tinyBiomes=Tiny Biomes
+generator.sausage_core.miniature=Miniature
+generator.sausage_core.fastGen=Fast Generating

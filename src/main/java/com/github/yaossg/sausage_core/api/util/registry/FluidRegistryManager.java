@@ -17,7 +17,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.UnaryOperator;
 
-import static com.github.yaossg.sausage_core.api.util.common.Conversions.block2item;
+import static com.github.yaossg.sausage_core.api.util.common.Conversions.To.item;
 
 public final class FluidRegistryManager {
     public static final class StateMapper extends StateMapperBase implements ItemMeshDefinition {
@@ -85,7 +85,7 @@ public final class FluidRegistryManager {
         inner.blocks.forEach(block -> {
             StateMapper mapper = new StateMapper(modid,
                     block.getRegistryName().getResourcePath());
-            ModelLoader.setCustomMeshDefinition(block2item(block), mapper);
+            ModelLoader.setCustomMeshDefinition(item(block), mapper);
             ModelLoader.setCustomStateMapper(block, mapper);
         });
     }

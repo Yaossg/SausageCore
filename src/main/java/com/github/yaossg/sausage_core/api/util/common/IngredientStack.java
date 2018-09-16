@@ -9,9 +9,11 @@ import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.crafting.JsonContext;
 
 import javax.annotation.concurrent.Immutable;
+import java.util.Arrays;
 import java.util.OptionalInt;
 import java.util.function.Predicate;
 
+import static com.github.yaossg.sausage_core.api.util.common.Conversions.To.stack;
 import static com.google.common.base.Preconditions.*;
 
 /**
@@ -40,6 +42,13 @@ public final class IngredientStack implements Predicate<ItemStack> {
     public boolean test(ItemStack input) {
         return count == input.getCount() && ingredient.apply(input);
     }
+
+    public ItemStack[] getMatchingStacks() {
+        return Arrays.stream(ingredient.getMatchingStacks())
+                .map(stack -> stack(stack, count))
+                .toArray(ItemStack[]::new);
+    }
+
     private static OptionalInt seekCount(JsonContext context, JsonElement json) {
         OptionalInt count = OptionalInt.empty();
         if(json.isJsonArray()) {

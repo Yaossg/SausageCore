@@ -1,4 +1,4 @@
-package com.github.yaossg.sausage_core.api.util.worldgen;
+package com.github.yaossg.sausage_core.api.util.world.gen;
 
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -10,8 +10,10 @@ import net.minecraftforge.fml.common.IWorldGenerator;
 import java.util.Random;
 
 /**
- * delegate {@link IWorldGenerator}
+ * delegates {@link IWorldGenerator}
+ * @deprecated
  */
+@Deprecated
 public interface IWorldGenBiome extends IWorldGenerator {
     @Override
     default void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {

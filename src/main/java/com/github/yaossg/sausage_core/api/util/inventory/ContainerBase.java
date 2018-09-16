@@ -6,9 +6,8 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 
-
 /**
- * Default implementation Container for a tileEntity
+ * Default implementation of {@link Container} for a {@link TileEntity}
  * */
 public abstract class ContainerBase<T extends TileEntity> extends Container {
     public T tileEntity;

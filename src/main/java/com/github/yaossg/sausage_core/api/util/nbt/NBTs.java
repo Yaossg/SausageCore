@@ -1,12 +1,13 @@
-package com.github.yaossg.sausage_core.api.util.common;
+package com.github.yaossg.sausage_core.api.util.nbt;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Streams;
-import mcp.MethodsReturnNonnullByDefault;
+import it.unimi.dsi.fastutil.bytes.ByteList;
+import it.unimi.dsi.fastutil.ints.IntList;
+import it.unimi.dsi.fastutil.longs.LongList;
 import net.minecraft.nbt.*;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
+import net.minecraft.util.math.BlockPos;
 
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -39,6 +40,14 @@ public final class NBTs {
         return new NBTTagDouble(arg);
     }
 
+    public static NBTTagString of(char arg) {
+        return of(String.valueOf(arg));
+    }
+
+    public static NBTTagByte of(boolean arg) {
+        return new NBTTagByte((byte) (arg ? 1 : 0));
+    }
+
     public static NBTTagString of(String arg) {
         return new NBTTagString(arg);
     }
@@ -55,15 +64,27 @@ public final class NBTs {
         return new NBTTagLongArray(arg);
     }
 
-    public static NBTTagByteArray array(byte... arg) {
+    public static NBTTagByteArray of(ByteList arg) {
+        return new NBTTagByteArray(arg);
+    }
+
+    public static NBTTagIntArray of(IntList arg) {
+        return new NBTTagIntArray(arg);
+    }
+
+    public static NBTTagLongArray of(LongList arg) {
+        return new NBTTagLongArray(arg);
+    }
+
+    public static NBTTagByteArray arrayOf(byte... arg) {
         return of(arg);
     }
 
-    public static NBTTagIntArray array(int... arg) {
+    public static NBTTagIntArray arrayOf(int... arg) {
         return of(arg);
     }
 
-    public static NBTTagLongArray array(long... arg) {
+    public static NBTTagLongArray arrayOf(long... arg) {
         return of(arg);
     }
 
@@ -74,30 +95,9 @@ public final class NBTs {
         return list;
     }
 
-    public static NBTTagList ofStrings(Iterable<String> arg) {
+    public static NBTTagList stringListOf(Iterable<String> arg) {
         NBTTagList list = new NBTTagList();
         for (String each : arg)
-            list.appendTag(of(each));
-        return list;
-    }
-
-    public static NBTTagList ofByteArrays(Iterable<byte[]> arg) {
-        NBTTagList list = new NBTTagList();
-        for (byte[] each : arg)
-            list.appendTag(of(each));
-        return list;
-    }
-
-    public static NBTTagList ofIntArrays(Iterable<int[]> arg) {
-        NBTTagList list = new NBTTagList();
-        for (int[] each : arg)
-            list.appendTag(of(each));
-        return list;
-    }
-
-    public static NBTTagList ofLongArrays(Iterable<long[]> arg) {
-        NBTTagList list = new NBTTagList();
-        for (long[] each : arg)
             list.appendTag(of(each));
         return list;
     }
@@ -129,30 +129,9 @@ public final class NBTs {
         return map;
     }
 
-    public static NBTTagCompound ofStrings(Map<String, String> arg) {
+    public static NBTTagCompound stringListOf(Map<String, String> arg) {
         NBTTagCompound map = new NBTTagCompound();
         for (Map.Entry<String, String> entry : arg.entrySet())
-            map.setTag(entry.getKey(), of(entry.getValue()));
-        return map;
-    }
-
-    public static NBTTagCompound ofByteArrays(Map<String, byte[]> arg) {
-        NBTTagCompound map = new NBTTagCompound();
-        for (Map.Entry<String, byte[]> entry : arg.entrySet())
-            map.setTag(entry.getKey(), of(entry.getValue()));
-        return map;
-    }
-
-    public static NBTTagCompound ofIntArrays(Map<String, int[]> arg) {
-        NBTTagCompound map = new NBTTagCompound();
-        for (Map.Entry<String, int[]> entry : arg.entrySet())
-            map.setTag(entry.getKey(), of(entry.getValue()));
-        return map;
-    }
-
-    public static NBTTagCompound ofLongArrays(Map<String, long[]> arg) {
-        NBTTagCompound map = new NBTTagCompound();
-        for (Map.Entry<String, long[]> entry : arg.entrySet())
             map.setTag(entry.getKey(), of(entry.getValue()));
         return map;
     }
@@ -309,4 +288,25 @@ public final class NBTs {
     public static long[] raw(NBTTagLongArray arg) {
         return arg.data; //AT
     }
+
+    /**
+     * @deprecated
+     * @see NBTUtil#createPosTag(BlockPos)
+     * @see NBTUtil#getPosFromTag(NBTTagCompound)
+     * */
+    @Deprecated
+    public static class BlockPosNBTs {
+        @Deprecated
+        public static BlockPos read(NBTTagCompound compound) {
+            return new BlockPos(compound.getInteger("x"), compound.getInteger("y"), compound.getInteger("z"));
+        }
+        @Deprecated
+        public static NBTTagCompound write(BlockPos pos) {
+            return NBTs.of(
+                    "x", NBTs.of(pos.getX()),
+                    "y", NBTs.of(pos.getY()),
+                    "z", NBTs.of(pos.getZ()));
+        }
+    }
+
 }

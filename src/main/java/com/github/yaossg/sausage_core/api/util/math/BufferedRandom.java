@@ -12,10 +12,6 @@ public class BufferedRandom extends Random {
     protected Random random; //instance to delegate
     protected int buffer = 0;
     protected int left = 0;
-    protected boolean large = false;
-    protected int[] largeBuffer;
-    protected int largeLeft = 0;
-    public static final int largeSize = 0xffff;
 
     private static final BufferedRandom INSTANCE = new BufferedRandom();
 
@@ -42,7 +38,7 @@ public class BufferedRandom extends Random {
     public synchronized void setSeed(long seed) {
         if(seed != 0) {
             if(random == null) {
-                random = this; // random has not been initialized here
+                random = this;
                 super.setSeed(seed);
             } else
                 random.setSeed(seed);
@@ -50,21 +46,9 @@ public class BufferedRandom extends Random {
         hasNextG = false;
     }
 
-    public BufferedRandom setLarge(boolean large) {
-        this.large = large;
-        largeBuffer = large ? new int[largeSize] : null;
-        return this;
-    }
 
     protected void allocate() {
-        if(large) {
-            if(largeLeft > 0)
-                --largeLeft;
-            else for (int i = 0; i < (largeLeft = largeSize); i++)
-                largeBuffer[i] = nextInt();
-            buffer = largeBuffer[largeLeft - 1];
-        } else
-            buffer = nextInt();
+        buffer = nextInt();
         left = 32;
     }
 
@@ -129,7 +113,7 @@ public class BufferedRandom extends Random {
     private boolean hasNextG = false;
     private float nextG;
 
-    public synchronized float nextfloatGaussian() {
+    public synchronized float nextFloatGaussian() {
         if(hasNextG) {
             hasNextG = false;
             return nextG;

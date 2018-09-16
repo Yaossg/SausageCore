@@ -37,7 +37,7 @@ public final class IBRegistryManager {
         return item;
     }
 
-    public <T extends Block>T addBlock(T block, String name, Function<T, ItemBlock> itemBlockFactory) {
+    public <T extends Block>T addBlock(T block, String name, Function<? super T, ItemBlock> itemBlockFactory) {
         blocks.add(block.setUnlocalizedName(modid + "." + name).setRegistryName(name).setCreativeTab(tab));
         items.add(itemBlockFactory.apply(block).setRegistryName(block.getRegistryName()));
         return block;

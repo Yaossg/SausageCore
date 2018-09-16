@@ -12,7 +12,9 @@ import java.util.Optional;
 
 /**
  * Default Inventory implementation for ItemStackHandler-like inventory
+ * @deprecated what a useless and stupid vanilla api...
  * */
+@Deprecated
 public interface IDefaultInventory extends IInventory {
 
     /**

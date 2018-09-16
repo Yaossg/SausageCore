@@ -1,5 +1,6 @@
 package com.github.yaossg.sausage_core.api.util.inventory;
 
+import com.github.yaossg.sausage_core.api.util.common.SausageUtils;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
@@ -10,8 +11,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public abstract class GUIHelper {
     @SideOnly(Side.CLIENT)
-    public static ResourceLocation getTexture(String modid, String root, String texture) {
-        return new ResourceLocation(modid, "textures/gui/" + root + "/" + texture + ".png");
+    public static ResourceLocation getTexture(String modid, String... path) {
+        return new ResourceLocation(modid, "textures/gui/" + String.join("/", path) + ".png");
     }
 
     @SideOnly(Side.CLIENT)
@@ -20,9 +21,8 @@ public abstract class GUIHelper {
     }
 
     @SideOnly(Side.CLIENT)
-    @SuppressWarnings("unchecked")
     public static <T extends Container> T getContainer(GuiContainer guiContainer) {
-        return (T) guiContainer.inventorySlots;
+        return SausageUtils.rawtype(guiContainer.inventorySlots);
     }
 
     @SideOnly(Side.CLIENT)
