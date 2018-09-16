@@ -2,6 +2,7 @@ package com.github.yaossg.sausage_core.proxy;
 
 import com.github.yaossg.sausage_core.SausageCore;
 import com.github.yaossg.sausage_core.api.util.registry.IBRegistryManager;
+import com.github.yaossg.sausage_core.world.gen.WorldTypeChaos;
 import com.github.yaossg.sausage_core.world.gen.WorldTypeMiniature;
 import com.github.yaossg.sausage_core.world.gen.WorldTypeTinyBiomes;
 import net.minecraft.creativetab.CreativeTabs;
@@ -19,6 +20,7 @@ public class CommonProxy {
         manager.registerAll();
         new WorldTypeTinyBiomes();
         new WorldTypeMiniature();
+        new WorldTypeChaos();
     }
 
     public void init(FMLInitializationEvent event) {

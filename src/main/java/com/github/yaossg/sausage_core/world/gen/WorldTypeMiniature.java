@@ -17,11 +17,6 @@ public class WorldTypeMiniature extends WorldType {
     }
 
     @Override
-    public BiomeProvider getBiomeProvider(World world) {
-        return super.getBiomeProvider(world);
-    }
-
-    @Override
     public IChunkGenerator getChunkGenerator(World world, String generatorOptions) {
         assert generatorOptions.isEmpty();
         return new ChunkGeneratorOverworld(world, world.getSeed(), world.getWorldInfo().isMapFeaturesEnabled(),
