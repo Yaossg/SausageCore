@@ -1,12 +1,12 @@
 package sausage_core.api.util.inventory;
 
-import sausage_core.api.util.common.SausageUtils;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import sausage_core.api.util.common.SausageUtils;
 
 @SideOnly(Side.CLIENT)
 public abstract class GUIHelper {

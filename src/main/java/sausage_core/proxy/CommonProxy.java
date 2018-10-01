@@ -1,16 +1,16 @@
 package sausage_core.proxy;
 
-import sausage_core.SausageCore;
-import sausage_core.api.util.registry.IBRegistryManager;
-import sausage_core.gen.WorldTypeChaos;
-import sausage_core.gen.WorldTypeMiniature;
-import sausage_core.gen.WorldTypeTinyBiomes;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import sausage_core.SausageCore;
+import sausage_core.api.util.registry.IBRegistryManager;
+import sausage_core.gen.WorldTypeChaos;
+import sausage_core.gen.WorldTypeMiniature;
+import sausage_core.gen.WorldTypeTinyBiomes;
 
 public class CommonProxy {
     public static final IBRegistryManager manager = new IBRegistryManager(SausageCore.MODID, CreativeTabs.FOOD);

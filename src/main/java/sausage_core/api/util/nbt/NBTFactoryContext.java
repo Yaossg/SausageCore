@@ -1,13 +1,9 @@
 package sausage_core.api.util.nbt;
 
 import com.google.common.collect.ImmutableMap;
-import it.unimi.dsi.fastutil.ints.IntArrayList;
-import it.unimi.dsi.fastutil.ints.IntList;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;

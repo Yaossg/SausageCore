@@ -13,8 +13,8 @@ import java.util.Arrays;
 import java.util.OptionalInt;
 import java.util.function.Predicate;
 
-import static sausage_core.api.util.common.Conversions.To.stack;
 import static com.google.common.base.Preconditions.*;
+import static sausage_core.api.util.common.Conversions.To.stack;
 
 /**
  * {@link Ingredient} with a count

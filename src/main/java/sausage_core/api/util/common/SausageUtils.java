@@ -1,6 +1,5 @@
 package sausage_core.api.util.common;
 
-import sausage_core.SausageCore;
 import com.google.common.base.Strings;
 import com.google.common.collect.Streams;
 import net.minecraft.advancements.Advancement;
@@ -15,6 +14,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.apache.logging.log4j.Logger;
+import sausage_core.SausageCore;
 
 import java.net.URI;
 import java.nio.file.FileSystems;
