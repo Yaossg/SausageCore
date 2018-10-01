@@ -1,6 +1,6 @@
 {
   "ingredients": {
-    "ore_filter": "com.github.yaossg.sausage_core.crafting.OreFilterIngredientFactory",
-    "item_wildcard": "com.github.yaossg.sausage_core.crafting.ItemWildcardIngredientFactory"
+    "ore_filter": "sausage_core.crafting.OreFilterIngredientFactory",
+    "item_wildcard": "sausage_core.crafting.ItemWildcardIngredientFactory"
   }
 }
