@@ -76,22 +76,4 @@ public class BlockPosIterator extends AbstractIterator<BlockPos> {
         compound.setTag("current", writes(x, y, z));
         return compound;
     }
-    /**
-     * @deprecated
-     * @see #toNBT()
-     * */
-    @Deprecated
-    public NBTTagCompound serializeNBT() {
-        return toNBT();
-    }
-
-    /**
-     * @deprecated
-     * @see BlockPosIterator#BlockPosIterator(NBTTagCompound)
-     * @throws UnsupportedOperationException always
-     * */
-    @Deprecated
-    public void deserializeNBT(NBTTagCompound nbt) {
-        throw new UnsupportedOperationException();
-    }
 }

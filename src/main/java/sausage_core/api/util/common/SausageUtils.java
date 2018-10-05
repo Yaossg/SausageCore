@@ -49,7 +49,7 @@ public final class SausageUtils {
             String joined = String.join("/", path);
             Advancement advancement = player.getServer().getAdvancementManager()
                     .getAdvancement(new ResourceLocation(modid, joined));
-            checkNotNull(advancement, "unable to find such an advancement: %s:%s", modid, joined);
+            checkNotNull(advancement, "Unable to find such an advancement: %s:%s", modid, joined);
             AdvancementProgress progress = playerMP.getAdvancements().getProgress(advancement);
             if(!progress.isDone())
                 for (String s : progress.getRemaningCriteria())
@@ -58,27 +58,27 @@ public final class SausageUtils {
     }
 
     /**
-     * @deprecated narrow usage
-     * @param tileClass is a class whose name starts with "Tile"
-     */
-    @Deprecated
-    public static void registerTile(Class<? extends TileEntity> tileClass, String modid) {
-        GameRegistry.registerTileEntity(tileClass, modid + ":" + tileClass.getSimpleName().replaceFirst("Tile", ""));
-    }
-
-    public static void registerTileEntity( String modid, Class<? extends TileEntity> tileEntityClass) {
+     * register a tileEntity with auto-deduction name
+     * */
+    public static void registerTileEntity(String modid, Class<? extends TileEntity> tileEntityClass) {
         String name = tileEntityClass.getSimpleName();
-        int index = name.indexOf("TileEntity"), sub = "TileEntity".length();
+        int index = name.indexOf("TileEntity");
+        int sub = "TileEntity".length();
         if(index < 0) {
             index = name.indexOf("Tile");
             sub = "Tile".length();
         }
-        checkArgument(index >= 0, "Unable to get TileEntity's name from \"%s\"", name);
+        checkArgument(index >= 0, "Unable to parse TileEntity's name from \"%s\"", name);
         name = name.substring(index + sub);
-        checkArgument(!name.isEmpty(), "Unable to get TileEntity's name from \"%s\"", name);
+        checkArgument(!name.isEmpty(), "Unable to parse TileEntity's name from \"%s\"", name);
         name = camelToUnderlined(name);
         GameRegistry.registerTileEntity(tileEntityClass, new ResourceLocation(modid, name));
-        SausageCore.logger.info("{} register a tileEntity named {} // class: {}", modid, name, tileEntityClass.getName());
+        SausageCore.logger.info("{} has registered a tileEntity named {} //class: {}", modid, name, tileEntityClass.getName());
+    }
+
+    @SafeVarargs
+    public static void registerTileEntities(String modid, Class<? extends TileEntity>... classes) {
+        for (Class<? extends TileEntity> clazz : classes) registerTileEntity(modid, clazz);
     }
 
     /**

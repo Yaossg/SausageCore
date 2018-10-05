@@ -11,8 +11,6 @@ import net.minecraftforge.energy.IEnergyStorage;
  * implements INBTSerializable to simplify NBT I/O
  * can set maxReceive & maxExtract after construction
  * can build view of supplier or consumer
- * {@literal @}Deprecated
- * can force to extract or insert energy ignoring limits
  * */
 public class ExtendedEnergyStorage extends EnergyStorage implements INBTSerializable<NBTTagCompound> {
     protected int basement;
@@ -57,6 +55,7 @@ public class ExtendedEnergyStorage extends EnergyStorage implements INBTSerializ
         refresh();
         return this.energy;
     }
+
     @Deprecated
     public int forceReceiveEnergy(int maxReceive, boolean simulate) {
         int energyReceived = Math.min(capacity - energy, maxReceive);
@@ -64,6 +63,7 @@ public class ExtendedEnergyStorage extends EnergyStorage implements INBTSerializ
             energy += energyReceived;
         return energyReceived;
     }
+
     @Deprecated
     public int forceExtractEnergy(int maxExtract, boolean simulate) {
         int energyExtracted = Math.min(energy, maxExtract);
