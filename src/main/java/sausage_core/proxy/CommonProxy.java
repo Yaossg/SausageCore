@@ -8,9 +8,9 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import sausage_core.SausageCore;
 import sausage_core.api.util.registry.IBRegistryManager;
-import sausage_core.gen.WorldTypeChaos;
-import sausage_core.gen.WorldTypeMiniature;
-import sausage_core.gen.WorldTypeTinyBiomes;
+import sausage_core.world.WorldTypeChaos;
+import sausage_core.world.WorldTypeMiniature;
+import sausage_core.world.WorldTypeTinyBiomes;
 
 public class CommonProxy {
     public static final IBRegistryManager manager = new IBRegistryManager(SausageCore.MODID, CreativeTabs.FOOD);

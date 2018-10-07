@@ -1,4 +1,4 @@
-package sausage_core.gen;
+package sausage_core.world;
 
 import net.minecraft.world.WorldType;
 import net.minecraftforge.common.MinecraftForge;

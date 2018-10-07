@@ -58,9 +58,9 @@ public final class SausageUtils {
     }
 
     /**
-     * register a tileEntity with auto-deduction name
+     * guess the name of a tileEntity by its class
      * */
-    public static void registerTileEntity(String modid, Class<? extends TileEntity> tileEntityClass) {
+    public static String guessTileEntityName(Class<? extends TileEntity> tileEntityClass) {
         String name = tileEntityClass.getSimpleName();
         int index = name.indexOf("TileEntity");
         int sub = "TileEntity".length();
@@ -71,7 +71,14 @@ public final class SausageUtils {
         checkArgument(index >= 0, "Unable to parse TileEntity's name from \"%s\"", name);
         name = name.substring(index + sub);
         checkArgument(!name.isEmpty(), "Unable to parse TileEntity's name from \"%s\"", name);
-        name = camelToUnderlined(name);
+        return camelToUnderlined(name);
+    }
+
+    /**
+     * register a tileEntity with auto-deduction name
+     * */
+    public static void registerTileEntity(String modid, Class<? extends TileEntity> tileEntityClass) {
+        String name = guessTileEntityName(tileEntityClass);
         GameRegistry.registerTileEntity(tileEntityClass, new ResourceLocation(modid, name));
         SausageCore.logger.info("{} has registered a tileEntity named {} //class: {}", modid, name, tileEntityClass.getName());
     }

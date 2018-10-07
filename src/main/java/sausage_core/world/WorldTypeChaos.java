@@ -1,4 +1,4 @@
-package sausage_core.gen;
+package sausage_core.world;
 
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;

@@ -1,7 +1,6 @@
 package sausage_core.api.util.common;
 
 import com.google.common.collect.Comparators;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.registries.IForgeRegistryEntry;
@@ -13,9 +12,13 @@ import java.util.Comparator;
 public interface IItemComparators {
     Comparator<? extends IForgeRegistryEntry<?>> entry =
             Comparator.comparing(IForgeRegistryEntry::getRegistryName);
-    Comparator<Item> item = (Comparator<Item>) entry;
+
+    static <T extends IForgeRegistryEntry<T>> Comparator<T> forgeRegistry() {
+        return (Comparator<T>) entry;
+    }
+
     Comparator<ItemStack> itemStack =
-            Comparator.comparing(ItemStack::getItem, item)
+            Comparator.comparing(ItemStack::getItem, forgeRegistry())
                     .thenComparing(Comparator.comparingInt(ItemStack::getCount).reversed());
     Comparator<Ingredient> ingredient =
             Comparator.<Ingredient, Iterable<ItemStack>>comparing(ingredient -> Arrays.asList(ingredient.getMatchingStacks()),

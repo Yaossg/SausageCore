@@ -1,4 +1,4 @@
-package sausage_core.api.util.inventory;
+package sausage_core.api.util.tile;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;

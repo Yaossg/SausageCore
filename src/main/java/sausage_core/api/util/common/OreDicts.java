@@ -4,16 +4,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.oredict.OreDictionary;
 
-import java.util.stream.IntStream;
+import java.util.Arrays;
 import java.util.stream.Stream;
 
 public final class OreDicts {
     public static Stream<String> names(ItemStack stack) {
-        return IntStream.of(OreDictionary.getOreIDs(stack)).mapToObj(OreDictionary::getOreName);
+        return Arrays.stream(OreDictionary.getOreIDs(stack)).mapToObj(OreDictionary::getOreName);
     }
 
-    public static boolean startsWith(ItemStack stack, String start) {
-        return names(stack).anyMatch(s -> s.startsWith(start));
+    public static boolean startsWith(ItemStack stack, String prefix) {
+        return names(stack).anyMatch(s -> s.startsWith(prefix));
     }
 
     public static ItemStack replaceOreHead(ItemStack stack, String src, String dst) {
