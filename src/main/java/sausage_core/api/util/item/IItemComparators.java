@@ -1,4 +1,4 @@
-package sausage_core.api.util.common;
+package sausage_core.api.util.item;
 
 import com.google.common.collect.Comparators;
 import net.minecraft.item.ItemStack;
@@ -8,7 +8,7 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
 import java.util.Arrays;
 import java.util.Comparator;
 
-@SuppressWarnings("unchecked")
+@Deprecated
 public interface IItemComparators {
     Comparator<? extends IForgeRegistryEntry<?>> entry =
             Comparator.comparing(IForgeRegistryEntry::getRegistryName);

@@ -1,4 +1,4 @@
-package sausage_core.api.util.common;
+package sausage_core.api.util.item;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -40,7 +40,7 @@ public final class IngredientStack implements Predicate<ItemStack> {
 
     @Override
     public boolean test(ItemStack input) {
-        return count == input.getCount() && ingredient.apply(input);
+        return input.getCount() >= count && ingredient.apply(input);
     }
 
     public ItemStack[] getMatchingStacks() {
