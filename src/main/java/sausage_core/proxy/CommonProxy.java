@@ -1,26 +1,30 @@
 package sausage_core.proxy;
 
+import com.google.common.primitives.Ints;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemFood;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import sausage_core.SausageCore;
 import sausage_core.api.util.registry.IBRegistryManager;
-import sausage_core.world.WorldTypeChaos;
-import sausage_core.world.WorldTypeMiniature;
-import sausage_core.world.WorldTypeTinyBiomes;
+import sausage_core.item.ItemSausage;
+import sausage_core.world.WorldTypeBuffet;
+import sausage_core.world.WorldTypeCrazyBiomes;
+import sausage_core.world.WorldTypeCustomSize;
+
+import java.util.ArrayList;
 
 public class CommonProxy {
     public static final IBRegistryManager manager = new IBRegistryManager(SausageCore.MODID, CreativeTabs.FOOD);
-    public static final Item sausage = manager.addItem(new ItemFood(12, 1f, false), "sausage");
+    public static final Item sausage = manager.addItem(new ItemSausage(), "sausage");
 
     public void preInit(FMLPreInitializationEvent event) {
         manager.registerAll();
-        new WorldTypeTinyBiomes();
-        new WorldTypeMiniature();
-        new WorldTypeChaos();
+        new WorldTypeCustomSize();
+        new WorldTypeCrazyBiomes();
+        new WorldTypeBuffet();
     }
 
     public void init(FMLInitializationEvent event) {
@@ -28,7 +32,8 @@ public class CommonProxy {
     }
 
     public void postInit(FMLPostInitializationEvent event) {
-
+        //I hope no mod registers a biome now or later
+        WorldTypeBuffet.BIOMES = new ArrayList<>(ForgeRegistries.BIOMES.getValuesCollection());
     }
 
 }

@@ -1,5 +1,6 @@
 package sausage_core.api.util.nbt;
 
+import com.google.common.annotations.Beta;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
+@Beta
 public class NBTFactoryContext<T> {
     private final Class<T> clazz;
     private final Map<String, Field> commons;
@@ -48,10 +50,6 @@ public class NBTFactoryContext<T> {
             if(field.isAnnotationPresent(NBTFactory.AsList.class) && NBTFactoryManager.isArray(field.getType())) {
                 if(field.isAnnotationPresent(NBTFactory.class))
                     contexts.put(name, parse(field.getType().getComponentType()));
-                lists.put(name, field);
-            } else if(field.getType() == List.class) {
-                if(field.isAnnotationPresent(NBTFactory.class))
-                    contexts.put(name, parse(field.getAnnotation(NBTFactory.ListElement.class).value()));
                 lists.put(name, field);
             } else if(field.isAnnotationPresent(NBTFactory.class)) {
                 contexts.put(name, parse(field.getType()));
@@ -95,22 +93,7 @@ public class NBTFactoryContext<T> {
             try {
                 Object value = checkNotNull(list.getValue().get(instance));
                 boolean isFactory = list.getValue().isAnnotationPresent(NBTFactory.class);
-                if(value instanceof List) {
-                    List innerList = (List) value;
-                    if(innerList.isEmpty()) {
-                        nbt.setTag(list.getKey(), new NBTTagList());
-                    } else {
-                        Class<?> type = innerList.get(0).getClass();
-                        checkArgument(innerList.stream().allMatch(o -> o.getClass() == type));
-                        Object object;
-                        if(isFactory) {
-                            object = innerList.stream().map(contexts.get(list.getKey())::toNBT).collect(Collectors.toList());
-                        } else {
-                            object = innerList.stream().map(this::toNBTSingleton).collect(Collectors.toList());
-                        }
-                        nbt.setTag(list.getKey(), NBTs.of((Iterable) object));
-                    }
-                } else if(NBTFactoryManager.isArray(value.getClass())) {
+                if(NBTFactoryManager.isArray(value.getClass())) {
                     int length = Array.getLength(value);
                     if(length == 0) {
                         nbt.setTag(list.getKey(), new NBTTagList());
@@ -176,8 +159,6 @@ public class NBTFactoryContext<T> {
                         : nbt0 -> fromNBTSingleton(nbt0, type.getComponentType())).collect(Collectors.toList());
                 if(NBTFactoryManager.isArray(type))
                     field.set(object, objects.toArray((Object[]) Array.newInstance(type.getComponentType(), 0)));
-                else if(type == List.class)
-                    field.set(object, objects);
             }
             for (Map.Entry<String, Field> factory : factories.entrySet()) {
                 try {

@@ -41,7 +41,6 @@ public final class SausageUtils {
     /**
      * give an advancement to player
      * all of pre-advancements will be given at the same time
-     * @param player who will be given.
      */
     public static void giveAdvancement(Entity player, String modid, String... path) {
         if(player.getServer() != null && player instanceof EntityPlayerMP) {
@@ -107,7 +106,7 @@ public final class SausageUtils {
 
     /**sausage-private*/ public static void unstableWarning(Logger logger, String name, String version, String modid) {
         logger.info("{} (modid:{}) v{} is loading now", name, modid, version);
-        logger.warn("The mod is still unstable and in early development and full of bugs");
+        logger.warn("The mod is still unstable, in early development and full of bugs");
         logger.warn("If you find any bug, please create a new issue on github.com/Yaossg/{} ", name);
     }
 

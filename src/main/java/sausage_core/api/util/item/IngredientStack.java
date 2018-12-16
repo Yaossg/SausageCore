@@ -38,6 +38,10 @@ public final class IngredientStack implements Predicate<ItemStack> {
         return count;
     }
 
+    public IngredientStack withCount(int count) {
+        return new IngredientStack(ingredient, count);
+    }
+
     @Override
     public boolean test(ItemStack input) {
         return input.getCount() >= count && ingredient.apply(input);

@@ -19,13 +19,13 @@ public class SingleItemStackHandler extends ItemStackHandler {
             throw new UnsupportedOperationException();
     }
 
-    public void setStack(ItemStack stack) {
+    public void set(ItemStack stack) {
         super.setStackInSlot(0, stack);
     }
 
     @Nonnull
-    public ItemStack getStack() {
-        return super.getStackInSlot(0);
+    public ItemStack get() {
+        return super.getStackInSlot(0).copy();
     }
 
     @Nonnull
@@ -39,11 +39,10 @@ public class SingleItemStackHandler extends ItemStackHandler {
     }
 
     public SingleItemStackHandler copy() {
-        return new SingleItemStackHandler(getStack().copy());
+        return new SingleItemStackHandler(get());
     }
 
     @Override
-    @Deprecated
     protected final void onContentsChanged(int slot) {
         onContentsChanged();
     }

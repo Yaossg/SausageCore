@@ -33,4 +33,11 @@ public abstract class TileBase extends TileEntity {
     public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState) {
         return oldState.getBlock() != newState.getBlock();
     }
+
+    protected void notifyClient() {
+        markDirty();
+        IBlockState state = world.getBlockState(pos);
+        world.notifyBlockUpdate(pos, state, state, 3);
+        world.notifyNeighborsOfStateChange(pos, state.getBlock(), true);
+    }
 }

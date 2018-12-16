@@ -15,7 +15,7 @@ public class ItemStackMatches {
             for (int i = 0; !each.isEmpty() && i < stacks.size(); ++i)
                 each = handler.insertItem(i, each, false);
         }
-        NonNullList<ItemStack> ret = handler.underlyingCopy();
+        NonNullList<ItemStack> ret = handler.copyStacks();
         ret.removeIf(ItemStack::isEmpty);
         return ret;
     }
@@ -39,11 +39,11 @@ public class ItemStackMatches {
         return true;
     }
 
-    public static void remove(PortableItemStackHandler handler, ItemStack[] stacks) {
+    public static void remove(PortableItemStackHandler handler, ItemStack[] stacks, IEqualityComparator<ItemStack> equal) {
         for (ItemStack stack : stacks) {
             ItemStack in = stack.copy();
-            for (ItemStack storage : handler)
-                if(ItemStack.areItemsEqual(storage, in)) {
+            for (IItemStackSlotView storage : handler)
+                if(storage.compare(equal).test(in)) {
                     if(in.getCount() <= storage.getCount()) {
                         storage.shrink(in.getCount());
                         break;

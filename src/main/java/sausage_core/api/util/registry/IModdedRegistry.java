@@ -47,4 +47,8 @@ public interface IModdedRegistry<E> extends Iterable<E> {
     default List<E> findAll(Predicate<E> predicate) {
         return stream().filter(predicate).collect(Collectors.toList());
     }
+
+    default boolean contains(Predicate<E> predicate) {
+        return stream().anyMatch(predicate);
+    }
 }

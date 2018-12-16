@@ -12,29 +12,29 @@ import java.util.function.Predicate;
 
 public class ItemStackComparators {
 
-    public static final Builder ITEM_EQUAL_BUILDER = builder().addressShortCut().anyCount().anyNBT();
+    public static final Builder ITEM_EQUAL_BUILDER = builder().anyCount().anyNBT();
     public static final IEqualityComparator<ItemStack>
             IS_ITEM_EQUAL = ItemStack::isItemEqual,
             ARE_ITEMS_EQUAL = ItemStack::areItemsEqual,
             ITEM_EQUAL = ITEM_EQUAL_BUILDER.build();
 
-    public static final Builder ITEM_EQUAL_IGNORE_DURABILITY_BUILDER = builder().addressShortCut().ignoreDurability().anyCount().anyNBT();
+    public static final Builder ITEM_EQUAL_IGNORE_DURABILITY_BUILDER = builder().ignoreDurability().anyCount().anyNBT();
     public static final IEqualityComparator<ItemStack>
             IS_ITEM_EQUAL_IGNORE_DURABILITY = ItemStack::isItemEqualIgnoreDurability,
             ARE_ITEMS_EQUAL_IGNORE_DURABILITY = ItemStack::areItemsEqualIgnoreDurability,
             ITEM_EQUAL_IGNORE_DURABILITY = ITEM_EQUAL_IGNORE_DURABILITY_BUILDER.build();
 
-    public static final Builder CAPS_COMPATIBLE_BUILDER = builder().anyItem().anyCount().anyData().anyNBT().capsCompatible();
+    public static final Builder CAPS_COMPATIBLE_BUILDER = builder().noAddressShortCut().anyItem().anyCount().anyData().anyNBT().capsCompatible();
     public static final IEqualityComparator<ItemStack>
             ARE_CAPS_COMPATIBLE = ItemStack::areCapsCompatible,
             CAPS_COMPATIBLE = CAPS_COMPATIBLE_BUILDER.build();
 
-    public static final Builder ITEM_STACKS_EQUAL_BUILDER = builder().capsCompatible();
+    public static final Builder ITEM_STACKS_EQUAL_BUILDER = builder().noAddressShortCut().capsCompatible();
     public static final IEqualityComparator<ItemStack>
             ARE_ITEM_STACKS_EQUAL = ItemStack::areItemStacksEqual,
             ITEM_STACKS_EQUAL = ITEM_STACKS_EQUAL_BUILDER.build();
 
-    public static final Builder ITEM_STACK_TAGS_EQUAL_BUILDER = builder().anyItem().anyCount().anyData().capsCompatible();
+    public static final Builder ITEM_STACK_TAGS_EQUAL_BUILDER = builder().noAddressShortCut().anyItem().anyCount().anyData().capsCompatible();
     public static final IEqualityComparator<ItemStack>
             ARE_ITEM_STACK_TAGS_EQUAL = ItemStack::areItemStackTagsEqual,
             ITEM_STACK_TAGS_EQUAL = ITEM_STACK_TAGS_EQUAL_BUILDER.build();
@@ -42,12 +42,14 @@ public class ItemStackComparators {
     public static final IEqualityComparator<ItemStack> ARE_ITEM_STACK_SHARE_TAGS_EQUAL = ItemStack::areItemStackShareTagsEqual;
     public static final IEqualityComparator<ItemStack> ARE_ITEM_STACKS_EQUAL_USING_NBT_SHARE_TAG = ItemStack::areItemStacksEqualUsingNBTShareTag;
 
+    public static final IEqualityComparator<ItemStack> STACKABLE = builder().anyCount().build();
+
     public static class Builder {
         private IEqualityComparator<Item> item = (a, b) -> a == b;
         private IIntEqualityComparator data = (a, b) -> a == b;
         private IIntEqualityComparator count = (a, b) -> a == b;
         private IEqualityComparator<NBTTagCompound> nbt = Objects::equals;
-        private IEqualityComparator<ItemStack> shortcut = (a, b) -> false;
+        private IEqualityComparator<ItemStack> shortcut = (a, b) -> a == b;
         private IEqualityComparator<ItemStack> empty = (a, b) -> a.isEmpty() == b.isEmpty() && a.isEmpty();
         private IEqualityComparator<ItemStack> ignoreDurability = (a, b) -> true;
         private IEqualityComparator<ItemStack> capsCompatible = (a, b) -> true;
@@ -129,8 +131,8 @@ public class ItemStackComparators {
             return this;
         }
 
-        public Builder addressShortCut() {
-            shortcut = (a, b) -> a == b;
+        public Builder noAddressShortCut() {
+            shortcut = (a, b) -> false;
             return this;
         }
 

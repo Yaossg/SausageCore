@@ -1,6 +1,8 @@
 ﻿
 item.sausage_core.sausage.name=Sausage
-generator.sausage_core.tinyBiomes=Tiny Biomes
-generator.sausage_core.miniature=Miniature
-generator.sausage_core.chaos=Chaos
-generator.sausage_core.chaos.info=Chaos Biome Generation
+generator.sausage_core.customSize=Custom Size
+generator.sausage_core.customSize.title=Custom Size World Type
+generator.sausage_core.crazyBiomes=Crazy Biomes
+generator.sausage_core.buffet=Buffet
+generator.sausage_core.buffet.title=Buffet World Type
+death.attack.overeating=%s ate too much

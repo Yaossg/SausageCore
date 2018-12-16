@@ -1,5 +1,6 @@
 package sausage_core.api.util.nbt;
 
+import com.google.common.annotations.Beta;
 import it.unimi.dsi.fastutil.bytes.ByteArrayList;
 import it.unimi.dsi.fastutil.bytes.ByteList;
 import it.unimi.dsi.fastutil.chars.CharArrayList;
@@ -14,6 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import java.util.*;
 import java.util.function.Function;
 
+@Beta
 public final class NBTFactoryManager {
     static final Map<Class<?>, Function> mapToNBT = new IdentityHashMap<>();
     static final Map<Class<?>, Function> mapFromNBT = new IdentityHashMap<>();
