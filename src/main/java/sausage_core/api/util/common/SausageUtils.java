@@ -9,17 +9,23 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.apache.logging.log4j.Logger;
 import sausage_core.SausageCore;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.net.URI;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -76,15 +82,15 @@ public final class SausageUtils {
     /**
      * register a tileEntity with auto-deduction name
      * */
-    public static void registerTileEntity(String modid, Class<? extends TileEntity> tileEntityClass) {
+    public static void registerTileEntity(Logger logger, String modid, Class<? extends TileEntity> tileEntityClass) {
         String name = guessTileEntityName(tileEntityClass);
         GameRegistry.registerTileEntity(tileEntityClass, new ResourceLocation(modid, name));
-        SausageCore.logger.info("{} has registered a tileEntity named {} //class: {}", modid, name, tileEntityClass.getName());
+        logger.info("{} has registered a tileEntity named {} //class: {}", modid, name, tileEntityClass.getName());
     }
 
     @SafeVarargs
-    public static void registerTileEntities(String modid, Class<? extends TileEntity>... classes) {
-        for (Class<? extends TileEntity> clazz : classes) registerTileEntity(modid, clazz);
+    public static void registerTileEntities(Logger logger, String modid, Class<? extends TileEntity>... classes) {
+        for (Class<? extends TileEntity> clazz : classes) registerTileEntity(logger, modid, clazz);
     }
 
     /**
@@ -108,11 +114,6 @@ public final class SausageUtils {
         logger.info("{} (modid:{}) v{} is loading now", name, modid, version);
         logger.warn("The mod is still unstable, in early development and full of bugs");
         logger.warn("If you find any bug, please create a new issue on github.com/Yaossg/{} ", name);
-    }
-
-    @SuppressWarnings("unchecked")
-    public static <T> T rawtype(Object o) {
-        return (T) o;
     }
 
     public static Optional<Path> getPath(Class<?> clazz, String meta) {
@@ -180,4 +181,32 @@ public final class SausageUtils {
         return _s + builder.toString();
     }
 
+    /**
+     * A useful helper for {@link net.minecraftforge.common.capabilities.ICapabilityProvider#getCapability(Capability, EnumFacing)} and so on
+     * to avoid rawtype warning
+     * */
+    @SuppressWarnings("unchecked")
+    public static <T> T rawtype(Object o) {
+        return (T) o;
+    }
+
+
+    /**
+     * A useful helper for {@link net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder} and so on
+     * to avoid null pointer warning
+     * */
+    @SuppressWarnings("ConstantConditions")
+    @Nonnull
+    public static <T> T nonnull() {
+        return null;
+    }
+    /**
+     * A useful helper for {@link EnumHelper#addToolMaterial(String, int, int, float, float, int)} and so on
+     * to avoid null pointer warning
+     * */
+    @SuppressWarnings("ConstantConditions")
+    @Nonnull
+    public static <T> T nonnull(@Nullable T t) {
+        return t;
+    }
 }

@@ -288,25 +288,4 @@ public final class NBTs {
     public static long[] raw(NBTTagLongArray arg) {
         return arg.data; //AT
     }
-
-    /**
-     * @deprecated
-     * @see NBTUtil#createPosTag(BlockPos)
-     * @see NBTUtil#getPosFromTag(NBTTagCompound)
-     * */
-    @Deprecated
-    public static class BlockPosNBTs {
-        @Deprecated
-        public static BlockPos read(NBTTagCompound compound) {
-            return new BlockPos(compound.getInteger("x"), compound.getInteger("y"), compound.getInteger("z"));
-        }
-        @Deprecated
-        public static NBTTagCompound write(BlockPos pos) {
-            return NBTs.of(
-                    "x", NBTs.of(pos.getX()),
-                    "y", NBTs.of(pos.getY()),
-                    "z", NBTs.of(pos.getZ()));
-        }
-    }
-
 }

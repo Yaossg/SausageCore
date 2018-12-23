@@ -6,33 +6,22 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.registries.IForgeRegistryEntry;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
-
-import static sausage_core.api.util.common.Conversions.To.block;
 
 public final class IBRegistryManager {
     public final String modid;
     @Nullable
     public final CreativeTabs tab;
-    final List<Item> items = NonNullList.create();
-    final List<Block> blocks = NonNullList.create();
-
-    public final NonNullList<IModelLoadListener<Item>> itemModelLoaders = NonNullList.create();
-    public final NonNullList<IModelLoadListener<Block>> blockModelLoaders = NonNullList.create();
-
-    @FunctionalInterface
-    interface IModelLoadListener<T extends IForgeRegistryEntry<T>> {
-        boolean onModelLoad(IBRegistryManager manager, T entry, ItemStack toLoad);
-    }
+    final List<Item> items = new ArrayList<>();
+    final List<Block> blocks = new ArrayList<>();
 
     public IBRegistryManager(String modid) {
         this(modid, null);
@@ -41,8 +30,6 @@ public final class IBRegistryManager {
     public IBRegistryManager(String modid, @Nullable CreativeTabs tab) {
         this.modid = modid;
         this.tab = tab;
-        itemModelLoaders.add((manager, entry, toLoad) -> defaultLoadModel(toLoad));
-        blockModelLoaders.add((manager, entry, toLoad) -> defaultLoadModel(toLoad));
     }
 
     public Item addItem(String name) {
@@ -78,6 +65,16 @@ public final class IBRegistryManager {
     }
 
     @SideOnly(Side.CLIENT)
+    public void loadItemsModel(List<Item> exclude) {
+        items.stream().filter(item -> !exclude.contains(item)).forEach(this::loadModel);
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void loadBlocksModel(List<Block> exclude) {
+        blocks.stream().filter(block -> !exclude.contains(block)).forEach(this::loadModel);
+    }
+
+    @SideOnly(Side.CLIENT)
     public void loadItemsModel() {
         items.forEach(this::loadModel);
     }
@@ -95,30 +92,17 @@ public final class IBRegistryManager {
 
     @SideOnly(Side.CLIENT)
     void loadModel(Item item) {
-        NonNullList<ItemStack> items = NonNullList.create();
-        if(item.getHasSubtypes()) item.getSubItems(tab, items);
-        else items.add(new ItemStack(item));
-        for (ItemStack stack : items)
-            for (IModelLoadListener<Item> loader : itemModelLoaders)
-                if(loader.onModelLoad(this, stack.getItem(), stack)) break;
-
+        loadModelDefault(new ItemStack(item));
     }
 
     @SideOnly(Side.CLIENT)
     void loadModel(Block block) {
-        NonNullList<ItemStack> blocks = NonNullList.create();
-        block.getSubBlocks(tab, blocks);
-        for (ItemStack stack : blocks)
-            for (IModelLoadListener<Block> loader : blockModelLoaders)
-                if(loader.onModelLoad(this, block(stack.getItem()), stack)) break;
-
+        loadModelDefault(new ItemStack(block));
     }
 
-
     @SideOnly(Side.CLIENT)
-    static boolean defaultLoadModel(ItemStack stack) {
+    static void loadModelDefault(ItemStack stack) {
         ModelLoader.setCustomModelResourceLocation(stack.getItem(), stack.getMetadata(),
                 new ModelResourceLocation(stack.getItem().getRegistryName(), "inventory"));
-        return true;
     }
 }

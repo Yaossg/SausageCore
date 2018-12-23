@@ -1,5 +1,6 @@
 package sausage_core.world;
 
+import com.google.common.annotations.Beta;
 import com.google.common.math.IntMath;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiCreateWorld;
@@ -15,6 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+@Beta
 public class WorldTypeCrazyBiomes extends WorldType {
 
     public WorldTypeCrazyBiomes() {

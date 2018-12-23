@@ -24,6 +24,7 @@ public interface IWorldGenWrapper {
             }
         };
     }
+
     default IWorldGenerator toIWorldGenerator() {
         return (random, chunkX, chunkZ, world, chunkGenerator, chunkProvider) ->
                 generate(random, world, new BlockPos((chunkX << 4), 0, (chunkZ << 4)));

@@ -35,7 +35,7 @@ public @interface NBTFactory {
     /**
      * considers byte[], int[], long[] as {@link net.minecraft.nbt.NBTTagList}
      *     instead of {@link net.minecraft.nbt.NBTTagByteArray}, {@link net.minecraft.nbt.NBTTagIntArray}, {@link net.minecraft.nbt.NBTTagLongArray}
-     * also necessary when using array with {@link NBTFactory}
+     * also necessary while using with {@link NBTFactory}
      * */
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.FIELD)

@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
+import static sausage_core.api.util.nbt.NBTFactoryManager.*;
 
 @Beta
 public class NBTFactoryContext<T> {
@@ -47,7 +48,8 @@ public class NBTFactoryContext<T> {
                 name = field.getAnnotation(NBTFactory.Rename.class).value();
             checkArgument(!name.isEmpty());
             checkArgument(names.add(name));
-            if(field.isAnnotationPresent(NBTFactory.AsList.class) && NBTFactoryManager.isArray(field.getType())) {
+            if(field.isAnnotationPresent(NBTFactory.AsList.class)
+                    && isArray(field.getType())) {
                 if(field.isAnnotationPresent(NBTFactory.class))
                     contexts.put(name, parse(field.getType().getComponentType()));
                 lists.put(name, field);
@@ -64,65 +66,41 @@ public class NBTFactoryContext<T> {
         this.contexts = contexts.build();
     }
 
-    @SuppressWarnings("unchecked")
-    private NBTBase toNBTSingleton(Object value) {
-        Function function = null;
-        checkNotNull(value);
-        for (Map.Entry<Class<?>, Function> entry : NBTFactoryManager.mapToNBT.entrySet())
-            if(entry.getKey().isInstance(value)) {
-                function = entry.getValue();
-                break;
-            }
-        return (NBTBase) checkNotNull(checkNotNull(function).apply(value));
+    interface ExRunnable {
+        void run() throws Exception;
+    }
+
+    void ignoreException(ExRunnable runnable) {
+        try {
+            runnable.run();
+        } catch (NullPointerException e) {
+            //NO OP
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @SuppressWarnings("unchecked")
     public NBTTagCompound toNBT(T instance) {
         checkNotNull(instance);
         NBTTagCompound nbt = new NBTTagCompound();
-        for (Map.Entry<String, Field> common : commons.entrySet()) {
-            try {
-                nbt.setTag(common.getKey(), toNBTSingleton(common.getValue().get(instance)));
-            } catch (NullPointerException e) {
-                //NO OP
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
-        for (Map.Entry<String, Field> list : lists.entrySet()) {
-            try {
-                Object value = checkNotNull(list.getValue().get(instance));
-                boolean isFactory = list.getValue().isAnnotationPresent(NBTFactory.class);
-                if(NBTFactoryManager.isArray(value.getClass())) {
-                    int length = Array.getLength(value);
-                    if(length == 0) {
-                        nbt.setTag(list.getKey(), new NBTTagList());
-                    } else {
-                        NBTTagList bases = new NBTTagList();
-                        for (int i = 0; i < length; ++i) {
-                            Object o = Array.get(value, i);
-                            bases.appendTag(isFactory ? contexts.get(list.getKey()).toNBT(o) : toNBTSingleton(o));
-                        }
-                        nbt.setTag(list.getKey(), bases);
-                    }
+        commons.forEach((name, field) -> ignoreException(() ->
+                nbt.setTag(name, NBTFactoryManager.toNBT(field.get(instance)))));
+        lists.forEach((name, field) -> ignoreException(() -> {
+            Object value = field.get(instance);
+            boolean isFactory = field.isAnnotationPresent(NBTFactory.class);
+            if(isArray(value.getClass())) {
+                int length = Array.getLength(value);
+                NBTTagList bases = new NBTTagList();
+                for (int i = 0; i < length; ++i) {
+                    Object object = Array.get(value, i);
+                    bases.appendTag(isFactory ? contexts.get(name).toNBT(object) : NBTFactoryManager.toNBT(object));
                 }
-            } catch (NullPointerException e) {
-                //NO OP
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+                nbt.setTag(name, bases);
             }
-        }
-        for (Map.Entry<String, Field> factory : factories.entrySet()) {
-            try {
-                Object value = checkNotNull(factory.getValue().get(instance));
-                String name = factory.getKey();
-                nbt.setTag(name, contexts.get(name).toNBT(value));
-            } catch (NullPointerException e) {
-                //NO OP
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
+        }));
+        factories.forEach((name, field) -> ignoreException(() ->
+                nbt.setTag(name, contexts.get(name).toNBT(field.get(instance)))));
         return nbt;
     }
 
@@ -131,49 +109,28 @@ public class NBTFactoryContext<T> {
     }
 
     @SuppressWarnings("unchecked")
-    private Object fromNBTSingleton(NBTBase nbt, Class<?> type) {
-        Function function = null;
-        for (Map.Entry<Class<?>, Function> entry : NBTFactoryManager.mapFromNBT.entrySet())
-            if(entry.getKey().isAssignableFrom(type)) {
-                function = entry.getValue();
-                break;
-            }
-        return checkNotNull(function).apply(nbt);
-    }
-
-    @SuppressWarnings("unchecked")
     public T fromNBT(NBTTagCompound nbt) {
         checkNotNull(nbt);
+        T object;
         try {
-            T object = clazz.newInstance();
-            for (Map.Entry<String, Field> common : commons.entrySet()) {
-                Field field = common.getValue();
-                field.set(object, fromNBTSingleton(checkNotNull(nbt.getTag(common.getKey())), field.getType()));
-            }
-            for (Map.Entry<String, Field> list : lists.entrySet()) {
-                Field field = list.getValue();
-                Class<?> type = field.getType();
-                NBTTagList tag = checkNotNull((NBTTagList) nbt.getTag(list.getKey()));
-                List objects = NBTs.stream(tag).map(field.isAnnotationPresent(NBTFactory.class)
-                        ? contexts.get(list.getKey())::fromNBT0
-                        : nbt0 -> fromNBTSingleton(nbt0, type.getComponentType())).collect(Collectors.toList());
-                if(NBTFactoryManager.isArray(type))
-                    field.set(object, objects.toArray((Object[]) Array.newInstance(type.getComponentType(), 0)));
-            }
-            for (Map.Entry<String, Field> factory : factories.entrySet()) {
-                try {
-                    factory.getValue().set(object, contexts.get(factory.getKey()).fromNBT((NBTTagCompound) nbt.getTag(factory.getKey())));
-                } catch (NullPointerException e) {
-                    //NO OP
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            return object;
+            object = clazz.newInstance();
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
+        commons.forEach((name, field) -> ignoreException(() ->
+                field.set(object, NBTFactoryManager.fromNBT(field.getType(), nbt.getTag(name)))));
+        lists.forEach((name, field) -> ignoreException(() -> {
+            Class<?> type = field.getType();
+            NBTTagList tag = checkNotNull((NBTTagList) nbt.getTag(name));
+            List objects = NBTs.stream(tag).map(field.isAnnotationPresent(NBTFactory.class)
+                    ? contexts.get(name)::fromNBT0
+                    : nbt0 -> NBTFactoryManager.fromNBT(type.getComponentType(), nbt0)).collect(Collectors.toList());
+            if(isArray(type))
+                field.set(object, objects.toArray((Object[]) Array.newInstance(type.getComponentType(), 0)));
+        }));
+        factories.forEach((name, field) -> ignoreException(() ->
+                field.set(object, contexts.get(name).fromNBT0(nbt.getTag(name)))));
+        return object;
     }
 
 //    public static void main(String[] args) {
@@ -185,11 +142,8 @@ public class NBTFactoryContext<T> {
 //    @NBTFactory
 //    public static class Factory {
 //
-//        @NBTFactory.AsList
-//        IntList[] sq = {IntArrayList.wrap(new int[] {1, 2}), IntArrayList.wrap(new int[] {3, 4})};
 //        @NBTFactory
 //        public static class Inner {
-//            public int d = 0;
 //
 //            @Override
 //            public String toString() {

@@ -23,7 +23,6 @@ public class CommonProxy {
     public void preInit(FMLPreInitializationEvent event) {
         manager.registerAll();
         new WorldTypeCustomSize();
-        new WorldTypeCrazyBiomes();
         new WorldTypeBuffet();
     }
 
@@ -32,7 +31,6 @@ public class CommonProxy {
     }
 
     public void postInit(FMLPostInitializationEvent event) {
-        //I hope no mod registers a biome now or later
         WorldTypeBuffet.BIOMES = new ArrayList<>(ForgeRegistries.BIOMES.getValuesCollection());
     }
 
