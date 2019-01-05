@@ -6,7 +6,7 @@ import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 
-public class SingleItemStackHandler extends ItemStackHandler {
+public class SingleItemStackHandler extends ItemStackHandler implements IItemStackHandlerView {
     public SingleItemStackHandler() {}
     public SingleItemStackHandler(ItemStack stack) {
         stacks = NonNullList.create();

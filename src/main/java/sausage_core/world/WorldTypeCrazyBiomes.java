@@ -1,7 +1,6 @@
 package sausage_core.world;
 
 import com.google.common.annotations.Beta;
-import com.google.common.math.IntMath;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiCreateWorld;
 import net.minecraft.util.math.BlockPos;

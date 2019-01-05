@@ -1,6 +1,5 @@
 package sausage_core.proxy;
 
-import com.google.common.primitives.Ints;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -11,7 +10,6 @@ import sausage_core.SausageCore;
 import sausage_core.api.util.registry.IBRegistryManager;
 import sausage_core.item.ItemSausage;
 import sausage_core.world.WorldTypeBuffet;
-import sausage_core.world.WorldTypeCrazyBiomes;
 import sausage_core.world.WorldTypeCustomSize;
 
 import java.util.ArrayList;

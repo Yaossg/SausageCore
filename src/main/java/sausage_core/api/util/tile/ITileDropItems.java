@@ -1,10 +1,13 @@
 package sausage_core.api.util.tile;
 
+import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nullable;
@@ -13,9 +16,8 @@ import java.util.List;
 
 import static net.minecraft.inventory.InventoryHelper.spawnItemStack;
 
-
 public interface ITileDropItems {
-    default ItemStackHandler[] getItemStackHandlers() {
+    default IItemHandler[] getItemStackHandlers() {
         return new ItemStackHandler[0];
     }
 
@@ -29,7 +31,7 @@ public interface ITileDropItems {
 
     default NonNullList<ItemStack> getDrops() {
         NonNullList<ItemStack> drops = NonNullList.create();
-        for (ItemStackHandler handler : getItemStackHandlers())
+        for (IItemHandler handler : getItemStackHandlers())
             for (int i = 0; i < handler.getSlots(); i++)
                 drops.add(handler.getStackInSlot(i));
         Collections.addAll(drops, getItemStacks());
@@ -48,5 +50,17 @@ public interface ITileDropItems {
                     .filter(drop -> !drop.isEmpty())
                     .forEach(drop -> dropOne(tileEntity.getWorld(), tileEntity.getPos(), drop));
         }
+    }
+
+    // ============================================================  //
+
+    static ItemStack dropWithNBT(Block block, TileEntity tileEntity) {
+        ItemStack drop = new ItemStack(block);
+        if(tileEntity != null) {
+            NBTTagCompound nbt = new NBTTagCompound();
+            tileEntity.writeToNBT(nbt);
+            drop.setTagCompound(nbt);
+        }
+        return drop;
     }
 }

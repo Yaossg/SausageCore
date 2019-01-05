@@ -6,7 +6,6 @@ import it.unimi.dsi.fastutil.bytes.ByteList;
 import it.unimi.dsi.fastutil.ints.IntList;
 import it.unimi.dsi.fastutil.longs.LongList;
 import net.minecraft.nbt.*;
-import net.minecraft.util.math.BlockPos;
 
 import java.util.List;
 import java.util.Map;

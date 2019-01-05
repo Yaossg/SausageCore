@@ -8,9 +8,6 @@ import net.minecraft.world.biome.BiomeProvider;
 import net.minecraft.world.gen.ChunkGeneratorSettings;
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.terraingen.WorldTypeEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import sausage_core.gui.GUICreateBuffetWorld;
 import sausage_core.gui.GUICreateCustomSize;
 
 public class WorldTypeCustomSize extends WorldType {

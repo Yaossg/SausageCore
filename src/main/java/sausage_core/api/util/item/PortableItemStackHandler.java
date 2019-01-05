@@ -1,6 +1,5 @@
 package sausage_core.api.util.item;
 
-import com.google.common.collect.Iterators;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -17,7 +16,7 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class PortableItemStackHandler extends ItemStackHandler implements Iterable<IItemStackSlotView> {
+public class PortableItemStackHandler extends ItemStackHandler implements Iterable<IItemStackSlotView>, IItemStackHandlerView {
 
     public PortableItemStackHandler() {
         super();
