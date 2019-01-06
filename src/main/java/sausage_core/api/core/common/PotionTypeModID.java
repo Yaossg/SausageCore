@@ -1,4 +1,4 @@
-package sausage_core.api.util.potion;
+package sausage_core.api.core.common;
 
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionType;

@@ -1,4 +1,4 @@
-package sausage_core.api.util.inventory;
+package sausage_core.api.util.client;
 
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;

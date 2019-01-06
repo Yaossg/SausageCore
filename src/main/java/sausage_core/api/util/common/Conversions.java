@@ -4,6 +4,12 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
+import sausage_core.api.util.nbt.NBTs;
+
+import static sausage_core.api.util.common.Conversions.To.block;
 
 /**
  * Conversions among {@link Item}, {@link Block}, {@link ItemStack} and {@link IBlockState}
@@ -31,6 +37,37 @@ public final class Conversions {
     public static IBlockState stack2state(ItemStack stack) {
         Block block = item2block(stack.getItem());
         return block.getStateFromMeta(stack.getMetadata());
+    }
+
+    /**
+     * Stores a TE with its NBT but without its states into a stack
+     * */
+    public static ItemStack TE2stack(TileEntity tileEntity) {
+        ItemStack stack = new ItemStack(tileEntity.getBlockType());
+        NBTTagCompound nbt = new NBTTagCompound();
+        tileEntity.writeToNBT(nbt);
+        nbt.removeTag("id");
+        nbt.removeTag("x");
+        nbt.removeTag("y");
+        nbt.removeTag("z");
+        stack.setTagCompound(NBTs.of("tile", nbt));
+        return stack;
+    }
+    /**
+     * Restore TE's NBTs from stack
+     * */
+    public static void stack2TE(ItemStack stack, TileEntity tileEntity) {
+        if(tileEntity == null || block(stack.getItem()) != tileEntity.getBlockType()) return;
+        NBTTagCompound tile = stack.getSubCompound("tile");
+        if(tile != null) {
+            tile = tile.copy();
+            tile.setString("id", TileEntity.getKey(tileEntity.getClass()).toString());
+            BlockPos pos = tileEntity.getPos();
+            tile.setInteger("x", pos.getX());
+            tile.setInteger("y", pos.getY());
+            tile.setInteger("z", pos.getZ());
+            tileEntity.readFromNBT(tile);
+        }
     }
 
     /**

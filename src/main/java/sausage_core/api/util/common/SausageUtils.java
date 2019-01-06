@@ -4,10 +4,12 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Streams;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
+import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
@@ -17,6 +19,7 @@ import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.apache.logging.log4j.Logger;
+import sausage_core.api.util.nbt.NBTs;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -207,4 +210,5 @@ public final class SausageUtils {
     public static <T> T nonnull(@Nullable T t) {
         return t;
     }
+
 }

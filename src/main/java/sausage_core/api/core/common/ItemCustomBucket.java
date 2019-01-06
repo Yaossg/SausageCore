@@ -1,4 +1,4 @@
-package sausage_core.api.util.item;
+package sausage_core.api.core.common;
 
 import net.minecraft.block.BlockCauldron;
 import net.minecraft.block.BlockDispenser;

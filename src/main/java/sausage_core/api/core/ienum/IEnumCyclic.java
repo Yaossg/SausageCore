@@ -1,4 +1,6 @@
-package sausage_core.api.util.common;
+package sausage_core.api.core.ienum;
+
+import sausage_core.api.util.common.SausageUtils;
 
 import java.util.function.Predicate;
 

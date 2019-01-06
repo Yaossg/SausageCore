@@ -1,24 +1,11 @@
 package sausage_core.api.util.energy;
 
+import net.minecraft.nbt.NBTTagCompound;
+
 public abstract class DynamicEnergyStorage extends BasicEnergyStorage implements IEnergyDynamic {
     protected float efficiency;
     protected float receiveRatio;
     protected float extractRatio;
-    public DynamicEnergyStorage(int capacity) {
-        super(capacity);
-    }
-
-    public DynamicEnergyStorage(int capacity, int maxTransfer) {
-        super(capacity, maxTransfer);
-    }
-
-    public DynamicEnergyStorage(int capacity, int maxReceive, int maxExtract) {
-        super(capacity, maxReceive, maxExtract);
-    }
-
-    public DynamicEnergyStorage(int capacity, int maxReceive, int maxExtract, int energy) {
-        super(capacity, maxReceive, maxExtract, energy);
-    }
 
     @Override
     public float getReceiveRatio() {
@@ -64,5 +51,22 @@ public abstract class DynamicEnergyStorage extends BasicEnergyStorage implements
             setMaxReceive((int) (getEnergyStored() * getReceiveRatio() * getReceiveEfficiency()));
         if(getExtractRatio() > 0)
             setMaxExtract((int) (getEnergyStored() * getExtractRatio() * getExtractEfficiency()));
+    }
+
+    @Override
+    public NBTTagCompound serializeNBT() {
+        NBTTagCompound nbt = super.serializeNBT();
+        nbt.setFloat("efficiency", efficiency);
+        nbt.setFloat("receiveRatio", receiveRatio);
+        nbt.setFloat("extractRatio", extractRatio);
+        return nbt;
+    }
+
+    @Override
+    public void deserializeNBT(NBTTagCompound nbt) {
+        super.deserializeNBT(nbt);
+        efficiency = nbt.getFloat("efficiency");
+        receiveRatio = nbt.getFloat("receiveRatio");
+        extractRatio = nbt.getFloat("extractRatio");
     }
 }

@@ -1,22 +1,13 @@
 package sausage_core.api.util.energy;
 
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.energy.EnergyStorage;
 
-public class BasicEnergyStorage extends EnergyStorage implements IEnergyModifiable, IEnergyView {
-    public BasicEnergyStorage(int capacity) {
-        super(capacity);
-    }
+public class BasicEnergyStorage extends EnergyStorage implements IEnergyModifiable, IEnergyView, INBTSerializable<NBTTagCompound> {
 
-    public BasicEnergyStorage(int capacity, int maxTransfer) {
-        super(capacity, maxTransfer);
-    }
-
-    public BasicEnergyStorage(int capacity, int maxReceive, int maxExtract) {
-        super(capacity, maxReceive, maxExtract);
-    }
-
-    public BasicEnergyStorage(int capacity, int maxReceive, int maxExtract, int energy) {
-        super(capacity, maxReceive, maxExtract, energy);
+    public BasicEnergyStorage() {
+        super(0);
     }
 
     @Override
@@ -77,5 +68,23 @@ public class BasicEnergyStorage extends EnergyStorage implements IEnergyModifiab
 
     protected void onEnergyChanged(int changes) {
 
+    }
+
+    @Override
+    public NBTTagCompound serializeNBT() {
+        NBTTagCompound nbt = new NBTTagCompound();
+        nbt.setInteger("capacity", capacity);
+        nbt.setInteger("energy", energy);
+        nbt.setInteger("maxReceive", maxReceive);
+        nbt.setInteger("maxExtract", maxExtract);
+        return nbt;
+    }
+
+    @Override
+    public void deserializeNBT(NBTTagCompound nbt) {
+        capacity = nbt.getInteger("capacity");
+        energy = nbt.getInteger("energy");
+        maxReceive = nbt.getInteger("maxReceive");
+        maxExtract = nbt.getInteger("maxExtract");
     }
 }

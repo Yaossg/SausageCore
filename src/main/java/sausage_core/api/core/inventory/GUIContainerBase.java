@@ -1,4 +1,4 @@
-package sausage_core.api.util.inventory;
+package sausage_core.api.core.inventory;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;

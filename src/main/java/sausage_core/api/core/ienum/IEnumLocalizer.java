@@ -1,8 +1,8 @@
-package sausage_core.api.util.common;
+package sausage_core.api.core.ienum;
 
 import net.minecraft.client.resources.I18n;
 
-public interface IEnumLocalization {
+public interface IEnumLocalizer {
     default String localize(String... entries) {
         return I18n.format(String.join(".", String.join(".", entries),
                 getClass().getSimpleName().toLowerCase(), toString().toLowerCase()));

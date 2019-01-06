@@ -1,4 +1,4 @@
-@API(apiVersion = "0.2.6", owner = "SausageCore", provides = "SausageCore API")
+@API(apiVersion = "0.2.7", owner = "SausageCore", provides = "SausageCore API")
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 package sausage_core.api;

@@ -1,4 +1,4 @@
-package sausage_core.api.util.inventory;
+package sausage_core.api.core.ienum;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;

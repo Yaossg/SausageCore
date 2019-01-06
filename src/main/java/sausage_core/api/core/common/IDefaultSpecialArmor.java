@@ -1,4 +1,4 @@
-package sausage_core.api.util.common;
+package sausage_core.api.core.common;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;

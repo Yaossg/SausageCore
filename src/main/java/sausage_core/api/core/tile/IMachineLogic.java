@@ -1,4 +1,4 @@
-package sausage_core.api.util.tile;
+package sausage_core.api.core.tile;
 
 public interface IMachineLogic {
     /**

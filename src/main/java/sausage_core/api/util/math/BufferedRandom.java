@@ -1,8 +1,8 @@
 package sausage_core.api.util.math;
 
 import com.google.common.math.IntMath;
-import net.minecraft.util.math.MathHelper;
 
+import java.math.RoundingMode;
 import java.util.Random;
 
 /**
@@ -88,7 +88,7 @@ public class BufferedRandom extends Random {
 
     private int nextIntInternal(int bound) {
         int p2 = IntMath.ceilingPowerOfTwo(bound);
-        int bits = MathHelper.log2(p2);
+        int bits = IntMath.log2(p2, RoundingMode.UNNECESSARY);
         int r = next(bits);
         if(r >= bound) {
             int r2 = next(bits) + r - bound;
@@ -124,7 +124,7 @@ public class BufferedRandom extends Random {
                 v2 = 2 * nextFloat() - 1; // between -1 and 1
                 s = v1 * v1 + v2 * v2;
             } while (s >= 1 || s == 0);
-            float multiplier = MathHelper.sqrt(-2 * StrictMath.log(s) / s);
+            float multiplier = (float) Math.sqrt(-2 * StrictMath.log(s) / s);
             nextG = v2 * multiplier;
             hasNextG = true;
             return v1 * multiplier;
