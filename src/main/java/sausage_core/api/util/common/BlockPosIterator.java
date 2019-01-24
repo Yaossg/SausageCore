@@ -6,7 +6,7 @@ import net.minecraft.nbt.NBTUtil;
 import net.minecraft.util.math.BlockPos;
 
 /**
- * do the same work as {@link BlockPos#getAllInBox(BlockPos, BlockPos)} but NBTSerializable
+ * same as {@link BlockPos#getAllInBox(BlockPos, BlockPos)} but NBTSerializable
  * */
 public class BlockPosIterator extends AbstractIterator<BlockPos> {
 
@@ -65,15 +65,15 @@ public class BlockPosIterator extends AbstractIterator<BlockPos> {
         }
     }
 
-    private static NBTTagCompound writes(int x, int y, int z) {
+    private static NBTTagCompound toNBT(int x, int y, int z) {
         return NBTUtil.createPosTag(new BlockPos(x, y, z));
     }
 
     public NBTTagCompound toNBT() {
         NBTTagCompound compound = new NBTTagCompound();
-        compound.setTag("from", writes(x1, y1, z1));
-        compound.setTag("to", writes(x2, y2, z2));
-        compound.setTag("current", writes(x, y, z));
+        compound.setTag("from", toNBT(x1, y1, z1));
+        compound.setTag("to", toNBT(x2, y2, z2));
+        compound.setTag("current", toNBT(x, y, z));
         return compound;
     }
 }

@@ -2,7 +2,7 @@
 item.sausage_core.sausage.name=香肠
 generator.sausage_core.customSize=自定义生物群系大小
 generator.sausage_core.customSize.title=自定义生物群系大小世界类型
-generator.sausage_core.crazyBiomes=疯狂生物群系
+generator.sausage_core.chaosBiomes=混乱生物群系
 generator.sausage_core.buffet=自选
 generator.sausage_core.buffet.title=自选世界类型
-death.attack.overeating=%s 吃了太多
+death.attack.overeating=%s吃了太多

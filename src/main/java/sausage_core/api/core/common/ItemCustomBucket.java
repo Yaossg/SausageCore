@@ -36,7 +36,6 @@ import static net.minecraftforge.fml.common.eventhandler.Event.Result.*;
 
 /**
  * Fork from knightminer.ceramics.items.ItemClayBucket
- * Simple implementation for custom buckets
  * */
 public class ItemCustomBucket extends Item {
 
@@ -110,7 +109,7 @@ public class ItemCustomBucket extends Item {
 
             BlockPos targetPos = pos.offset(target.sideHit);
             if(!isMilk(stack)) result = tryPlaceFluid(stack, player, world, targetPos);
-        } else result = tryFillBucket(stack, player, world, pos, state, target.sideHit);
+        } else result = tryFillBucket(stack, player, world, pos, target.sideHit);
 
         if(result != null) {
             event.setResult(ALLOW);
@@ -118,7 +117,7 @@ public class ItemCustomBucket extends Item {
         } else event.setResult(DENY);
     }
 
-    private ItemStack tryFillBucket(ItemStack stack, EntityPlayer player, World world, BlockPos pos, IBlockState state, EnumFacing side) {
+    private ItemStack tryFillBucket(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side) {
         // first, try filling using fluid logic
         ItemStack single = stack.copy();
         single.setCount(1);

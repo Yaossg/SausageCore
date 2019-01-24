@@ -1,5 +1,6 @@
 package sausage_core.api.core.tile;
 
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
@@ -10,8 +11,6 @@ import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nullable;
 import java.util.Collections;
-
-import static net.minecraft.inventory.InventoryHelper.spawnItemStack;
 
 public interface ITileDropItems {
     default IItemHandler[] getItemStackHandlers() {
@@ -31,8 +30,8 @@ public interface ITileDropItems {
         return drops;
     }
 
-    static void dropOne(World world, BlockPos pos, ItemStack stack) {
-        spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack);
+    static void drop(World world, BlockPos pos, ItemStack stack) {
+        InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack);
     }
 
     static void dropAll(@Nullable TileEntity tileEntity) {
@@ -40,7 +39,7 @@ public interface ITileDropItems {
             ((ITileDropItems) tileEntity).getDrops()
                     .stream()
                     .filter(drop -> !drop.isEmpty())
-                    .forEach(drop -> dropOne(tileEntity.getWorld(), tileEntity.getPos(), drop));
+                    .forEach(drop -> drop(tileEntity.getWorld(), tileEntity.getPos(), drop));
         }
     }
 

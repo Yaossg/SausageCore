@@ -16,10 +16,10 @@ import java.util.List;
 import java.util.Random;
 
 @Beta
-public class WorldTypeCrazyBiomes extends WorldType {
+public class WorldTypeChaosBiomes extends WorldType {
 
-    public WorldTypeCrazyBiomes() {
-        super("crazyBiomes");
+    public WorldTypeChaosBiomes() {
+        super("chaosBiomes");
     }
 
     @Override
@@ -29,7 +29,7 @@ public class WorldTypeCrazyBiomes extends WorldType {
 
     @Override
     public String getTranslationKey() {
-        return "generator.sausage_core.crazyBiomes";
+        return "generator.sausage_core.chaosBiomes";
     }
 
     @Override

@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.ForgeHooks;
 import sausage_core.api.util.nbt.NBTs;
 
 import static sausage_core.api.util.common.Conversions.To.block;
@@ -61,7 +62,7 @@ public final class Conversions {
         NBTTagCompound tile = stack.getSubCompound("tile");
         if(tile != null) {
             tile = tile.copy();
-            tile.setString("id", TileEntity.getKey(tileEntity.getClass()).toString());
+            tile.setString("id", ForgeHooks.getRegistryName(tileEntity.getClass()));
             BlockPos pos = tileEntity.getPos();
             tile.setInteger("x", pos.getX());
             tile.setInteger("y", pos.getY());

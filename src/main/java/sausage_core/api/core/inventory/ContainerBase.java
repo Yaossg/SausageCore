@@ -24,7 +24,7 @@ public abstract class ContainerBase<T extends TileEntity> extends Container {
 
     /**
      * copy from {@link Container#mergeItemStack(ItemStack, int, int, boolean)}
-     * but check if the item is valid for the slot, and adjust code style
+     * but check if the item is valid for the slot
      */
     @Override
     protected boolean mergeItemStack(ItemStack stack, int startIndex, int endIndex, boolean reverseDirection) {

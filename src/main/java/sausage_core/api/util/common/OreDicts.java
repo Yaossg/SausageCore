@@ -5,6 +5,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public final class OreDicts {
@@ -16,6 +17,12 @@ public final class OreDicts {
         return names(stack).anyMatch(s -> s.startsWith(prefix));
     }
 
+    public static Optional<ItemStack> getOre(String name) {
+        NonNullList<ItemStack> ores = OreDictionary.getOres(name);
+        return ores.isEmpty() ? Optional.empty() : Optional.of(ores.get(0));
+    }
+
+    @Deprecated
     public static ItemStack replaceOreHead(ItemStack stack, String src, String dst) {
         return names(stack)
                 .filter(str -> str.startsWith(src))

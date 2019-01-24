@@ -9,8 +9,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * A registry interface just like {@link net.minecraftforge.registries.IForgeRegistry}
- * but much easier and friendlier for modders
+ * A simple registry interface designed for modders
  * */
 public interface IModdedRegistry<E> extends Iterable<E> {
     Collection<E> view();
