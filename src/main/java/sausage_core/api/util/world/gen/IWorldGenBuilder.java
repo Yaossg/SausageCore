@@ -54,6 +54,17 @@ public interface IWorldGenBuilder {
             }
 
             @Override
+            public IWorldGenBuilder copy() {
+                return of(wrapper)
+                        .times(times)
+                        .offsetEach(offsetEach)
+                        .offsetAll(offsetAll)
+                        .atBiome(atBiome)
+                        .atDimension(atDimensionA)
+                        .atDimension(atDimensionB);
+            }
+
+            @Override
             public IWorldGenWrapper build() {
                 return (random, world, pos) -> {
                     if(atBiome.test(world.getBiome(pos))
@@ -113,6 +124,6 @@ public interface IWorldGenBuilder {
     }
     IWorldGenBuilder atDimension(IntPredicate predicate);
     IWorldGenBuilder atDimension(Predicate<DimensionType> predicate);
-
+    IWorldGenBuilder copy();
     IWorldGenWrapper build();
 }

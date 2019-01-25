@@ -18,4 +18,8 @@ public final class WorldGenUtils {
     public static Biome getBiome(World world, int chunkX, int chunkZ) {
         return world.getBiomeProvider().getBiome(new BlockPos(chunkX << 4, 0, chunkZ << 4));
     }
+
+    public static BlockPos commonOffset(Random random, BlockPos pos) {
+        return pos.add(random.nextInt(16), 0, random.nextInt(16));
+    }
 }
