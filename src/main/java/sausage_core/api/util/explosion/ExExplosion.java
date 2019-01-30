@@ -189,7 +189,7 @@ public class ExExplosion extends Explosion {
             }
         }
 
-        if(causesFire) for(BlockPos pos : affectedBlockPositions)
+        if(causesFire && !world.isRemote) for(BlockPos pos : affectedBlockPositions)
             if(air.test(world.getBlockState(pos)) && !air.test(world.getBlockState(pos.down())) && random.nextInt(3) == 0)
                 world.setBlockState(pos, fire);
     }
