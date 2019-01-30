@@ -8,7 +8,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
-import sausage_core.util.WorldTypeUtils;
+import sausage_core.SausageCore;
 
 @SideOnly(Side.CLIENT)
 public class GUICreateCustomSize extends GuiScreen {
@@ -19,7 +19,7 @@ public class GUICreateCustomSize extends GuiScreen {
 
     public GUICreateCustomSize(GuiCreateWorld createWorldGuiIn) {
         createWorldGui = createWorldGuiIn;
-        size = WorldTypeUtils.parseInt(createWorldGuiIn.chunkProviderSettingsJson);
+        size = SausageCore.parseInt(createWorldGuiIn.chunkProviderSettingsJson);
     }
     
     public void initGui() {
@@ -47,7 +47,7 @@ public class GUICreateCustomSize extends GuiScreen {
     @Override
     protected void keyTyped(char typedChar, int keyCode) {
         field.textboxKeyTyped(typedChar, keyCode);
-        size = WorldTypeUtils.parseInt(field.getText());
+        size = SausageCore.parseInt(field.getText());
         if (keyCode == 28 || keyCode == 156)
             actionPerformed(this.buttonList.get(0));
     }

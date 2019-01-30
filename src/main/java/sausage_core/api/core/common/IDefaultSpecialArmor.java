@@ -11,7 +11,9 @@ import net.minecraftforge.common.ISpecialArmor;
 import javax.annotation.Nonnull;
 
 public interface IDefaultSpecialArmor extends ISpecialArmor {
-    // Forge's TO-DO
+    /**
+     * from Forge's TO-DO item
+     * */
     enum EnumArmorType {
         HEAD(EntityEquipmentSlot.HEAD),
         CHEST(EntityEquipmentSlot.CHEST),
@@ -69,6 +71,7 @@ public interface IDefaultSpecialArmor extends ISpecialArmor {
     }
 
     /**
+     * {@inheritDoc}
      * all damage will apply on {@link IDefaultSpecialArmor#damageArmor(EntityLivingBase, ItemStack, DamageSource, int, int)} instead of vanilla
      * */
     default ArmorProperties getProperties(EntityLivingBase player, @Nonnull ItemStack armor, DamageSource source, double damage, EnumArmorType armorType) {
@@ -76,6 +79,7 @@ public interface IDefaultSpecialArmor extends ISpecialArmor {
     }
 
     /**
+     * {@inheritDoc}
      * no extra armor value display provided
      * */
     default int getArmorDisplay(EntityPlayer player, @Nonnull ItemStack armor, EnumArmorType armorType) {
@@ -83,7 +87,8 @@ public interface IDefaultSpecialArmor extends ISpecialArmor {
     }
 
     /**
-     * this implementation invokes vanilla method
+     * {@inheritDoc}
+     * this implementation call the vanilla method
      * */
     default void damageArmor(EntityLivingBase entity, @Nonnull ItemStack stack, DamageSource source, int damage, EnumArmorType armorType) {
         if(stack.attemptDamageItem(damage, entity.getRNG(), entity instanceof EntityPlayerMP ? ((EntityPlayerMP) entity) : null))

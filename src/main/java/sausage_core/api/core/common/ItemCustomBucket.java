@@ -255,10 +255,12 @@ public class ItemCustomBucket extends Item {
     }
 
     /**
-     * @implNote For item "modid:itemid", the translate key is one of
-     * "item.modid.itemid.name" for universal buckets, using "%s" to be the placeholder of fluid's name
-     * "item.modid.itemid.milk.name" for the milk bucket (if present)
-     * "item.modid.itemid.empty.name" for the empty bucket
+     * For item <code>"modid:itemid"</code>, the translate key is one of
+     * <ul>
+     * <li><code>"item.modid.itemid.name"</code> for universal buckets, using <code>"%s"</code> to be the placeholder of fluid's name</li>
+     * <li><code>"item.modid.itemid.milk.name"</code> for the milk bucket (if present)</li>
+     * <li><code>"item.modid.itemid.empty.name"</code> for the empty bucket</li>
+     * </ul>
      * */
     @Override
     public String getItemStackDisplayName(ItemStack stack) {

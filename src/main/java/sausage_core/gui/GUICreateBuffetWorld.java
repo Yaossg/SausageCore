@@ -7,7 +7,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import sausage_core.util.WorldTypeUtils;
+import sausage_core.SausageCore;
 import sausage_core.world.WorldTypeBuffet;
 
 @SideOnly(Side.CLIENT)
@@ -26,7 +26,7 @@ public class GUICreateBuffetWorld extends GuiScreen {
 
     public GUICreateBuffetWorld(GuiCreateWorld createWorldGuiIn) {
         createWorldGui = createWorldGuiIn;
-        biome = WorldTypeUtils.parseInt(createWorldGuiIn.chunkProviderSettingsJson);
+        biome = SausageCore.parseInt(createWorldGuiIn.chunkProviderSettingsJson);
     }
     
     public void initGui() {

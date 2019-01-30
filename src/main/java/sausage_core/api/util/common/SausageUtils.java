@@ -35,7 +35,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public final class SausageUtils {
     /**
-     * used for {@link net.minecraft.block.Block#setLightLevel(float)}
+     * for {@link net.minecraft.block.Block#setLightLevel(float)},
      * convert integer light level to float one.
      * */
     public static float lightLevelOf(int level) {
@@ -43,7 +43,7 @@ public final class SausageUtils {
     }
 
     /**
-     * give an advancement to player
+     * give an advancement to player,
      * all of pre-advancements will be given at the same time
      */
     public static void giveAdvancement(Entity player, String modid, String... path) {
@@ -109,8 +109,8 @@ public final class SausageUtils {
     }
 
     /**sausage-private*/ public static void unstableWarning(Logger logger, String name, String version, String modid) {
-        logger.info("{} (modid:{}) v{} is loading now", name, modid, version);
-        logger.warn("The mod is still unstable, in early development and full of bugs");
+        logger.info("{} {} is loading now (modid:{})", name, modid, version);
+        logger.warn("The mod is still unstable and in early development");
         logger.warn("If you find any bug, please create a new issue on github.com/Yaossg/{} ", name);
     }
 
@@ -135,19 +135,21 @@ public final class SausageUtils {
     private static final Pattern UPPER_TAIL = Pattern.compile(".+[A-Z]{2,}");
     /**
      * convert a camel name to a underlined lower case name
-     * @apiNote  here are some examples
-     * null -> {@link NullPointerException}
-     * "" -> ""
-     * "GreatChanges" -> "great_changes"
-     * "tinyChanges" -> "tiny_changes"
-     * "SUPER" -> "super"
-     * "SFItems" -> "sf_items"
-     * "ILoveMc" -> "i_love_mc"
-     * "ILoveMC" -> "i_love_mc"
-     * "__Me__" -> "__me__"
-     * "__me__" -> "__me__"
-     * "happy!" -> {@link IllegalArgumentException}
-     * "SF's chair" -> {@link IllegalArgumentException}.
+     * <p>Here are some examples:
+     * <ul>
+     * <li><code>null =&gt; {@link NullPointerException}</code></li>
+     * <li><code>"" =&gt; ""</code></li>
+     * <li><code>"GreatChanges" =&gt; "great_changes"</code></li>
+     * <li><code>"tinyChanges" =&gt; "tiny_changes"</code></li>
+     * <li><code>"SUPER" =&gt; "super"</code></li>
+     * <li><code>"SFItems" =&gt; "sf_items"</code></li>
+     * <li><code>"ILoveMc" =&gt; "i_love_mc"</code></li>
+     * <li><code>"ILoveMC" =&gt; "i_love_mc"</code></li>
+     * <li><code>"__Me__" =&gt; "__me__"</code></li>
+     * <li><code>"__me__" =&gt; "__me__"</code></li>
+     * <li><code>"happy!" =&gt; {@link IllegalArgumentException}</code></li>
+     * <li><code>"SF's chair" =&gt; {@link IllegalArgumentException}</code></li>
+     * </ul>
      *
      * @param camel A camel name
      * @return A underlined lower case name

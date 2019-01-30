@@ -17,6 +17,7 @@ public class ItemSausage extends ItemFood {
     }
 
     private static final DamageSource overeating = new DamageSource("overeating").setDamageIsAbsolute();
+
     @Override
     protected void onFoodEaten(ItemStack stack, World worldIn, EntityPlayer player) {
         player.attackEntityFrom(overeating, 128);

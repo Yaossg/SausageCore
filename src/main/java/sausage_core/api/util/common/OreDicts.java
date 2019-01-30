@@ -21,16 +21,4 @@ public final class OreDicts {
         NonNullList<ItemStack> ores = OreDictionary.getOres(name);
         return ores.isEmpty() ? Optional.empty() : Optional.of(ores.get(0));
     }
-
-    @Deprecated
-    public static ItemStack replaceOreHead(ItemStack stack, String src, String dst) {
-        return names(stack)
-                .filter(str -> str.startsWith(src))
-                .map(str -> str.replaceFirst(src, dst))
-                .map(OreDictionary::getOres)
-                .flatMap(NonNullList::stream)
-                .findAny()
-                .map(ItemStack::copy)
-                .orElse(ItemStack.EMPTY);
-    }
 }

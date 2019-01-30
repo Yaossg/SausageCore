@@ -7,8 +7,8 @@ import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeProvider;
 import net.minecraft.world.biome.BiomeProviderSingle;
+import sausage_core.SausageCore;
 import sausage_core.gui.GUICreateBuffetWorld;
-import sausage_core.util.WorldTypeUtils;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class WorldTypeBuffet extends WorldType {
 
     @Override
     public BiomeProvider getBiomeProvider(World world) {
-        return new BiomeProviderSingle(BIOMES.get(WorldTypeUtils.parseInt(world.getWorldInfo().getGeneratorOptions())));
+        return new BiomeProviderSingle(BIOMES.get(SausageCore.parseInt(world.getWorldInfo().getGeneratorOptions())));
     }
 
     @Override

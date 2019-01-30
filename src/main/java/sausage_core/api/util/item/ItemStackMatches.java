@@ -43,7 +43,7 @@ public class ItemStackMatches {
         for (ItemStack stack : stacks) {
             ItemStack in = stack.copy();
             for (IItemStackSlotView storage : handler)
-                if(storage.compare(equal).test(in)) {
+                if(storage.comparing(equal).test(in)) {
                     if(in.getCount() <= storage.getCount()) {
                         storage.shrink(in.getCount());
                         break;

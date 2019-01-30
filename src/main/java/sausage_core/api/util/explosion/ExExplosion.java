@@ -257,7 +257,7 @@ public class ExExplosion extends Explosion {
             return this;
         }
 
-        public Builder damageTerrain() {
+        public Builder damagesTerrain() {
             damagesTerrain = true;
             return this;
         }

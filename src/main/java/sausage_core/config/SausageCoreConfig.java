@@ -1,0 +1,13 @@
+package sausage_core.config;
+
+import net.minecraftforge.common.config.Config;
+import net.minecraftforge.common.config.Config.*;
+import sausage_core.SausageCore;
+
+@Config(modid = SausageCore.MODID, name = SausageCore.NAME)
+public class SausageCoreConfig {
+    @Comment("enable spawn info card")
+    @LangKey("sausage_core.general.spawnInfoCard")
+    public static boolean spawnInfoCard = true;
+
+}

@@ -6,7 +6,7 @@ import java.math.RoundingMode;
 import java.util.Random;
 
 /**
- * byte-saving & {@link java.util.Random} supported RNG
+ * byte-saving and {@link java.util.Random} supported RNG
  * */
 public class BufferedRandom extends Random {
     protected Random random; //instance to delegate
