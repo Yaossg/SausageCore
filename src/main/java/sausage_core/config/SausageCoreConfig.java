@@ -1,7 +1,8 @@
 package sausage_core.config;
 
 import net.minecraftforge.common.config.Config;
-import net.minecraftforge.common.config.Config.*;
+import net.minecraftforge.common.config.Config.Comment;
+import net.minecraftforge.common.config.Config.LangKey;
 import sausage_core.SausageCore;
 
 @Config(modid = SausageCore.MODID, name = SausageCore.NAME)
