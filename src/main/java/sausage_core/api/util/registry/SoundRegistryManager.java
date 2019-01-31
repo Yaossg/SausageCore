@@ -12,8 +12,9 @@ public class SoundRegistryManager {
     }
 
     public SoundEvent addSound(String name) {
-        SoundEvent soundEvent = new SoundEvent(new ResourceLocation(modid, name));
-        ForgeRegistries.SOUND_EVENTS.register(soundEvent.setRegistryName(soundEvent.getSoundName()));
+        ResourceLocation soundName = new ResourceLocation(modid, name);
+        SoundEvent soundEvent = new SoundEvent(soundName);
+        ForgeRegistries.SOUND_EVENTS.register(soundEvent.setRegistryName(soundName));
         return soundEvent;
     }
 }
