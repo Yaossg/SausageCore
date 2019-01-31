@@ -7,6 +7,8 @@ import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeProvider;
 import net.minecraft.world.biome.BiomeProviderSingle;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import sausage_core.SausageCore;
 import sausage_core.gui.GUICreateBuffetWorld;
 
@@ -41,6 +43,7 @@ public class WorldTypeBuffet extends WorldType {
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public void onCustomizeButton(Minecraft mc, GuiCreateWorld guiCreateWorld) {
         mc.displayGuiScreen(new GUICreateBuffetWorld(guiCreateWorld));
     }

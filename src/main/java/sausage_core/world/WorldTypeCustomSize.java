@@ -8,6 +8,8 @@ import net.minecraft.world.biome.BiomeProvider;
 import net.minecraft.world.gen.ChunkGeneratorSettings;
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import sausage_core.gui.GUICreateCustomSize;
 
 public class WorldTypeCustomSize extends WorldType {
@@ -28,6 +30,7 @@ public class WorldTypeCustomSize extends WorldType {
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public void onCustomizeButton(Minecraft mc, GuiCreateWorld guiCreateWorld) {
         mc.displayGuiScreen(new GUICreateCustomSize(guiCreateWorld));
     }
