@@ -4,6 +4,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 
+import javax.annotation.Nonnull;
 import java.util.Random;
 
 public final class WorldGenUtils {
@@ -15,8 +16,9 @@ public final class WorldGenUtils {
         return randomPos(random, chunkX, chunkZ, random.nextInt(maxY - minY) + minY);
     }
 
+    @Nonnull // since world#getBiome returns PLAINS as default value
     public static Biome getBiome(World world, int chunkX, int chunkZ) {
-        return world.getBiomeProvider().getBiome(new BlockPos(chunkX << 4, 0, chunkZ << 4));
+        return world.getBiome(new BlockPos(chunkX << 4, 0, chunkZ << 4));
     }
 
     public static BlockPos commonOffset(Random random, BlockPos pos) {

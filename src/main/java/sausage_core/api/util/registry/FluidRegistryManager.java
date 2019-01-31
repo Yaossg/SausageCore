@@ -10,6 +10,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -77,6 +79,7 @@ public final class FluidRegistryManager {
         inner.registerAll();
     }
 
+    @SideOnly(Side.CLIENT)
     public void loadModel() {
         inner.blocks.forEach(block -> {
             StateMapper mapper = new StateMapper(modid, block.getRegistryName().getResourcePath());
