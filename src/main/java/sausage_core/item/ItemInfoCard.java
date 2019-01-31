@@ -57,6 +57,7 @@ public class ItemInfoCard extends Item {
                 .addText(" ")
                 .withStyle(style -> style.setColor(TextFormatting.BLUE))
                 .addURL("HERE", "https://github.com/Yaossg/SausageCore")
+                .withStyle()
                 .addText(" ")
                 .addI18nText("for more information")
                 .newline()
