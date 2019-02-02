@@ -12,3 +12,5 @@ sausage_core.info_card.Please visit=请访问
 sausage_core.info_card.HERE=这里
 sausage_core.info_card.for more information=来获得更多信息
 sausage_core.info_card.No %s is detected=无法找到%s
+sausage_core.general.spawnInfoCard=出生获得信息卡
+sausage_core.general.testAl=铝问题测试

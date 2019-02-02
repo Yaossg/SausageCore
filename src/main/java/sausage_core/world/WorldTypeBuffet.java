@@ -10,6 +10,7 @@ import net.minecraft.world.biome.BiomeProviderSingle;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import sausage_core.SausageCore;
+import sausage_core.api.util.common.Opts;
 import sausage_core.gui.GUICreateBuffetWorld;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public class WorldTypeBuffet extends WorldType {
 
     @Override
     public BiomeProvider getBiomeProvider(World world) {
-        return new BiomeProviderSingle(BIOMES.get(SausageCore.parseInt(world.getWorldInfo().getGeneratorOptions())));
+        return new BiomeProviderSingle(BIOMES.get(Opts.parseInt(world.getWorldInfo().getGeneratorOptions()).orElse(0)));
     }
 
     @Override

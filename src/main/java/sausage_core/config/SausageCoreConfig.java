@@ -11,4 +11,9 @@ public class SausageCoreConfig {
     @LangKey("sausage_core.general.spawnInfoCard")
     public static boolean spawnInfoCard = true;
 
+    @Comment("enable tests of Al")
+    @LangKey("sausage_core.general.testAl")
+    public static boolean testAl = false;
+
+
 }
