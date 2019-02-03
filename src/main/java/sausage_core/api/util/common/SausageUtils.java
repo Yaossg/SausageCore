@@ -16,6 +16,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nonnull;
@@ -80,15 +81,15 @@ public final class SausageUtils {
     /**
      * register a tileEntity with auto-deduction name
      * */
-    public static void registerTileEntity(Logger logger, String modid, Class<? extends TileEntity> tileEntityClass) {
+    public static void registerTileEntity(String modid, Class<? extends TileEntity> tileEntityClass) {
         String name = guessTileEntityName(tileEntityClass);
         GameRegistry.registerTileEntity(tileEntityClass, new ResourceLocation(modid, name));
-        logger.info("{} has registered a tileEntity named {} //class: {}", modid, name, tileEntityClass.getName());
+        LogManager.getLogger(modid).info("{} has registered a tileEntity named {} //class: {}", modid, name, tileEntityClass.getName());
     }
 
     @SafeVarargs
-    public static void registerTileEntities(Logger logger, String modid, Class<? extends TileEntity>... classes) {
-        for (Class<? extends TileEntity> clazz : classes) registerTileEntity(logger, modid, clazz);
+    public static void registerTileEntities(String modid, Class<? extends TileEntity>... classes) {
+        for (Class<? extends TileEntity> clazz : classes) registerTileEntity(modid, clazz);
     }
 
     /**
@@ -108,7 +109,8 @@ public final class SausageUtils {
                 .filter(stack -> !stack.isEmpty());
     }
 
-    /**sausage-private*/ public static void unstableWarning(Logger logger, String name, String version, String modid) {
+    /**sausage-private*/ public static void unstableWarning(String name, String version, String modid) {
+        Logger logger = LogManager.getLogger(modid);
         logger.info("{} {} is loading now (modid:{})", name, modid, version);
         logger.warn("The mod is still unstable and in early development");
         logger.warn("If you find any bug, please create a new issue on github.com/Yaossg/{} ", name);

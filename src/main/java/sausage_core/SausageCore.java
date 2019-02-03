@@ -4,9 +4,9 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -18,8 +18,9 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.OreIngredient;
 import org.apache.logging.log4j.Logger;
-import sausage_core.api.util.common.OreDicts;
+import sausage_core.api.registry.AutoSyncConfigs;
 import sausage_core.api.util.common.SausageUtils;
+import sausage_core.api.util.oredict.OreDicts;
 import sausage_core.api.util.registry.IBRegistryManager;
 import sausage_core.config.SausageCoreConfig;
 import sausage_core.item.ItemInfoCard;
@@ -29,7 +30,6 @@ import sausage_core.world.WorldTypeCustomSize;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -58,10 +58,13 @@ public class SausageCore {
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        SausageUtils.unstableWarning(logger = event.getModLog(), NAME, VERSION, MODID);
-        manager.registerAll();
+        logger = event.getModLog();
+        SausageUtils.unstableWarning(NAME, VERSION, MODID);
+        MinecraftForge.EVENT_BUS.register(AutoSyncConfigs.class);
+        AutoSyncConfigs.AUTO_SYNC_CONFIG.register(MODID);
         sausage = manager.addItem(new ItemSausage(), "sausage");
         manager.addItem(new ItemInfoCard(), "info_card");
+        manager.registerAll();
         new WorldTypeCustomSize();
         new WorldTypeBuffet();
     }

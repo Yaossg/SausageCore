@@ -1,4 +1,4 @@
-package sausage_core.api.util.common;
+package sausage_core.api.util.oredict;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 public final class OreDicts {

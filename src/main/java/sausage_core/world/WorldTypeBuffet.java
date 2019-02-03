@@ -9,7 +9,6 @@ import net.minecraft.world.biome.BiomeProvider;
 import net.minecraft.world.biome.BiomeProviderSingle;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import sausage_core.SausageCore;
 import sausage_core.api.util.common.Opts;
 import sausage_core.gui.GUICreateBuffetWorld;
 

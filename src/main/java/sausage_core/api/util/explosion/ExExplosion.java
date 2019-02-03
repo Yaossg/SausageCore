@@ -205,9 +205,11 @@ public class ExExplosion extends Explosion {
     public static class Builder {
         private final World world;
         private Entity entity = null;
+        private boolean initPos = false;
         private double x = 0;
         private double y = 0;
         private double z = 0;
+        private boolean initSize = false;
         private float size = 0;
         private boolean causesFire = false;
         private boolean damagesTerrain = false;
@@ -225,6 +227,7 @@ public class ExExplosion extends Explosion {
             x = pos.getX() + 0.5;
             y = pos.getY() + 0.5;
             z = pos.getZ() + 0.5;
+            initPos = true;
             return this;
         }
 
@@ -232,6 +235,7 @@ public class ExExplosion extends Explosion {
             x = vec3d.x;
             y = vec3d.y;
             z = vec3d.z;
+            initPos = true;
             return this;
         }
 
@@ -239,6 +243,7 @@ public class ExExplosion extends Explosion {
             this.x = x;
             this.y = y;
             this.z = z;
+            initPos = true;
             return this;
         }
 
@@ -249,6 +254,7 @@ public class ExExplosion extends Explosion {
 
         public Builder sizeOf(float size) {
             this.size = size;
+            initSize = true;
             return this;
         }
 
@@ -288,6 +294,8 @@ public class ExExplosion extends Explosion {
         }
 
         public ExExplosion build() {
+            if(!(initPos && initSize))
+                throw new IllegalStateException("ExExplosion.Builder: pos and size are required");
             return new ExExplosion(world, entity, x, y, z, size, causesFire, damagesTerrain, hurtEntity, spawnParticles, fire, fill, air);
         }
 

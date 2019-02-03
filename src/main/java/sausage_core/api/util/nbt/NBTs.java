@@ -128,7 +128,7 @@ public final class NBTs {
         return map;
     }
 
-    public static NBTTagCompound stringListOf(Map<String, String> arg) {
+    public static NBTTagCompound stringMapOf(Map<String, String> arg) {
         NBTTagCompound map = new NBTTagCompound();
         for (Map.Entry<String, String> entry : arg.entrySet())
             map.setTag(entry.getKey(), of(entry.getValue()));
@@ -209,6 +209,14 @@ public final class NBTs {
         NBTTagList list = new NBTTagList();
         for (NBTBase each : args)
             list.appendTag(each);
+        return list;
+    }
+
+    @SafeVarargs
+    public static <T> NBTTagList asList(Function<T, ? extends NBTBase> function, T... args) {
+        NBTTagList list = new NBTTagList();
+        for (T each : args)
+            list.appendTag(function.apply(each));
         return list;
     }
 

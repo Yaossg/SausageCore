@@ -8,7 +8,6 @@ import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
-import sausage_core.SausageCore;
 import sausage_core.api.util.common.Opts;
 
 @SideOnly(Side.CLIENT)

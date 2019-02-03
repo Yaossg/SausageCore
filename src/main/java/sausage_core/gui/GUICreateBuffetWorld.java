@@ -7,7 +7,6 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import sausage_core.SausageCore;
 import sausage_core.api.util.common.Opts;
 import sausage_core.world.WorldTypeBuffet;
 
