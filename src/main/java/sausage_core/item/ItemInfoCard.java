@@ -26,13 +26,13 @@ import sausage_core.config.SausageCoreConfig;
 public class ItemInfoCard extends Item {
     public ItemInfoCard() {
         setMaxStackSize(1);
-        if(SausageCoreConfig.spawnInfoCard)
-            MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.register(this);
         InfoCardEvent.INFO_CARD_BUS.register(this);
     }
     public static final String HAS = SausageCore.MODID + ".has_info_card";
     @SubscribeEvent
     public void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
+        if(!SausageCoreConfig.spawnInfoCard) return;
         NBTTagCompound entityData = event.player.getEntityData();
         NBTTagCompound data = entityData.getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG);
         if(!data.getBoolean(HAS)) {

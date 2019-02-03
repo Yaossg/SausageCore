@@ -13,5 +13,6 @@ public class SausageCoreConfig {
 
     @Comment("enable tests of Al")
     @LangKey("sausage_core.general.testAl")
+    @Config.RequiresMcRestart
     public static boolean testAl = false;
 }
