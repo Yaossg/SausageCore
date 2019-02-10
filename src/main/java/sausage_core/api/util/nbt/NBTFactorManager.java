@@ -19,14 +19,14 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static sausage_core.api.util.common.SausageUtils.rawtype;
 
 @Beta
-public final class NBTFactoryManager {
+public final class NBTFactorManager {
     static final Map<Class<?>, Function> mapToNBT = new IdentityHashMap<>();
     static final Map<Class<?>, Function> mapFromNBT = new IdentityHashMap<>();
     static final Set<Class<?>> arrayTypes = new HashSet<>();
     @SuppressWarnings("unchecked")
     public static <T, R> void register(Class<T> clazz, Function<T, R> to, Function<R, T> from) {
-        NBTFactoryManager.mapToNBT.put(clazz, to);
-        NBTFactoryManager.mapFromNBT.put(clazz, from);
+        NBTFactorManager.mapToNBT.put(clazz, to);
+        NBTFactorManager.mapFromNBT.put(clazz, from);
     }
     public static <T, R> void registerArrayType(Class<T> clazz, Function<T, R> to, Function<R, T> from) {
         register(clazz, to, from);

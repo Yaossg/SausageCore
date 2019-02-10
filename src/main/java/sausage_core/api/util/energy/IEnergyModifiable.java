@@ -23,4 +23,11 @@ public interface IEnergyModifiable extends IEnergyStorage {
         setEnergyStored(getMaxEnergyStored());
     }
 
+    default boolean isEmpty() {
+        return getEnergyStored() == 0;
+    }
+
+    default void setDefaults(int maxEnergyStored) {
+        setMaxEnergyStored(maxEnergyStored);
+    }
 }

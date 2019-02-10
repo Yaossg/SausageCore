@@ -14,7 +14,7 @@ public class BasicEnergyStorage extends EnergyStorage implements IEnergyModifiab
     public void setEnergyStored(int value) {
         int old_energy = energy;
         energy = value;
-        internalEnergyChange(energy - old_energy);
+        internalEnergyChanged(energy - old_energy);
     }
 
     @Override
@@ -22,14 +22,14 @@ public class BasicEnergyStorage extends EnergyStorage implements IEnergyModifiab
         capacity = value;
         int old_energy = energy;
         energy = Math.min(energy, capacity);
-        internalEnergyChange(energy - old_energy);
+        internalEnergyChanged(energy - old_energy);
     }
 
     @Override
     public int receiveEnergy(int maxReceive, boolean simulate) {
         int receiveEnergy = super.receiveEnergy(maxReceive, simulate);
         if(!simulate)
-            internalEnergyChange(receiveEnergy);
+            internalEnergyChanged(receiveEnergy);
         return receiveEnergy;
     }
 
@@ -37,7 +37,7 @@ public class BasicEnergyStorage extends EnergyStorage implements IEnergyModifiab
     public int extractEnergy(int maxExtract, boolean simulate) {
         int extractEnergy = super.extractEnergy(maxExtract, simulate);
         if(!simulate)
-            internalEnergyChange(-extractEnergy);
+            internalEnergyChanged(-extractEnergy);
         return extractEnergy;
     }
 
@@ -61,7 +61,7 @@ public class BasicEnergyStorage extends EnergyStorage implements IEnergyModifiab
         return maxExtract;
     }
 
-    protected void internalEnergyChange(int changes) {
+    protected void internalEnergyChanged(int changes) {
         if(changes != 0)
             onEnergyChanged(changes);
     }

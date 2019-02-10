@@ -60,4 +60,14 @@ public abstract class TileBase extends TileEntity {
     public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing side) {
         return super.getCapability(capability, side);
     }
+
+    @Override
+    public void readFromNBT(NBTTagCompound nbt) {
+        super.readFromNBT(nbt);
+    }
+
+    @Override
+    public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+        return super.writeToNBT(nbt);
+    }
 }

@@ -40,6 +40,28 @@ public final class Conversions {
         return block.getStateFromMeta(stack.getMetadata());
     }
 
+    public static String stack2string(ItemStack stack) {
+        StringBuilder builder = new StringBuilder();
+        if(stack.getCount() > 1) {
+            builder.append(stack.getCount());
+            builder.append('*');
+        }
+        builder.append(stack.getItem().getRegistryName());
+        if(stack.getHasSubtypes() || stack.isItemStackDamageable()) {
+            builder.append(':');
+            builder.append(stack.getMetadata());
+        }
+        if(stack.hasTagCompound()) {
+            builder.append(stack.getTagCompound());
+        }
+        return builder.toString();
+    }
+
+    public static String state2string(IBlockState state) {
+        return state.getBlock().getRegistryName() + state.getProperties().toString();
+    }
+
+
     /**
      * Stores a TE with its NBT but without its states into a stack
      * */

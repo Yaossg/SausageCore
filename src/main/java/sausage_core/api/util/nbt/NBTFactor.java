@@ -9,12 +9,12 @@ import java.lang.annotation.Target;
 
 /**
  * read/write all public non-static fields
- * @see NBTFactoryManager
+ * @see NBTFactorManager
  * */
 @Beta
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.FIELD})
-public @interface NBTFactory {
+public @interface NBTFactor {
 
     /**
      * declares to ignore this field
@@ -35,7 +35,7 @@ public @interface NBTFactory {
     /**
      * considers byte[], int[], long[] as {@link net.minecraft.nbt.NBTTagList}
      *     instead of {@link net.minecraft.nbt.NBTTagByteArray}, {@link net.minecraft.nbt.NBTTagIntArray}, {@link net.minecraft.nbt.NBTTagLongArray}
-     * also necessary while using with {@link NBTFactory}
+     * also necessary while using with {@link NBTFactor}
      * */
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.FIELD)

@@ -12,8 +12,12 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.EnumHelper;
+import net.minecraftforge.fml.common.eventhandler.Event;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.apache.logging.log4j.LogManager;
@@ -27,6 +31,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -210,6 +215,17 @@ public final class SausageUtils {
     @Nonnull
     public static <T> T nonnull(@Nullable T t) {
         return t;
+    }
+
+
+    public static <T extends Event> void register(EventBus bus, Class<T> clazz, Consumer<T> consumer) {
+        bus.register(new Object() {
+            @SubscribeEvent
+            public void on(T t) {
+                if(clazz.isInstance(t))
+                    consumer.accept(t);
+            }
+        });
     }
 
 }
