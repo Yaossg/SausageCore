@@ -20,7 +20,7 @@ public interface IEnumGUIHandler {
     }
 
     class InnerHandler implements IGuiHandler {
-        IEnumGUIHandler[] values;
+        final IEnumGUIHandler[] values;
         InnerHandler(IEnumGUIHandler[] values) {
             this.values = values;
         }

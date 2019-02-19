@@ -4,6 +4,9 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Streams;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
+import net.minecraft.block.Block;
+import net.minecraft.block.state.BlockStateContainer;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -12,7 +15,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.eventhandler.Event;
@@ -29,6 +31,7 @@ import java.net.URI;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -112,6 +115,16 @@ public final class SausageUtils {
                     }
                 })
                 .filter(stack -> !stack.isEmpty());
+    }
+
+    /**
+     * @return all blocks in the game, including every states
+     * */
+    static Stream<IBlockState> getAllBlocks() {
+        return Streams.stream(ForgeRegistries.BLOCKS)
+                .map(Block::getBlockState)
+                .map(BlockStateContainer::getValidStates)
+                .flatMap(Collection::stream);
     }
 
     /**sausage-private*/ public static void unstableWarning(String name, String version, String modid) {

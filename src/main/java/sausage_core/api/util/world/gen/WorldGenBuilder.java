@@ -12,7 +12,7 @@ public class WorldGenBuilder {
     public WorldGenBuilder(IWorldGenWrapper wrapper) {
         this.wrapper = wrapper;
     }
-    private IWorldGenWrapper wrapper;
+    private final IWorldGenWrapper wrapper;
     private ToDoubleFunction<Random> times = random -> 1;
     private BiFunction<Random, BlockPos, BlockPos> offsetEach = (random, blockPos) -> blockPos;
     private BiFunction<Random, BlockPos, BlockPos> offsetAll = (random, blockPos) -> blockPos;

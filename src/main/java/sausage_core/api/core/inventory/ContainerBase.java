@@ -10,7 +10,7 @@ import net.minecraft.tileentity.TileEntity;
  * Default implementation of {@link Container} for a {@link TileEntity}
  * */
 public abstract class ContainerBase<T extends TileEntity> extends Container {
-    public T tileEntity;
+    public final T tileEntity;
 
     @SuppressWarnings("unchecked")
     public ContainerBase(TileEntity tileEntity) {

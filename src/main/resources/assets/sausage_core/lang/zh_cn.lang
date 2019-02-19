@@ -1,5 +1,7 @@
 ﻿
 item.sausage_core.sausage.name=香肠
+item.sausage_core.debug_stick.name=调试棒
+generator.sausage_core.village=村庄
 generator.sausage_core.customSize=自定义生物群系大小
 generator.sausage_core.customSize.title=自定义生物群系大小世界类型
 generator.sausage_core.chaosBiomes=混乱生物群系
@@ -15,3 +17,6 @@ sausage_core.info_card.No %s is detected=无法找到%s
 sausage_core.general.spawnInfoCard=出生获得信息卡
 sausage_core.general.testAl=铝问题测试
 SausageCore.tooltip=香肠核心
+sausage_core.debug_stick.mode.switch=切换
+sausage_core.debug_stick.mode.block=方块
+sausage_core.debug_stick.mode.entity=实体

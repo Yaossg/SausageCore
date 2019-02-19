@@ -22,7 +22,7 @@ import static sausage_core.api.util.common.Conversions.To.item;
 
 public final class FluidRegistryManager {
     public static final class StateMapper extends StateMapperBase implements ItemMeshDefinition {
-        ModelResourceLocation location;
+        private final ModelResourceLocation location;
 
         StateMapper(String modid, String name) {
             location = new ModelResourceLocation(modid + ":" + name, "fluid");

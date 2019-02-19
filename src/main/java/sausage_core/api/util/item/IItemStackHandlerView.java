@@ -16,7 +16,7 @@ public interface IItemStackHandlerView extends IItemHandler {
 
     default IItemHandler getAsInput() {
         return new IItemStackHandlerView() {
-            IItemStackHandlerView view = IItemStackHandlerView.this;
+            private final IItemStackHandlerView view = IItemStackHandlerView.this;
             @Override
             public int getSlots() {
                 return view.getSlots();
@@ -54,7 +54,7 @@ public interface IItemStackHandlerView extends IItemHandler {
 
     default IItemStackHandlerView getAsOutput() {
         return new IItemStackHandlerView() {
-            IItemStackHandlerView view = IItemStackHandlerView.this;
+            private final IItemStackHandlerView view = IItemStackHandlerView.this;
             @Override
             public int getSlots() {
                 return view.getSlots();

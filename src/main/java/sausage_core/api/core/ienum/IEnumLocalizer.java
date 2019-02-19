@@ -5,6 +5,6 @@ import net.minecraft.client.resources.I18n;
 public interface IEnumLocalizer {
     default String localize(String... entries) {
         return I18n.format(String.join(".", String.join(".", entries),
-                getClass().getSimpleName().toLowerCase(), toString().toLowerCase()));
+                ((Enum)this).getDeclaringClass().getSimpleName().toLowerCase(), toString().toLowerCase()));
     }
 }

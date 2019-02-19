@@ -35,7 +35,7 @@ import javax.annotation.Nullable;
 import static net.minecraftforge.fml.common.eventhandler.Event.Result.*;
 
 /**
- * Fork from knightminer.ceramics.items.ItemClayBucket
+ * Fork from <code>knightminer.ceramics.items.ItemClayBucket</code>
  * */
 public class ItemCustomBucket extends Item {
 

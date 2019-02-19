@@ -1,5 +1,7 @@
 ﻿
 item.sausage_core.sausage.name=Sausage
+item.sausage_core.debug_stick.name=Debug Stick
+generator.sausage_core.village=Village
 generator.sausage_core.customSize=Custom Size
 generator.sausage_core.customSize.title=Custom Size World Type
 generator.sausage_core.chaosBiomes=Chaos Biomes
@@ -15,3 +17,6 @@ sausage_core.info_card.No %s is detected=No %s is detected
 sausage_core.general.spawnInfoCard=Spawn with Info Card
 sausage_core.general.testAl=Test of Al problems
 SausageCore.tooltip=SausageCore
+sausage_core.debug_stick.mode.switch=Switch
+sausage_core.debug_stick.mode.block=Block
+sausage_core.debug_stick.mode.entity=Entity

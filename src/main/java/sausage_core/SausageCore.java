@@ -23,10 +23,12 @@ import sausage_core.api.util.common.SausageUtils;
 import sausage_core.api.util.oredict.OreDicts;
 import sausage_core.api.util.registry.IBRegistryManager;
 import sausage_core.config.SausageCoreConfig;
+import sausage_core.item.ItemDebugStick;
 import sausage_core.item.ItemInfoCard;
 import sausage_core.item.ItemSausage;
 import sausage_core.world.WorldTypeBuffet;
 import sausage_core.world.WorldTypeCustomSize;
+import sausage_core.world.WorldTypeVillage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -64,9 +66,11 @@ public class SausageCore {
         AutoSyncConfigs.AUTO_SYNC_CONFIG.register(MODID);
         sausage = manager.addItem(new ItemSausage(), "sausage");
         manager.addItem(new ItemInfoCard(), "info_card");
+        manager.addItem(new ItemDebugStick(), "debug_stick");
         manager.registerAll();
         new WorldTypeCustomSize();
         new WorldTypeBuffet();
+        new WorldTypeVillage();
     }
 
     @EventHandler
@@ -86,9 +90,7 @@ public class SausageCore {
         Arrays.stream(OreDictionary.getOreNames())
                 .filter(ore -> OreDicts.materialOf(ore).equals(from))
                 .collect(Collectors.toMap(Function.identity(), OreDictionary::getOres))
-                .forEach((ore, stacks) -> OreDicts.shapeOf(ore).ifPresent(shape -> {
-                    stacks.forEach(stack -> OreDictionary.registerOre(shape + to, stack));
-                }));
+                .forEach((ore, stacks) -> OreDicts.shapeOf(ore).ifPresent(shape -> stacks.forEach(stack -> OreDictionary.registerOre(shape + to, stack))));
     }
 
     @EventHandler

@@ -29,11 +29,13 @@ import java.util.Random;
 import java.util.Set;
 import java.util.function.Predicate;
 
-public class ExExplosion extends Explosion {
-    boolean hurtEntity, spawnParticles;
-    IBlockState fire, fill;
-    Predicate<IBlockState> air;
-    Random random;
+public final class ExExplosion extends Explosion {
+    private final boolean hurtEntity;
+    private final boolean spawnParticles;
+    private final IBlockState fire;
+    private final IBlockState fill;
+    private final Predicate<IBlockState> air;
+    private final Random random;
     public ExExplosion(World worldIn, Entity entityIn,
                        double x, double y, double z, float size,
                        boolean causesFire, boolean damagesTerrain, boolean hurtEntity, boolean spawnParticles,

@@ -5,14 +5,24 @@ import com.google.common.collect.Streams;
 import it.unimi.dsi.fastutil.bytes.ByteList;
 import it.unimi.dsi.fastutil.ints.IntList;
 import it.unimi.dsi.fastutil.longs.LongList;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.*;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
+import sausage_core.api.util.common.SausageUtils;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static net.minecraftforge.common.util.Constants.NBT.*;
 
 public final class NBTs {
     public static NBTTagByte of(byte arg) {
@@ -294,5 +304,147 @@ public final class NBTs {
 
     public static long[] raw(NBTTagLongArray arg) {
         return arg.data; //AT
+    }
+
+    // following methods with 'OrCreate' never cause NPE
+
+    public static NBTTagCompound getOrCreateTag(ItemStack stack) {
+        if(!stack.hasTagCompound()) stack.setTagCompound(new NBTTagCompound());
+        return SausageUtils.nonnull(stack.getTagCompound());
+    }
+
+    public static void setOrCreateSubTag(ItemStack stack, String name, NBTBase nbt) {
+        getOrCreateTag(stack).setTag(name, nbt);
+    }
+
+    public static <T extends NBTBase> T getOrCreateSubTag(ItemStack stack, String name, T def) {
+        NBTTagCompound tag = getOrCreateTag(stack);
+        if(!tag.hasKey(name)) tag.setTag(name, def);
+        return SausageUtils.rawtype(tag.getTag(name));
+    }
+
+    private static final Pattern SIMPLE_VALUE = Pattern.compile("[A-Za-z0-9._+-]+");
+    private static String handleEscape(String p_193582_0_) {
+        return SIMPLE_VALUE.matcher(p_193582_0_).matches() ? p_193582_0_ : NBTTagString.quoteAndEscape(p_193582_0_);
+    }
+
+    private static final Style digits = new Style().setColor(TextFormatting.GOLD);
+    private static final Style literal = new Style().setColor(TextFormatting.RED);
+    private static final Style string = new Style().setColor(TextFormatting.GREEN);
+    private static final Style key = new Style().setColor(TextFormatting.AQUA);
+    public static ITextComponent highlight(NBTBase nbt) {
+        if(nbt instanceof NBTPrimitive) return highlight((NBTPrimitive) nbt);
+        ITextComponent ret = new TextComponentString("");
+        switch(nbt.getId()) {
+            case TAG_STRING:
+                ret.appendText("\"");
+                String raw = nbt.toString();
+                ret.appendSibling(new TextComponentString(raw.substring(1, raw.length() - 1)).setStyle(string));
+                ret.appendText("\"");
+                break;
+            case TAG_LIST:
+                ret.appendText("[");
+                NBTTagList list = (NBTTagList) nbt;
+                for (int i = 0; i < list.tagCount(); ++i) {
+                    if (i != 0) ret.appendText(", ");
+                    ret.appendSibling(highlight(list.get(i)));
+                }
+                ret.appendText("]");
+                break;
+            case TAG_COMPOUND:
+                NBTTagCompound compound = (NBTTagCompound) nbt;
+                Collection<String> collection = compound.getKeySet();
+                ret.appendText("{");
+                boolean first = true;
+                for (String s : collection) {
+                    if (!first) ret.appendText(", ");
+                    first = false;
+                    ret.appendSibling(new TextComponentString(handleEscape(s)).setStyle(key));
+                    ret.appendText(": ");
+                    ret.appendSibling(highlight(compound.getTag(s)));
+                }
+                ret.appendText("}");
+                break;
+            case TAG_BYTE_ARRAY:
+            case TAG_INT_ARRAY:
+            case TAG_LONG_ARRAY:
+                ret.appendSibling(handleArrays(nbt));
+        }
+        return ret;
+    }
+
+    private static ITextComponent handleArrays(NBTBase nbt) {
+        ITextComponent ret = new TextComponentString("[");
+        String type = "";
+        switch(nbt.getId()) {
+            case TAG_BYTE_ARRAY:
+                type = "B";
+                break;
+            case TAG_INT_ARRAY:
+                type = "I";
+                break;
+            case TAG_LONG_ARRAY:
+                type = "L";
+                break;
+        }
+        ret.appendSibling(new TextComponentString(type).setStyle(literal));
+        ret.appendText("; ");
+        switch(nbt.getId()) {
+            case TAG_BYTE_ARRAY: {
+                byte[] raw = raw((NBTTagByteArray) nbt);
+                for(int i = 0; i < raw.length; ++i) {
+                    if (i != 0) ret.appendText(", ");
+                    ret.appendSibling(new TextComponentString(String.valueOf(raw[i])).setStyle(digits))
+                            .appendSibling(new TextComponentString(type).setStyle(literal));
+                }
+            } break;
+            case TAG_INT_ARRAY: {
+                int[] raw = raw((NBTTagIntArray) nbt);
+                for(int i = 0; i < raw.length; ++i) {
+                    if (i != 0) ret.appendText(", ");
+                    ret.appendSibling(new TextComponentString(String.valueOf(raw[i])).setStyle(digits));
+                }
+            } break;
+            case TAG_LONG_ARRAY: {
+                long[] raw = raw((NBTTagLongArray) nbt);
+                for(int i = 0; i < raw.length; ++i) {
+                    if (i != 0) ret.appendText(", ");
+                    ret.appendSibling(new TextComponentString(String.valueOf(raw[i])).setStyle(digits))
+                            .appendSibling(new TextComponentString(type).setStyle(literal));
+                }
+            } break;
+        }
+        return ret.appendText("]");
+    }
+
+    private static ITextComponent highlight(NBTPrimitive base) {
+        String value = "", suffix = "";
+        switch(base.getId()) {
+            case TAG_BYTE:
+                value = String.valueOf(base.getByte());
+                suffix = "b";
+                break;
+            case TAG_SHORT:
+                value = String.valueOf(base.getShort());
+                suffix = "s";
+                break;
+            case TAG_INT:
+                value = String.valueOf(base.getInt());
+                break;
+            case TAG_LONG:
+                value = String.valueOf(base.getLong());
+                suffix = "L";
+                break;
+            case TAG_FLOAT:
+                value = String.valueOf(base.getFloat());
+                suffix = "f";
+                break;
+            case TAG_DOUBLE:
+                value = String.valueOf(base.getDouble());
+                suffix = "d";
+                break;
+        }
+        return new TextComponentString(value).setStyle(digits)
+                .appendSibling(new TextComponentString(suffix).setStyle(literal));
     }
 }

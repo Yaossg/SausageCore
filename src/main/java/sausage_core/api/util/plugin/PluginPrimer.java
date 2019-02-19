@@ -9,8 +9,8 @@ import org.apache.logging.log4j.Logger;
 import sausage_core.api.core.plugin.PluginCore;
 
 public final class PluginPrimer {
-    Multimap<String, String> plugins = MultimapBuilder.hashKeys().hashSetValues().build();
-    private static Logger logger = LogManager.getLogger("PluginPrimer");
+    private final Multimap<String, String> plugins = MultimapBuilder.hashKeys().hashSetValues().build();
+    private static final Logger logger = LogManager.getLogger("PluginPrimer");
 
     public void register(String modid, String plugin) {
         plugins.put(modid, plugin);
