@@ -92,7 +92,7 @@ public final class SausageUtils {
     public static void registerTileEntity(String modid, Class<? extends TileEntity> tileEntityClass) {
         String name = guessTileEntityName(tileEntityClass);
         GameRegistry.registerTileEntity(tileEntityClass, new ResourceLocation(modid, name));
-        LogManager.getLogger(modid).info("{} has registered a tileEntity named {} //class: {}", modid, name, tileEntityClass.getName());
+        LogManager.getLogger(modid).info("registered a tileEntity named {} // class: {}", name, tileEntityClass.getName());
     }
 
     @SafeVarargs

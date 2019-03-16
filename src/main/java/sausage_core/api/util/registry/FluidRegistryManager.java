@@ -1,11 +1,6 @@
 package sausage_core.api.util.registry;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.ItemMeshDefinition;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.block.statemap.StateMapperBase;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fluids.Fluid;
@@ -19,26 +14,10 @@ import java.util.function.Function;
 import java.util.function.UnaryOperator;
 
 import static sausage_core.api.util.common.Conversions.To.item;
+import static sausage_core.api.util.registry.FluidRegistryManager2.StateMapper;
 
+@Deprecated
 public final class FluidRegistryManager {
-    public static final class StateMapper extends StateMapperBase implements ItemMeshDefinition {
-        private final ModelResourceLocation location;
-
-        StateMapper(String modid, String name) {
-            location = new ModelResourceLocation(modid + ":" + name, "fluid");
-        }
-
-        @Override
-        public ModelResourceLocation getModelLocation(ItemStack stack) {
-            return location;
-        }
-
-        @Override
-        protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
-            return location;
-        }
-    }
-
     public final String modid;
     final Map<Fluid, Function<? super Fluid, Block>> fluids = new HashMap<>();
     final IBRegistryManager inner;

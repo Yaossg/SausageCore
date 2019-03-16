@@ -9,14 +9,14 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public interface IEnumGUIHandler {
+public interface IEnumGUIHandler extends IEnum {
     @Nonnull
     Object getServer(EntityPlayer player, World world, BlockPos pos);
     @Nonnull
     Object getClient(EntityPlayer player, World world, BlockPos pos);
 
     default int ID() {
-        return ((Enum<?>) this).ordinal();
+        return getEnum().ordinal();
     }
 
     class InnerHandler implements IGuiHandler {

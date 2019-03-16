@@ -10,7 +10,9 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import sausage_core.api.util.common.SausageUtils;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,23 +34,44 @@ public final class IBRegistryManager {
         this.tab = tab;
     }
 
-    public Item addItem(String name) {
-        return addItem(new Item(), name);
+    @Nonnull
+    private CreativeTabs nonnull_tab() {
+        return SausageUtils.nonnull(tab);
     }
 
+    public Item addItem(String name) {
+        return addItem(name, new Item());
+    }
+
+    @Deprecated
     public <T extends Item> T addItem(T item, String name) {
-        items.add(item.setUnlocalizedName(modid + "." + name).setRegistryName(name).setCreativeTab(tab));
+        return addItem(name, item);
+    }
+
+    public <T extends Item> T addItem(String name, T item) {
+        items.add(item.setUnlocalizedName(modid + "." + name).setRegistryName(name).setCreativeTab(nonnull_tab()));
         return item;
     }
 
+    @Deprecated
     public <T extends Block> T addBlock(T block, String name, Function<? super T, ItemBlock> itemBlockFactory) {
-        blocks.add(block.setUnlocalizedName(modid + "." + name).setRegistryName(name).setCreativeTab(tab));
+        return addBlock(name, block, itemBlockFactory);
+    }
+
+    public <T extends Block> T addBlock(String name, T block, Function<? super T, ItemBlock> itemBlockFactory) {
+        blocks.add(block.setUnlocalizedName(modid + "." + name).setRegistryName(name).setCreativeTab(nonnull_tab()));
         items.add(itemBlockFactory.apply(block).setRegistryName(block.getRegistryName()));
         return block;
     }
 
+    @Deprecated
     public <T extends Block> T addBlock(T block, String name) {
-        return addBlock(block, name, ItemBlock::new);
+        return addBlock(name, block);
+    }
+
+
+    public <T extends Block> T addBlock(String name, T block) {
+        return addBlock(name, block, ItemBlock::new);
     }
 
     public void registerItems() {

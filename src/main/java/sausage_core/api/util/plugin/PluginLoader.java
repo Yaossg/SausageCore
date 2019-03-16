@@ -8,9 +8,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sausage_core.api.core.plugin.PluginCore;
 
-public final class PluginPrimer {
+public final class PluginLoader {
     private final Multimap<String, String> plugins = MultimapBuilder.hashKeys().hashSetValues().build();
-    private static final Logger logger = LogManager.getLogger("PluginPrimer");
+
+    private final String owner;
+
+    public PluginLoader(String owner) {
+        this.owner = owner;
+    }
 
     public void register(String modid, String plugin) {
         plugins.put(modid, plugin);
@@ -26,6 +31,7 @@ public final class PluginPrimer {
 
     void execute(String modid, String plugin) {
         PluginCore pluginCore;
+        Logger logger = LogManager.getLogger(owner);
         try {
             pluginCore = (PluginCore) Class.forName(plugin).newInstance();
         } catch(Exception e) {
@@ -34,7 +40,7 @@ public final class PluginPrimer {
         }
         String pluginModid = pluginCore.get();
         if(!pluginModid.equals(modid)) {
-            logger.warn("The plugin({})'s modid({}) is different from what it was registered({})", plugin, pluginModid, modid);
+            logger.warn("The plugin({})'s modid({}) is different from what it registered({})", plugin, pluginModid, modid);
             return;
         }
         pluginCore.run();

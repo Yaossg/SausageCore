@@ -19,6 +19,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.OreIngredient;
 import org.apache.logging.log4j.Logger;
 import sausage_core.api.registry.AutoSyncConfigs;
+import sausage_core.api.registry.SCFRecipeManager;
 import sausage_core.api.util.common.SausageUtils;
 import sausage_core.api.util.oredict.OreDicts;
 import sausage_core.api.util.registry.IBRegistryManager;
@@ -64,9 +65,9 @@ public class SausageCore {
         SausageUtils.unstableWarning(NAME, VERSION, MODID);
         MinecraftForge.EVENT_BUS.register(AutoSyncConfigs.class);
         AutoSyncConfigs.AUTO_SYNC_CONFIG.register(MODID);
-        sausage = manager.addItem(new ItemSausage(), "sausage");
-        manager.addItem(new ItemInfoCard(), "info_card");
-        manager.addItem(new ItemDebugStick(), "debug_stick");
+        sausage = manager.addItem("sausage", new ItemSausage());
+        manager.addItem("info_card", new ItemInfoCard());
+        manager.addItem("debug_stick", new ItemDebugStick());
         manager.registerAll();
         new WorldTypeCustomSize();
         new WorldTypeBuffet();
@@ -98,6 +99,7 @@ public class SausageCore {
         WorldTypeBuffet.BIOMES = new ArrayList<>(ForgeRegistries.BIOMES.getValuesCollection());
         registerOres("Aluminum", "Aluminium");
         registerOres("Aluminium", "Aluminum");
+        SCFRecipeManager.load();
     }
 
     @SubscribeEvent

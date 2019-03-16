@@ -25,6 +25,9 @@ import java.util.stream.Stream;
 import static net.minecraftforge.common.util.Constants.NBT.*;
 
 public final class NBTs {
+
+    // following methods convert raw data to NBTs
+
     public static NBTTagByte of(byte arg) {
         return new NBTTagByte(arg);
     }
@@ -230,41 +233,7 @@ public final class NBTs {
         return list;
     }
 
-    public static Stream<NBTBase> stream(NBTTagList list) {
-        return Streams.stream(list);
-    }
-
-    public static List<NBTBase> list(NBTTagList list) {
-        return stream(list).collect(Collectors.toList());
-    }
-
-    public static Set<String> keySet(NBTTagCompound compound) {
-        return compound.getKeySet();
-    }
-
-    public static Stream<String> keys(NBTTagCompound compound) {
-        return keySet(compound).stream();
-    }
-
-    public static Map<String, NBTBase> map(NBTTagCompound compound) {
-        return keys(compound).collect(Collectors.toMap(Function.identity(), compound::getTag));
-    }
-
-    public static Stream<NBTBase> values(NBTTagCompound compound) {
-        return keys(compound).map(compound::getTag);
-    }
-
-    public static List<NBTBase> valueList(NBTTagCompound compound) {
-        return values(compound).collect(Collectors.toList());
-    }
-
-    public static Set<Map.Entry<String, NBTBase>> entrySet(NBTTagCompound compound) {
-        return map(compound).entrySet();
-    }
-
-    public static Stream<Map.Entry<String, NBTBase>> entries(NBTTagCompound compound) {
-        return entrySet(compound).stream();
-    }
+    // following methods convert NBTs to raw data
 
     public static byte raw(NBTTagByte arg) {
         return arg.getByte();
@@ -306,6 +275,42 @@ public final class NBTs {
         return arg.data; //AT
     }
 
+    public static Stream<NBTBase> stream(NBTTagList list) {
+        return Streams.stream(list);
+    }
+
+    public static List<NBTBase> list(NBTTagList list) {
+        return stream(list).collect(Collectors.toList());
+    }
+
+    public static Set<String> keySet(NBTTagCompound compound) {
+        return compound.getKeySet();
+    }
+
+    public static Stream<String> keys(NBTTagCompound compound) {
+        return keySet(compound).stream();
+    }
+
+    public static Map<String, NBTBase> map(NBTTagCompound compound) {
+        return keys(compound).collect(Collectors.toMap(Function.identity(), compound::getTag));
+    }
+
+    public static Stream<NBTBase> values(NBTTagCompound compound) {
+        return keys(compound).map(compound::getTag);
+    }
+
+    public static List<NBTBase> valueList(NBTTagCompound compound) {
+        return values(compound).collect(Collectors.toList());
+    }
+
+    public static Set<Map.Entry<String, NBTBase>> entrySet(NBTTagCompound compound) {
+        return map(compound).entrySet();
+    }
+
+    public static Stream<Map.Entry<String, NBTBase>> entries(NBTTagCompound compound) {
+        return entrySet(compound).stream();
+    }
+
     // following methods with 'OrCreate' never cause NPE
 
     public static NBTTagCompound getOrCreateTag(ItemStack stack) {
@@ -323,15 +328,17 @@ public final class NBTs {
         return SausageUtils.rawtype(tag.getTag(name));
     }
 
+    // following methods are for NBTs' highlight
+
     private static final Pattern SIMPLE_VALUE = Pattern.compile("[A-Za-z0-9._+-]+");
     private static String handleEscape(String p_193582_0_) {
         return SIMPLE_VALUE.matcher(p_193582_0_).matches() ? p_193582_0_ : NBTTagString.quoteAndEscape(p_193582_0_);
     }
 
-    private static final Style digits = new Style().setColor(TextFormatting.GOLD);
-    private static final Style literal = new Style().setColor(TextFormatting.RED);
-    private static final Style string = new Style().setColor(TextFormatting.GREEN);
-    private static final Style key = new Style().setColor(TextFormatting.AQUA);
+    private static final Style DIGITS_STYLE = new Style().setColor(TextFormatting.GOLD);
+    private static final Style LITERAL_STYLE = new Style().setColor(TextFormatting.RED);
+    private static final Style STRING_STYLE = new Style().setColor(TextFormatting.GREEN);
+    private static final Style KEY_STYLE = new Style().setColor(TextFormatting.AQUA);
     public static ITextComponent highlight(NBTBase nbt) {
         if(nbt instanceof NBTPrimitive) return highlight((NBTPrimitive) nbt);
         ITextComponent ret = new TextComponentString("");
@@ -339,7 +346,7 @@ public final class NBTs {
             case TAG_STRING:
                 ret.appendText("\"");
                 String raw = nbt.toString();
-                ret.appendSibling(new TextComponentString(raw.substring(1, raw.length() - 1)).setStyle(string));
+                ret.appendSibling(new TextComponentString(raw.substring(1, raw.length() - 1)).setStyle(STRING_STYLE));
                 ret.appendText("\"");
                 break;
             case TAG_LIST:
@@ -359,7 +366,7 @@ public final class NBTs {
                 for (String s : collection) {
                     if (!first) ret.appendText(", ");
                     first = false;
-                    ret.appendSibling(new TextComponentString(handleEscape(s)).setStyle(key));
+                    ret.appendSibling(new TextComponentString(handleEscape(s)).setStyle(KEY_STYLE));
                     ret.appendText(": ");
                     ret.appendSibling(highlight(compound.getTag(s)));
                 }
@@ -387,30 +394,30 @@ public final class NBTs {
                 type = "L";
                 break;
         }
-        ret.appendSibling(new TextComponentString(type).setStyle(literal));
+        ret.appendSibling(new TextComponentString(type).setStyle(LITERAL_STYLE));
         ret.appendText("; ");
         switch(nbt.getId()) {
             case TAG_BYTE_ARRAY: {
                 byte[] raw = raw((NBTTagByteArray) nbt);
                 for(int i = 0; i < raw.length; ++i) {
                     if (i != 0) ret.appendText(", ");
-                    ret.appendSibling(new TextComponentString(String.valueOf(raw[i])).setStyle(digits))
-                            .appendSibling(new TextComponentString(type).setStyle(literal));
+                    ret.appendSibling(new TextComponentString(String.valueOf(raw[i])).setStyle(DIGITS_STYLE))
+                            .appendSibling(new TextComponentString(type).setStyle(LITERAL_STYLE));
                 }
             } break;
             case TAG_INT_ARRAY: {
                 int[] raw = raw((NBTTagIntArray) nbt);
                 for(int i = 0; i < raw.length; ++i) {
                     if (i != 0) ret.appendText(", ");
-                    ret.appendSibling(new TextComponentString(String.valueOf(raw[i])).setStyle(digits));
+                    ret.appendSibling(new TextComponentString(String.valueOf(raw[i])).setStyle(DIGITS_STYLE));
                 }
             } break;
             case TAG_LONG_ARRAY: {
                 long[] raw = raw((NBTTagLongArray) nbt);
                 for(int i = 0; i < raw.length; ++i) {
                     if (i != 0) ret.appendText(", ");
-                    ret.appendSibling(new TextComponentString(String.valueOf(raw[i])).setStyle(digits))
-                            .appendSibling(new TextComponentString(type).setStyle(literal));
+                    ret.appendSibling(new TextComponentString(String.valueOf(raw[i])).setStyle(DIGITS_STYLE))
+                            .appendSibling(new TextComponentString(type).setStyle(LITERAL_STYLE));
                 }
             } break;
         }
@@ -444,7 +451,8 @@ public final class NBTs {
                 suffix = "d";
                 break;
         }
-        return new TextComponentString(value).setStyle(digits)
-                .appendSibling(new TextComponentString(suffix).setStyle(literal));
+
+        return new TextComponentString(value).setStyle(DIGITS_STYLE)
+                .appendSibling(new TextComponentString(suffix).setStyle(LITERAL_STYLE));
     }
 }

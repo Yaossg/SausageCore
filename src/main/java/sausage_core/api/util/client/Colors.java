@@ -15,6 +15,7 @@ import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
  * Colors here are all copied from constants defined in <code>javafx.scene.paint.Color</code>,
  * which are quite different from what in <code>java.awt.Color</code>.
  * */
+@Deprecated
 public final class Colors {
 
     public static int fromRGB(int r, int g, int b) {
