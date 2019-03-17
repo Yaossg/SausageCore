@@ -21,6 +21,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import sausage_core.SausageCore;
 import sausage_core.api.core.ienum.IEnumLocalizer;
 import sausage_core.api.util.nbt.NBTs;
@@ -84,6 +86,7 @@ public class ItemDebugStick extends Item {
         return Mode.values()[NBTs.getOrCreateSubTag(stack, "mode", NBTs.of(0)).getInt()];
     }
 
+    @SideOnly(Side.CLIENT)
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
         tooltip.add(getMode(stack).localize());

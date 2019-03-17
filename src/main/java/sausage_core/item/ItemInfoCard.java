@@ -29,6 +29,7 @@ public class ItemInfoCard extends Item {
         MinecraftForge.EVENT_BUS.register(this);
         InfoCardEvent.INFO_CARD_BUS.register(this);
     }
+
     public static final String HAS = SausageCore.MODID + ".has_info_card";
     @SubscribeEvent
     public void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
