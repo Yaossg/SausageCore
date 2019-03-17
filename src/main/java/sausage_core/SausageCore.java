@@ -1,11 +1,11 @@
 package sausage_core;
 
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.GuiIngameForge;
 import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -14,27 +14,22 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
-import net.minecraftforge.oredict.OreIngredient;
 import org.apache.logging.log4j.Logger;
 import sausage_core.api.registry.AutoSyncConfigs;
 import sausage_core.api.registry.SCFRecipeManager;
 import sausage_core.api.util.common.SausageUtils;
 import sausage_core.api.util.oredict.OreDicts;
 import sausage_core.api.util.registry.IBRegistryManager;
-import sausage_core.config.SausageCoreConfig;
 import sausage_core.item.ItemDebugStick;
 import sausage_core.item.ItemInfoCard;
 import sausage_core.item.ItemSausage;
 import sausage_core.world.WorldTypeBuffet;
 import sausage_core.world.WorldTypeCustomSize;
-import sausage_core.world.WorldTypeVillage;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * @author Yaossg
@@ -71,40 +66,59 @@ public class SausageCore {
         manager.registerAll();
         new WorldTypeCustomSize();
         new WorldTypeBuffet();
-        new WorldTypeVillage();
     }
 
     @EventHandler
-    public void init(FMLInitializationEvent event) {
-        if(SausageCoreConfig.testAl) {
-            OreDictionary.registerOre("ingotAluminum", Items.STICK);
-            OreDictionary.registerOre("ingotAluminium", Items.SNOWBALL);
-
-            GameRegistry.addShapelessRecipe(new ResourceLocation(MODID, "aluminum_only"), null, new ItemStack(Items.APPLE, 9),
-                    new OreIngredient("ingotAluminum"));
-            GameRegistry.addShapedRecipe(new ResourceLocation(MODID, "aluminium_only"), null, new ItemStack(Items.CAKE),
-                    "xxx", "xxx", "xxx", 'x', new OreIngredient("ingotAluminium"));
-        }
-    }
-
-    void registerOres(String from, String to) {
-        Arrays.stream(OreDictionary.getOreNames())
-                .filter(ore -> OreDicts.materialOf(ore).equals(from))
-                .collect(Collectors.toMap(Function.identity(), OreDictionary::getOres))
-                .forEach((ore, stacks) -> OreDicts.shapeOf(ore).ifPresent(shape -> stacks.forEach(stack -> OreDictionary.registerOre(shape + to, stack))));
-    }
+    public void init(FMLInitializationEvent event) {}
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         WorldTypeBuffet.BIOMES = new ArrayList<>(ForgeRegistries.BIOMES.getValuesCollection());
-        registerOres("Aluminum", "Aluminium");
-        registerOres("Aluminium", "Aluminum");
         SCFRecipeManager.load();
     }
 
     @SubscribeEvent
     public static void loadModels(ModelRegistryEvent event) {
         manager.loadAllModel();
+    }
+
+    /**
+     * fix problem of different ore names for Al
+     * */
+    @SubscribeEvent
+    public static void onRegisterOre(OreDictionary.OreRegisterEvent event) {
+        String ore = event.getName();
+        String material = OreDicts.materialOf(ore);
+        switch(material) {
+            case "Aluminum":
+                OreDicts.shapeOf(ore).ifPresent(shape -> {
+                    String name = shape + "Aluminium";
+                    if(OreDicts.names(event.getOre()).noneMatch(name::equals))
+                        OreDictionary.registerOre(name, event.getOre());
+                });
+                break;
+            case "Aluminium":
+                OreDicts.shapeOf(ore).ifPresent(shape -> {
+                    String name = shape + "Aluminum";
+                    if(OreDicts.names(event.getOre()).noneMatch(name::equals))
+                        OreDictionary.registerOre(name, event.getOre());
+                });
+        }
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Mod.EventBusSubscriber(Side.CLIENT)
+    public static class RenderSubscriber {
+        /***
+         * fix bug by forge, here are the differences:
+         * vanilla: entity == null || !(entity instanceof EntityLivingBase)
+         * forge: mc.player.getRidingEntity() == null
+         */
+        @SubscribeEvent
+        public static void onRender(RenderGameOverlayEvent.Pre event) {
+            if(event.getType() == RenderGameOverlayEvent.ElementType.ALL)
+                GuiIngameForge.renderFood = !GuiIngameForge.renderHealthMount;
+        }
     }
 
 }

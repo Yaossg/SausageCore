@@ -10,9 +10,4 @@ public class SausageCoreConfig {
     @Comment("enable spawn info card")
     @LangKey("sausage_core.general.spawnInfoCard")
     public static boolean spawnInfoCard = true;
-
-    @Comment("enable tests of Al")
-    @LangKey("sausage_core.general.testAl")
-    @Config.RequiresMcRestart
-    public static boolean testAl = false;
 }

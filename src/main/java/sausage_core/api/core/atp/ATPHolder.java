@@ -1,11 +1,14 @@
 package sausage_core.api.core.atp;
 
+import com.google.common.base.Preconditions;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class ATPHolder {
     List<IATPProvider> providers = new ArrayList<>();
     int amount;
+
     public void give(int value) {
         amount += value;
     }
@@ -35,11 +38,7 @@ public class ATPHolder {
         return amount;
     }
 
-    public boolean present() {
-        return amount != 0;
-    }
-
     public void register(IATPProvider provider) {
-        providers.add(provider);
+        providers.add(Preconditions.checkNotNull(provider));
     }
 }

@@ -20,6 +20,6 @@ public class ItemSausage extends ItemFood {
 
     @Override
     protected void onFoodEaten(ItemStack stack, World worldIn, EntityPlayer player) {
-        player.attackEntityFrom(overeating, 128);
+        player.attackEntityFrom(overeating, 256);
     }
 }

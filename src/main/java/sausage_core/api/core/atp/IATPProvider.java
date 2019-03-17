@@ -1,5 +1,12 @@
 package sausage_core.api.core.atp;
 
-public interface IATPProvider {
+import java.util.function.IntUnaryOperator;
+
+public interface IATPProvider extends IntUnaryOperator {
     int provide(int goal);
+
+    @Override
+    default int applyAsInt(int operand) {
+        return provide(operand);
+    }
 }

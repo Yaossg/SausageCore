@@ -17,7 +17,7 @@ public class FluidATPProvider implements IATPProvider {
     @Override
     public int provide(int goal) {
         int ret = 0;
-        while(tank.getFluidAmount() > 0 && ret < goal)
+        while(ret < goal && tank.drain(1, false) != null)
             ret += function.applyAsInt(tank.drain(1, true));
         return ret;
     }
