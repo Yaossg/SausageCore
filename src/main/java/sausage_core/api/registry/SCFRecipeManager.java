@@ -52,13 +52,13 @@ public class SCFRecipeManager {
                 Files.walkFileTree(start, new SimpleFileVisitor<Path>() {
                     @Override
                     public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
-                        Files.createDirectories(where.resolve(start.relativize(dir)));
+                        Files.createDirectories(where.resolve(start.relativize(dir).toString()));
                         return super.preVisitDirectory(dir, attrs);
                     }
 
                     @Override
                     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                        Files.copy(file, where.resolve(start.relativize(file)));
+                        Files.copy(file, where.resolve(start.relativize(file).toString()));
                         return super.visitFile(file, attrs);
                     }
                 });
