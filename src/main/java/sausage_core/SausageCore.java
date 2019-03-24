@@ -18,11 +18,11 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 import org.apache.logging.log4j.Logger;
-import sausage_core.api.registry.AutoSyncConfigs;
-import sausage_core.api.registry.SCFRecipeManager;
+import sausage_core.api.registry.AutoSyncConfig;
 import sausage_core.api.util.common.SausageUtils;
 import sausage_core.api.util.oredict.OreDicts;
 import sausage_core.api.util.registry.IBRegistryManager;
+import sausage_core.impl.SCFRecipeManagerImpl;
 import sausage_core.item.ItemDebugStick;
 import sausage_core.item.ItemInfoCard;
 import sausage_core.item.ItemSausage;
@@ -58,8 +58,8 @@ public class SausageCore {
     public void preInit(FMLPreInitializationEvent event) {
         logger = event.getModLog();
         SausageUtils.unstableWarning(NAME, VERSION, MODID);
-        MinecraftForge.EVENT_BUS.register(AutoSyncConfigs.class);
-        AutoSyncConfigs.AUTO_SYNC_CONFIG.register(MODID);
+        MinecraftForge.EVENT_BUS.register(AutoSyncConfig.class);
+        AutoSyncConfig.AUTO_SYNC_CONFIG.register(MODID);
         sausage = manager.addItem("sausage", new ItemSausage());
         manager.addItem("info_card", new ItemInfoCard());
         manager.addItem("debug_stick", new ItemDebugStick());
@@ -74,7 +74,7 @@ public class SausageCore {
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         WorldTypeBuffet.BIOMES = new ArrayList<>(ForgeRegistries.BIOMES.getValuesCollection());
-        SCFRecipeManager.load();
+        SCFRecipeManagerImpl.IMPL.load();
     }
 
     @SubscribeEvent

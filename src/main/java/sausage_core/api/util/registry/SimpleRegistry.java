@@ -12,18 +12,18 @@ import static com.google.common.base.Preconditions.checkArgument;
 /**
  * Simple implementation for {@link IModdedRegistry}
  * */
-public class SausageRegistry<E> implements IModdedRegistry<E> {
+public class SimpleRegistry<E> implements IModdedRegistry<E> {
     private final List<E> entries = NonNullList.create();
     private final List<E> view = Collections.unmodifiableList(entries);
     private final Class<E> type;
-    BiPredicate<SausageRegistry<E>, E> validator = (registry, e) -> true;
+    BiPredicate<SimpleRegistry<E>, E> validator = (registry, e) -> true;
 
-    public SausageRegistry(Class<E> type) {
+    public SimpleRegistry(Class<E> type) {
         this.type = type;
     }
 
-    public SausageRegistry<E> valid(BiPredicate<SausageRegistry<E>, E> validator) {
-        this.validator = this.validator.and(validator);
+    public SimpleRegistry<E> validator(BiPredicate<SimpleRegistry<E>, E> validator) {
+        this.validator = validator;
         return this;
     }
 
@@ -32,11 +32,6 @@ public class SausageRegistry<E> implements IModdedRegistry<E> {
         checkArgument(type.isInstance(e));
         checkArgument(validator.test(this, e));
         entries.add(e);
-    }
-
-    @Override
-    public void remove(E e) {
-        entries.remove(e);
     }
 
     @Override

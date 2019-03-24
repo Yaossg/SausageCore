@@ -1,9 +1,7 @@
 package sausage_core.api.util.registry;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.lang.reflect.Array;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -16,7 +14,6 @@ public interface IModdedRegistry<E> extends Iterable<E> {
     Class<E> type();
 
     void register(E e);
-    void remove(E e);
 
     @SuppressWarnings("unchecked")
     default void registerAll(E... es) {
@@ -25,20 +22,17 @@ public interface IModdedRegistry<E> extends Iterable<E> {
     default void registerAll(Collection<E> es) {
         for(E e : es) register(e);
     }
-    @SuppressWarnings("unchecked")
-    default void removeAll(E... es) {
-        for(E e : es) remove(e);
-    }
-    default void removeAll(Collection<E> es) {
-        for(E e : es) remove(e);
-    }
-    default void removeIf(Predicate<E> predicate) {
-        for(E e : findAll(predicate)) remove(e);
-    }
 
     @Override
     default Iterator<E> iterator() { return view().iterator(); }
+    default Spliterator<E> spliterator() { return view().spliterator(); }
     default Stream<E> stream() { return view().stream(); }
+    default Stream<E> parallelStream() { return view().parallelStream(); }
+    default int size() { return view().size(); }
+    @SuppressWarnings("unchecked")
+    default E[] toArray() {
+        return view().toArray((E[]) Array.newInstance(type(), 0));
+    }
 
     default Optional<E> find(Predicate<E> predicate) {
         return stream().filter(predicate).findAny();

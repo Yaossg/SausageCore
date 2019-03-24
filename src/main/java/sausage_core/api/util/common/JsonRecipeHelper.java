@@ -53,8 +53,6 @@ public class JsonRecipeHelper {
         return getFluidStack(json);
     }
 
-    private static final Gson GSON = new GsonBuilder().disableHtmlEscaping().create();
-
     public static List<Path> walkJson(Path value) {
         try {
             return Files.walk(value)
@@ -66,6 +64,7 @@ public class JsonRecipeHelper {
         }
     }
 
+    private static final Gson GSON = new GsonBuilder().disableHtmlEscaping().create();
     public static final Method loadConstants = ReflectionHelper.findMethod(JsonContext.class, "loadConstants", "loadConstants", JsonObject[].class);
     public static <T> void loadEntries(String modid, Path where, BiFunction<JsonContext, JsonObject, T> parser, Consumer<T> consumer) {
         List<Path> paths = walkJson(where);
@@ -84,8 +83,13 @@ public class JsonRecipeHelper {
         paths.removeIf(path -> path.getFileName().toString().startsWith("_"));
         paths.forEach(path -> {
             try (BufferedReader reader = Files.newBufferedReader(path)) {
-                JsonObject json = JsonUtils.fromJson(GSON, reader, JsonObject.class);
-                consumer.accept(parser.apply(context, json));
+                JsonElement json = JsonUtils.fromJson(GSON, reader, JsonElement.class);
+                if(json instanceof JsonObject)
+                    consumer.accept(parser.apply(context, (JsonObject)json));
+                else if(json instanceof JsonArray)
+                    for(JsonElement element : ((JsonArray) json))
+                        consumer.accept(parser.apply(context, (JsonObject) element));
+                else throw new IOException();
             } catch (Exception e) {
                 LogManager.getLogger(modid).error("Unexpected Exception: ", e);
             }
