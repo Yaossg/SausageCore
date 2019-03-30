@@ -16,14 +16,14 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import javax.annotation.Nonnull;
 
 public class ItemWildcardIngredientFactory implements IIngredientFactory {
-    @Nonnull
-    @Override
-    public Ingredient parse(JsonContext context, JsonObject json) {
-        Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(context.appendModId(JsonUtils.getString(json, "item"))));
-        if(item == null)
-            throw new JsonSyntaxException("Unknown item \'" + JsonUtils.getString(json, "item") + "\'");
-        NonNullList<ItemStack> list = NonNullList.create();
-        item.getSubItems(CreativeTabs.SEARCH, list);
-        return Ingredient.fromStacks(list.toArray(new ItemStack[0]));
-    }
+	@Nonnull
+	@Override
+	public Ingredient parse(JsonContext context, JsonObject json) {
+		Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(context.appendModId(JsonUtils.getString(json, "item"))));
+		if(item == null)
+			throw new JsonSyntaxException("Unknown item \'" + JsonUtils.getString(json, "item") + "\'");
+		NonNullList<ItemStack> list = NonNullList.create();
+		item.getSubItems(CreativeTabs.SEARCH, list);
+		return Ingredient.fromStacks(list.toArray(new ItemStack[0]));
+	}
 }

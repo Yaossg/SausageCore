@@ -6,88 +6,89 @@ import net.minecraftforge.items.IItemHandler;
 import javax.annotation.Nonnull;
 
 public interface IItemStackHandlerView extends IItemHandler {
-    default boolean isInput() {
-        return true;
-    }
+	default boolean isInput() {
+		return true;
+	}
 
-    default boolean isOutput() {
-        return true;
-    }
+	default boolean isOutput() {
+		return true;
+	}
 
-    default IItemHandler getAsInput() {
-        return new IItemStackHandlerView() {
-            private final IItemStackHandlerView view = IItemStackHandlerView.this;
-            @Override
-            public int getSlots() {
-                return view.getSlots();
-            }
+	default IItemHandler getAsInput() {
+		return new IItemStackHandlerView() {
+			private final IItemStackHandlerView view = IItemStackHandlerView.this;
 
-            @Nonnull
-            @Override
-            public ItemStack getStackInSlot(int slot) {
-                return view.getStackInSlot(slot);
-            }
+			@Override
+			public int getSlots() {
+				return view.getSlots();
+			}
 
-            @Nonnull
-            @Override
-            public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-                return view.insertItem(slot, stack, simulate);
-            }
+			@Nonnull
+			@Override
+			public ItemStack getStackInSlot(int slot) {
+				return view.getStackInSlot(slot);
+			}
 
-            @Nonnull
-            @Override
-            public ItemStack extractItem(int slot, int amount, boolean simulate) {
-                return ItemStack.EMPTY;
-            }
+			@Nonnull
+			@Override
+			public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
+				return view.insertItem(slot, stack, simulate);
+			}
 
-            @Override
-            public int getSlotLimit(int slot) {
-                return view.getSlotLimit(slot);
-            }
+			@Nonnull
+			@Override
+			public ItemStack extractItem(int slot, int amount, boolean simulate) {
+				return ItemStack.EMPTY;
+			}
 
-            @Override
-            public boolean isOutput() {
-                return false;
-            }
-        };
-    }
+			@Override
+			public int getSlotLimit(int slot) {
+				return view.getSlotLimit(slot);
+			}
 
-    default IItemStackHandlerView getAsOutput() {
-        return new IItemStackHandlerView() {
-            private final IItemStackHandlerView view = IItemStackHandlerView.this;
-            @Override
-            public int getSlots() {
-                return view.getSlots();
-            }
+			@Override
+			public boolean isOutput() {
+				return false;
+			}
+		};
+	}
 
-            @Nonnull
-            @Override
-            public ItemStack getStackInSlot(int slot) {
-                return view.getStackInSlot(slot);
-            }
+	default IItemStackHandlerView getAsOutput() {
+		return new IItemStackHandlerView() {
+			private final IItemStackHandlerView view = IItemStackHandlerView.this;
 
-            @Nonnull
-            @Override
-            public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-                return stack;
-            }
+			@Override
+			public int getSlots() {
+				return view.getSlots();
+			}
 
-            @Nonnull
-            @Override
-            public ItemStack extractItem(int slot, int amount, boolean simulate) {
-                return view.extractItem(slot, amount, simulate);
-            }
+			@Nonnull
+			@Override
+			public ItemStack getStackInSlot(int slot) {
+				return view.getStackInSlot(slot);
+			}
 
-            @Override
-            public int getSlotLimit(int slot) {
-                return view.getSlotLimit(slot);
-            }
+			@Nonnull
+			@Override
+			public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
+				return stack;
+			}
 
-            @Override
-            public boolean isInput() {
-                return false;
-            }
-        };
-    }
+			@Nonnull
+			@Override
+			public ItemStack extractItem(int slot, int amount, boolean simulate) {
+				return view.extractItem(slot, amount, simulate);
+			}
 
+			@Override
+			public int getSlotLimit(int slot) {
+				return view.getSlotLimit(slot);
+			}
+
+			@Override
+			public boolean isInput() {
+				return false;
+			}
+		};
+	}
 }

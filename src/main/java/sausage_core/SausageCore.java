@@ -35,90 +35,87 @@ import java.util.ArrayList;
  * @author Yaossg
  */
 @Mod(modid = SausageCore.MODID,
-        name = SausageCore.NAME,
-        version = SausageCore.VERSION,
-        acceptedMinecraftVersions = "1.12.2")
+		name = SausageCore.NAME,
+		version = SausageCore.VERSION,
+		acceptedMinecraftVersions = "1.12.2")
 @Mod.EventBusSubscriber
 public class SausageCore {
-    public static final String MODID = "sausage_core";
-    public static final String NAME = "SausageCore";
-    public static final String VERSION = "@version@";
+	public static final String MODID = "sausage_core";
+	public static final String NAME = "SausageCore";
+	public static final String VERSION = "@version@";
+	public static Logger logger;
+	public static final IBRegistryManager manager = new IBRegistryManager(MODID, new CreativeTabs(MODID) {
+		@Override
+		public ItemStack getTabIconItem() {
+			return new ItemStack(sausage);
+		}
+	});
+	public static Item sausage;
 
-    public static Logger logger;
+	@EventHandler
+	public void preInit(FMLPreInitializationEvent event) {
+		logger = event.getModLog();
+		SausageUtils.unstableWarning(NAME, VERSION, MODID);
+		MinecraftForge.EVENT_BUS.register(AutoSyncConfig.class);
+		AutoSyncConfig.AUTO_SYNC_CONFIG.register(MODID);
+		sausage = manager.addItem("sausage", new ItemSausage());
+		manager.addItem("info_card", new ItemInfoCard());
+		manager.addItem("debug_stick", new ItemDebugStick());
+		manager.registerAll();
+		new WorldTypeCustomSize();
+		new WorldTypeBuffet();
+	}
 
-    public static final IBRegistryManager manager = new IBRegistryManager(MODID, new CreativeTabs(MODID) {
-        @Override
-        public ItemStack getTabIconItem() {
-            return new ItemStack(sausage);
-        }
-    });
-    public static Item sausage;
+	@EventHandler
+	public void init(FMLInitializationEvent event) {}
 
-    @EventHandler
-    public void preInit(FMLPreInitializationEvent event) {
-        logger = event.getModLog();
-        SausageUtils.unstableWarning(NAME, VERSION, MODID);
-        MinecraftForge.EVENT_BUS.register(AutoSyncConfig.class);
-        AutoSyncConfig.AUTO_SYNC_CONFIG.register(MODID);
-        sausage = manager.addItem("sausage", new ItemSausage());
-        manager.addItem("info_card", new ItemInfoCard());
-        manager.addItem("debug_stick", new ItemDebugStick());
-        manager.registerAll();
-        new WorldTypeCustomSize();
-        new WorldTypeBuffet();
-    }
+	@EventHandler
+	public void postInit(FMLPostInitializationEvent event) {
+		WorldTypeBuffet.BIOMES = new ArrayList<>(ForgeRegistries.BIOMES.getValuesCollection());
+		SCFRecipeManagerImpl.IMPL.load();
+	}
 
-    @EventHandler
-    public void init(FMLInitializationEvent event) {}
+	@SubscribeEvent
+	public static void loadModels(ModelRegistryEvent event) {
+		manager.loadAllModel();
+	}
 
-    @EventHandler
-    public void postInit(FMLPostInitializationEvent event) {
-        WorldTypeBuffet.BIOMES = new ArrayList<>(ForgeRegistries.BIOMES.getValuesCollection());
-        SCFRecipeManagerImpl.IMPL.load();
-    }
+	/**
+	 * fix problem of different ore names for Al
+	 */
+	@SubscribeEvent
+	public static void onRegisterOre(OreDictionary.OreRegisterEvent event) {
+		String ore = event.getName();
+		String material = OreDicts.materialOf(ore);
+		switch(material) {
+			case "Aluminum":
+				OreDicts.shapeOf(ore).ifPresent(shape -> {
+					String name = shape + "Aluminium";
+					if(OreDicts.names(event.getOre()).noneMatch(name::equals))
+						OreDictionary.registerOre(name, event.getOre());
+				});
+				break;
+			case "Aluminium":
+				OreDicts.shapeOf(ore).ifPresent(shape -> {
+					String name = shape + "Aluminum";
+					if(OreDicts.names(event.getOre()).noneMatch(name::equals))
+						OreDictionary.registerOre(name, event.getOre());
+				});
+		}
+	}
 
-    @SubscribeEvent
-    public static void loadModels(ModelRegistryEvent event) {
-        manager.loadAllModel();
-    }
-
-    /**
-     * fix problem of different ore names for Al
-     * */
-    @SubscribeEvent
-    public static void onRegisterOre(OreDictionary.OreRegisterEvent event) {
-        String ore = event.getName();
-        String material = OreDicts.materialOf(ore);
-        switch(material) {
-            case "Aluminum":
-                OreDicts.shapeOf(ore).ifPresent(shape -> {
-                    String name = shape + "Aluminium";
-                    if(OreDicts.names(event.getOre()).noneMatch(name::equals))
-                        OreDictionary.registerOre(name, event.getOre());
-                });
-                break;
-            case "Aluminium":
-                OreDicts.shapeOf(ore).ifPresent(shape -> {
-                    String name = shape + "Aluminum";
-                    if(OreDicts.names(event.getOre()).noneMatch(name::equals))
-                        OreDictionary.registerOre(name, event.getOre());
-                });
-        }
-    }
-
-    @SideOnly(Side.CLIENT)
-    @Mod.EventBusSubscriber(Side.CLIENT)
-    public static class RenderSubscriber {
-        /***
-         * fix bug by forge, here are the differences:
-         * vanilla: entity == null || !(entity instanceof EntityLivingBase)
-         * forge: mc.player.getRidingEntity() == null
-         */
-        @SubscribeEvent
-        public static void onRender(RenderGameOverlayEvent.Pre event) {
-            if(event.getType() == RenderGameOverlayEvent.ElementType.ALL)
-                GuiIngameForge.renderFood = !GuiIngameForge.renderHealthMount;
-        }
-    }
-
+	@SideOnly(Side.CLIENT)
+	@Mod.EventBusSubscriber(Side.CLIENT)
+	public static class RenderSubscriber {
+		/***
+		 * fix bug by forge, here are the differences:
+		 * vanilla: entity == null || !(entity instanceof EntityLivingBase)
+		 * forge: mc.player.getRidingEntity() == null
+		 */
+		@SubscribeEvent
+		public static void onRender(RenderGameOverlayEvent.Pre event) {
+			if(event.getType() == RenderGameOverlayEvent.ElementType.ALL)
+				GuiIngameForge.renderFood = !GuiIngameForge.renderHealthMount;
+		}
+	}
 }

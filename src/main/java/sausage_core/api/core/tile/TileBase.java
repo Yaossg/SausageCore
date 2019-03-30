@@ -13,61 +13,61 @@ import net.minecraftforge.common.capabilities.Capability;
 import javax.annotation.Nullable;
 
 public abstract class TileBase extends TileEntity {
-    protected boolean network = false;
+	protected boolean network = false;
 
-    @Override
-    public NBTTagCompound getUpdateTag() {
-        return network ? writeToNBT(new NBTTagCompound()) : super.getUpdateTag();
-    }
+	@Override
+	public NBTTagCompound getUpdateTag() {
+		return network ? writeToNBT(new NBTTagCompound()) : super.getUpdateTag();
+	}
 
-    @Override
-    @Nullable
-    public SPacketUpdateTileEntity getUpdatePacket() {
-        return network ? new SPacketUpdateTileEntity(getPos(), 3, getUpdateTag()) : super.getUpdatePacket();
-    }
+	@Override
+	@Nullable
+	public SPacketUpdateTileEntity getUpdatePacket() {
+		return network ? new SPacketUpdateTileEntity(getPos(), 3, getUpdateTag()) : super.getUpdatePacket();
+	}
 
-    @Override
-    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
-        if(network) readFromNBT(pkt.getNbtCompound());
-    }
+	@Override
+	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+		if(network) readFromNBT(pkt.getNbtCompound());
+	}
 
-    protected void notifyClient() {
-        notifyClient(false);
-    }
+	protected void notifyClient() {
+		notifyClient(false);
+	}
 
-    protected void notifyClient(boolean notifyNeighbors) {
-        markDirty();
-        IBlockState state = world.getBlockState(pos);
-        world.notifyBlockUpdate(pos, state, state, 3);
-        if(notifyNeighbors)
-            world.notifyNeighborsOfStateChange(pos, state.getBlock(), true);
-    }
+	protected void notifyClient(boolean notifyNeighbors) {
+		markDirty();
+		IBlockState state = world.getBlockState(pos);
+		world.notifyBlockUpdate(pos, state, state, 3);
+		if(notifyNeighbors)
+			world.notifyNeighborsOfStateChange(pos, state.getBlock(), true);
+	}
 
-    // following methods are overridden to rename their parameters
+	// following methods are overridden to rename their parameters
 
-    @Override
-    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState) {
-        return oldState.getBlock() != newState.getBlock(); // also keep same as vanilla
-    }
+	@Override
+	public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState) {
+		return oldState.getBlock() != newState.getBlock(); // also keep same as vanilla
+	}
 
-    @Override
-    public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing side) {
-        return super.hasCapability(capability, side);
-    }
+	@Override
+	public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing side) {
+		return super.hasCapability(capability, side);
+	}
 
-    @Nullable
-    @Override
-    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing side) {
-        return super.getCapability(capability, side);
-    }
+	@Nullable
+	@Override
+	public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing side) {
+		return super.getCapability(capability, side);
+	}
 
-    @Override
-    public void readFromNBT(NBTTagCompound nbt) {
-        super.readFromNBT(nbt);
-    }
+	@Override
+	public void readFromNBT(NBTTagCompound nbt) {
+		super.readFromNBT(nbt);
+	}
 
-    @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
-        return super.writeToNBT(nbt);
-    }
+	@Override
+	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+		return super.writeToNBT(nbt);
+	}
 }

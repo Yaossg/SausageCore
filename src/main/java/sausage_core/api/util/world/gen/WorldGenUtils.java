@@ -8,20 +8,20 @@ import javax.annotation.Nonnull;
 import java.util.Random;
 
 public final class WorldGenUtils {
-    public static BlockPos randomPos(Random random, int chunkX, int chunkZ, int y) {
-        return new BlockPos((chunkX << 4) + random.nextInt(16), y, (chunkZ << 4) + random.nextInt(16));
-    }
+	public static BlockPos randomPos(Random random, int chunkX, int chunkZ, int y) {
+		return new BlockPos((chunkX << 4) + random.nextInt(16), y, (chunkZ << 4) + random.nextInt(16));
+	}
 
-    public static BlockPos randomPos(Random random, int chunkX, int chunkZ, int minY, int maxY) {
-        return randomPos(random, chunkX, chunkZ, random.nextInt(maxY - minY) + minY);
-    }
+	public static BlockPos randomPos(Random random, int chunkX, int chunkZ, int minY, int maxY) {
+		return randomPos(random, chunkX, chunkZ, random.nextInt(maxY - minY) + minY);
+	}
 
-    @Nonnull // since world#getBiome returns PLAINS as default value
-    public static Biome getBiome(World world, int chunkX, int chunkZ) {
-        return world.getBiome(new BlockPos(chunkX << 4, 0, chunkZ << 4));
-    }
+	@Nonnull // since world#getBiome returns PLAINS as default value
+	public static Biome getBiome(World world, int chunkX, int chunkZ) {
+		return world.getBiome(new BlockPos(chunkX << 4, 0, chunkZ << 4));
+	}
 
-    public static BlockPos commonOffset(Random random, BlockPos pos) {
-        return pos.add(random.nextInt(16), 0, random.nextInt(16));
-    }
+	public static BlockPos commonOffset(Random random, BlockPos pos) {
+		return pos.add(random.nextInt(16), 0, random.nextInt(16));
+	}
 }

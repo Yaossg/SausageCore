@@ -1,16 +1,17 @@
 package sausage_core.api.core.tile;
 
 public interface IMachineLogic {
-    /**
-     * @return if the task is on
-     * */
-    boolean detect();
-    /**
-     * @return if the task has been finished
-     * */
-    boolean work();
+	/**
+	 * @return if the task is on
+	 */
+	boolean detect();
 
-    default boolean tick(boolean old) {
-        return old ? detect() && (!work() || detect()) : detect();
-    }
+	/**
+	 * @return if the task has been finished
+	 */
+	boolean work();
+
+	default boolean tick(boolean old) {
+		return old ? detect() && (!work() || detect()) : detect();
+	}
 }

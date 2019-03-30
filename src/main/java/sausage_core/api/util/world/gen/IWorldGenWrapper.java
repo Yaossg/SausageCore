@@ -9,24 +9,24 @@ import java.util.Random;
 
 @FunctionalInterface
 public interface IWorldGenWrapper {
-    void generate(Random random, World world, BlockPos pos);
+	void generate(Random random, World world, BlockPos pos);
 
-    static IWorldGenWrapper of(WorldGenerator generator) {
-        return (random, world, pos) -> generator.generate(world, random, pos);
-    }
+	static IWorldGenWrapper of(WorldGenerator generator) {
+		return (random, world, pos) -> generator.generate(world, random, pos);
+	}
 
-    default WorldGenerator toWorldGenerator() {
-        return new WorldGenerator() {
-            @Override
-            public boolean generate(World worldIn, Random rand, BlockPos position) {
-                IWorldGenWrapper.this.generate(rand, worldIn, position);
-                return true;
-            }
-        };
-    }
+	default WorldGenerator toWorldGenerator() {
+		return new WorldGenerator() {
+			@Override
+			public boolean generate(World worldIn, Random rand, BlockPos position) {
+				IWorldGenWrapper.this.generate(rand, worldIn, position);
+				return true;
+			}
+		};
+	}
 
-    default IWorldGenerator toIWorldGenerator() {
-        return (random, chunkX, chunkZ, world, chunkGenerator, chunkProvider) ->
-                generate(random, world, new BlockPos((chunkX << 4), 0, (chunkZ << 4)));
-    }
+	default IWorldGenerator toIWorldGenerator() {
+		return (random, chunkX, chunkZ, world, chunkGenerator, chunkProvider) ->
+				generate(random, world, new BlockPos((chunkX << 4), 0, (chunkZ << 4)));
+	}
 }

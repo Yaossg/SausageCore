@@ -7,11 +7,11 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import sausage_core.api.util.registry.SimpleRegistry;
 
 public class AutoSyncConfig {
-    public static final SimpleRegistry<String> AUTO_SYNC_CONFIG = new SimpleRegistry<>(String.class);
-    @SubscribeEvent
-    public static void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
-        if(AUTO_SYNC_CONFIG.contains(event.getModID()::equals))
-            ConfigManager.sync(event.getModID(), Config.Type.INSTANCE);
-    }
+	public static final SimpleRegistry<String> AUTO_SYNC_CONFIG = new SimpleRegistry<>(String.class);
 
+	@SubscribeEvent
+	public static void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
+		if(AUTO_SYNC_CONFIG.contains(event.getModID()::equals))
+			ConfigManager.sync(event.getModID(), Config.Type.INSTANCE);
+	}
 }

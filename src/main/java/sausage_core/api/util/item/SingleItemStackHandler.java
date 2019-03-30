@@ -7,47 +7,48 @@ import net.minecraftforge.items.ItemStackHandler;
 import javax.annotation.Nonnull;
 
 public class SingleItemStackHandler extends ItemStackHandler implements IItemStackHandlerView {
-    public SingleItemStackHandler() {}
-    public SingleItemStackHandler(ItemStack stack) {
-        stacks = NonNullList.create();
-        stacks.add(stack);
-    }
+	public SingleItemStackHandler() {}
 
-    @Override
-    public void setSize(int size) {
-        if(size != 1)
-            throw new UnsupportedOperationException();
-    }
+	public SingleItemStackHandler(ItemStack stack) {
+		stacks = NonNullList.create();
+		stacks.add(stack);
+	}
 
-    public void set(ItemStack stack) {
-        super.setStackInSlot(0, stack);
-    }
+	@Override
+	public void setSize(int size) {
+		if(size != 1)
+			throw new UnsupportedOperationException();
+	}
 
-    @Nonnull
-    public ItemStack get() {
-        return super.getStackInSlot(0).copy();
-    }
+	public void set(ItemStack stack) {
+		super.setStackInSlot(0, stack);
+	}
 
-    @Nonnull
-    public ItemStack insertItem(@Nonnull ItemStack stack, boolean simulate) {
-        return super.insertItem(0, stack, simulate);
-    }
+	@Nonnull
+	public ItemStack get() {
+		return super.getStackInSlot(0).copy();
+	}
 
-    @Nonnull
-    public ItemStack extractItem(int amount, boolean simulate) {
-        return super.extractItem(0, amount, simulate);
-    }
+	@Nonnull
+	public ItemStack insertItem(@Nonnull ItemStack stack, boolean simulate) {
+		return super.insertItem(0, stack, simulate);
+	}
 
-    public SingleItemStackHandler copy() {
-        return new SingleItemStackHandler(get());
-    }
+	@Nonnull
+	public ItemStack extractItem(int amount, boolean simulate) {
+		return super.extractItem(0, amount, simulate);
+	}
 
-    @Override
-    protected final void onContentsChanged(int slot) {
-        onContentsChanged();
-    }
+	public SingleItemStackHandler copy() {
+		return new SingleItemStackHandler(get());
+	}
 
-    protected void onContentsChanged() {
+	@Override
+	protected final void onContentsChanged(int slot) {
+		onContentsChanged();
+	}
 
-    }
+	protected void onContentsChanged() {
+
+	}
 }

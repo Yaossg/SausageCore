@@ -10,37 +10,41 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public interface IEnumGUIHandler extends IEnum {
-    @Nonnull
-    Object getServer(EntityPlayer player, World world, BlockPos pos);
-    @Nonnull
-    Object getClient(EntityPlayer player, World world, BlockPos pos);
+	@Nonnull
+	Object getServer(EntityPlayer player, World world, BlockPos pos);
 
-    default int ID() {
-        return getEnum().ordinal();
-    }
+	@Nonnull
+	Object getClient(EntityPlayer player, World world, BlockPos pos);
 
-    class InnerHandler implements IGuiHandler {
-        final IEnumGUIHandler[] values;
-        InnerHandler(IEnumGUIHandler[] values) {
-            this.values = values;
-        }
-        @Nullable
-        @Override
-        public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-            for (IEnumGUIHandler value : values)
-                if(ID == value.ID()) return value.getServer(player, world, new BlockPos(x, y, z));
-            return null;
-        }
+	default int ID() {
+		return getEnum().ordinal();
+	}
 
-        @Nullable
-        @Override
-        public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-            for (IEnumGUIHandler value : values)
-                if(ID == value.ID()) return value.getClient(player, world, new BlockPos(x, y, z));
-            return null;
-        }
-    }
-    static <E extends Enum<E> & IEnumGUIHandler> void register(Object mod, E[] values) {
-        NetworkRegistry.INSTANCE.registerGuiHandler(mod, new InnerHandler(values));
-    }
+	class InnerHandler implements IGuiHandler {
+		final IEnumGUIHandler[] values;
+
+		InnerHandler(IEnumGUIHandler[] values) {
+			this.values = values;
+		}
+
+		@Nullable
+		@Override
+		public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+			for(IEnumGUIHandler value : values)
+				if(ID == value.ID()) return value.getServer(player, world, new BlockPos(x, y, z));
+			return null;
+		}
+
+		@Nullable
+		@Override
+		public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+			for(IEnumGUIHandler value : values)
+				if(ID == value.ID()) return value.getClient(player, world, new BlockPos(x, y, z));
+			return null;
+		}
+	}
+
+	static <E extends Enum<E> & IEnumGUIHandler> void register(Object mod, E[] values) {
+		NetworkRegistry.INSTANCE.registerGuiHandler(mod, new InnerHandler(values));
+	}
 }

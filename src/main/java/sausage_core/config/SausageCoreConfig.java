@@ -7,7 +7,7 @@ import sausage_core.SausageCore;
 
 @Config(modid = SausageCore.MODID, name = SausageCore.NAME)
 public class SausageCoreConfig {
-    @Comment("enable spawn info card")
-    @LangKey("sausage_core.general.spawnInfoCard")
-    public static boolean spawnInfoCard = true;
+	@Comment("enable spawn info card")
+	@LangKey("sausage_core.general.spawnInfoCard")
+	public static boolean spawnInfoCard = true;
 }

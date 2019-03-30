@@ -3,31 +3,36 @@ package sausage_core.api.util.energy;
 import net.minecraftforge.energy.IEnergyStorage;
 
 public interface IEnergyModifiable extends IEnergyStorage {
-    void setEnergyStored(int value);
-    void setMaxEnergyStored(int value);
-    void setMaxReceive(int value);
-    void setMaxExtract(int value);
-    int getMaxReceive();
-    int getMaxExtract();
+	void setEnergyStored(int value);
 
-    default void setMaxTransfer(int value) {
-        setMaxReceive(value);
-        setMaxExtract(value);
-    }
+	void setMaxEnergyStored(int value);
 
-    default void clear() {
-        setEnergyStored(0);
-    }
+	void setMaxReceive(int value);
 
-    default void fill() {
-        setEnergyStored(getMaxEnergyStored());
-    }
+	void setMaxExtract(int value);
 
-    default boolean isEmpty() {
-        return getEnergyStored() == 0;
-    }
+	int getMaxReceive();
 
-    default void setDefaults(int maxEnergyStored) {
-        setMaxEnergyStored(maxEnergyStored);
-    }
+	int getMaxExtract();
+
+	default void setMaxTransfer(int value) {
+		setMaxReceive(value);
+		setMaxExtract(value);
+	}
+
+	default void clear() {
+		setEnergyStored(0);
+	}
+
+	default void fill() {
+		setEnergyStored(getMaxEnergyStored());
+	}
+
+	default boolean isEmpty() {
+		return getEnergyStored() == 0;
+	}
+
+	default void setDefaults(int maxEnergyStored) {
+		setMaxEnergyStored(maxEnergyStored);
+	}
 }

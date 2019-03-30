@@ -16,26 +16,25 @@ import sausage_core.gui.GUICreateBuffetWorld;
 import java.util.List;
 
 public class WorldTypeBuffet extends WorldTypeModID {
+	public static List<Biome> BIOMES;
 
-    public static List<Biome> BIOMES;
+	public WorldTypeBuffet() {
+		super(SausageCore.MODID, "buffet");
+	}
 
-    public WorldTypeBuffet() {
-        super(SausageCore.MODID, "buffet");
-    }
+	@Override
+	public BiomeProvider getBiomeProvider(World world) {
+		return new BiomeProviderSingle(BIOMES.get(Opts.parseInt(world.getWorldInfo().getGeneratorOptions()).orElse(0)));
+	}
 
-    @Override
-    public BiomeProvider getBiomeProvider(World world) {
-        return new BiomeProviderSingle(BIOMES.get(Opts.parseInt(world.getWorldInfo().getGeneratorOptions()).orElse(0)));
-    }
+	@Override
+	public boolean isCustomizable() {
+		return true;
+	}
 
-    @Override
-    public boolean isCustomizable() {
-        return true;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void onCustomizeButton(Minecraft mc, GuiCreateWorld guiCreateWorld) {
-        mc.displayGuiScreen(new GUICreateBuffetWorld(guiCreateWorld));
-    }
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void onCustomizeButton(Minecraft mc, GuiCreateWorld guiCreateWorld) {
+		mc.displayGuiScreen(new GUICreateBuffetWorld(guiCreateWorld));
+	}
 }

@@ -8,40 +8,48 @@ import java.util.stream.Stream;
 
 /**
  * A simple registry interface designed for modders
- * */
+ */
 public interface IModdedRegistry<E> extends Iterable<E> {
-    Collection<E> view();
-    Class<E> type();
+	Collection<E> view();
 
-    void register(E e);
+	Class<E> type();
 
-    @SuppressWarnings("unchecked")
-    default void registerAll(E... es) {
-        for(E e : es) register(e);
-    }
-    default void registerAll(Collection<E> es) {
-        for(E e : es) register(e);
-    }
+	void register(E e);
 
-    @Override
-    default Iterator<E> iterator() { return view().iterator(); }
-    default Spliterator<E> spliterator() { return view().spliterator(); }
-    default Stream<E> stream() { return view().stream(); }
-    default Stream<E> parallelStream() { return view().parallelStream(); }
-    default int size() { return view().size(); }
-    @SuppressWarnings("unchecked")
-    default E[] toArray() {
-        return view().toArray((E[]) Array.newInstance(type(), 0));
-    }
+	@SuppressWarnings("unchecked")
+	default void registerAll(E... es) {
+		for(E e : es) register(e);
+	}
 
-    default Optional<E> find(Predicate<E> predicate) {
-        return stream().filter(predicate).findAny();
-    }
-    default List<E> findAll(Predicate<E> predicate) {
-        return stream().filter(predicate).collect(Collectors.toList());
-    }
+	default void registerAll(Collection<E> es) {
+		for(E e : es) register(e);
+	}
 
-    default boolean contains(Predicate<E> predicate) {
-        return stream().anyMatch(predicate);
-    }
+	@Override
+	default Iterator<E> iterator() { return view().iterator(); }
+
+	default Spliterator<E> spliterator() { return view().spliterator(); }
+
+	default Stream<E> stream() { return view().stream(); }
+
+	default Stream<E> parallelStream() { return view().parallelStream(); }
+
+	default int size() { return view().size(); }
+
+	@SuppressWarnings("unchecked")
+	default E[] toArray() {
+		return view().toArray((E[]) Array.newInstance(type(), 0));
+	}
+
+	default Optional<E> find(Predicate<E> predicate) {
+		return stream().filter(predicate).findAny();
+	}
+
+	default List<E> findAll(Predicate<E> predicate) {
+		return stream().filter(predicate).collect(Collectors.toList());
+	}
+
+	default boolean contains(Predicate<E> predicate) {
+		return stream().anyMatch(predicate);
+	}
 }
