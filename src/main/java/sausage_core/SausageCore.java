@@ -55,7 +55,7 @@ public class SausageCore {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		logger = event.getModLog();
-		SausageUtils.unstableWarning(NAME, VERSION, MODID);
+		SausageUtils.loadingInformation(NAME, VERSION, MODID);
 		MinecraftForge.EVENT_BUS.register(AutoSyncConfig.class);
 		AutoSyncConfig.AUTO_SYNC_CONFIG.register(MODID);
 		sausage = manager.addItem("sausage", new ItemSausage());

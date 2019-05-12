@@ -24,6 +24,7 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import sausage_core.api.common.InternalUse;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -129,11 +130,12 @@ public final class SausageUtils {
 
 	/**
 	 * sausage-private
+	 * only used in sausage's code
 	 */
-	public static void unstableWarning(String name, String version, String modid) {
+	@InternalUse
+	public static void loadingInformation(String name, String version, String modid) {
 		Logger logger = LogManager.getLogger(modid);
-		logger.info("{} {} is loading now (modid:{})", name, modid, version);
-		logger.warn("The mod is still unstable and in early development");
+		logger.info("{} {} is loading now", name, version);
 		logger.warn("If you find any bug, please create a new issue on github.com/Yaossg/{} ", name);
 	}
 

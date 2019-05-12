@@ -267,7 +267,6 @@ public class ItemCustomBucket extends Item {
 		if(isMilk(stack)) return I18n.format(name + ".milk.name");
 		FluidStack fluidStack = getFluid(stack);
 		if(fluidStack == null) return I18n.format(name + ".empty.name");
-
 		return I18n.format(name + ".name", fluidStack.getLocalizedName());
 	}
 

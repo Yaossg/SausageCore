@@ -1,15 +1,14 @@
-package sausage_core.api.util.plugin;
+package sausage_core.api.core.plugin;
 
 import com.google.common.collect.Multimap;
 import com.google.common.collect.MultimapBuilder;
 import net.minecraftforge.fml.common.Loader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import sausage_core.api.core.plugin.PluginCore;
 
-public final class PluginLoader {
-	private final Multimap<String, String> plugins = MultimapBuilder.hashKeys().hashSetValues().build();
-	private final String owner;
+public class PluginLoader {
+	protected final Multimap<String, String> plugins = MultimapBuilder.hashKeys().hashSetValues().build();
+	protected final String owner;
 
 	public PluginLoader(String owner) {
 		this.owner = owner;
@@ -27,7 +26,7 @@ public final class PluginLoader {
 		});
 	}
 
-	void execute(String modid, String plugin) {
+	protected void execute(String modid, String plugin) {
 		PluginCore pluginCore;
 		Logger logger = LogManager.getLogger(owner);
 		try {
