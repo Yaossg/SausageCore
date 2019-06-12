@@ -18,12 +18,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-public final class IBRegistryManager {
+public class IBRegistryManager {
 	public final String modid;
 	@Nullable
 	public final CreativeTabs tab;
-	final List<Item> items = new ArrayList<>();
-	final List<Block> blocks = new ArrayList<>();
+	protected final List<Item> items = new ArrayList<>();
+	protected final List<Block> blocks = new ArrayList<>();
 
 	public IBRegistryManager(String modid) {
 		this(modid, null);
@@ -113,18 +113,18 @@ public final class IBRegistryManager {
 	}
 
 	@SideOnly(Side.CLIENT)
-	void loadModel(Item item) {
-		loadModelDefault(new ItemStack(item));
+	protected void loadModel(Item item) {
+		loadModel(new ItemStack(item));
 	}
 
 	@SideOnly(Side.CLIENT)
-	void loadModel(Block block) {
-		loadModelDefault(new ItemStack(block));
+	protected void loadModel(Block block) {
+		loadModel(new ItemStack(block));
 	}
 
 	@SideOnly(Side.CLIENT)
-	static void loadModelDefault(ItemStack stack) {
+	protected void loadModel(ItemStack stack) {
 		ModelLoader.setCustomModelResourceLocation(stack.getItem(), stack.getMetadata(),
-				new ModelResourceLocation(stack.getItem().getRegistryName(), "inventory"));
+				new ModelResourceLocation(SausageUtils.nonnull(stack.getItem().getRegistryName()), "inventory"));
 	}
 }

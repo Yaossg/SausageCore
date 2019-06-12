@@ -1,6 +1,9 @@
 ﻿
+itemGroup.sausage_core=Sausage Core
 item.sausage_core.sausage.name=Sausage
+item.sausage_core.sausage.info=The author, mascot, and extremely unhealthy food
 item.sausage_core.debug_stick.name=Debug Stick
+item.sausage_core.info_card.name=Info Card
 generator.sausage_core.village=Village
 generator.sausage_core.customSize=Custom Size
 generator.sausage_core.customSize.title=Custom Size World Type
@@ -8,14 +11,37 @@ generator.sausage_core.chaosBiomes=Chaos Biomes
 generator.sausage_core.buffet=Buffet
 generator.sausage_core.buffet.title=Buffet World Type
 death.attack.overeating=%s ate too much
-item.sausage_core.info_card.name=Info Card
-itemGroup.sausage_core=Sausage Core
 sausage_core.info_card.Please visit=Please visit
 sausage_core.info_card.for more information=for more information
 sausage_core.info_card.No %s is detected=No %s is detected
 sausage_core.general.spawnInfoCard=Spawn with Info Card
 sausage_core.general.testAl=Test of Al problems
+sausage_core.debug_stick.mode.switch=Switch Mode
+sausage_core.debug_stick.mode.block=Block Mode
+sausage_core.debug_stick.mode.entity=Entity Mode
 SausageCore.tooltip=SausageCore
-sausage_core.debug_stick.mode.switch=Switch
-sausage_core.debug_stick.mode.block=Block
-sausage_core.debug_stick.mode.entity=Entity
+commands.sausage_core.data.usage=/data block <x> <y> <z> Or /data entity <Entity>
+commands.sausage_core.data.success=Successfully queried NBT:
+
+guide.sausage_core.title=Book of the Hot dog
+
+guide.sausage_core.category.general=General
+
+guide.sausage_core.entry.general.introduction=Introduction
+guide.sausage_core.entry.general.ingredient=Crafting Ingredients
+guide.sausage_core.entry.general.world_type=World Types
+guide.sausage_core.entry.general.debugging=Debugging
+
+guide.sausage_core.entry.general.introduction.info.0=§lSausageCore§r is a mod developed by Yaossg, providing useful utilities and libraries for players and modders, on which any other mod developed by Yaossg dependents.\nVisit the mod's Github page below to learn more technical details.\nhttps://github.com/Yaossg/SausageCore
+guide.sausage_core.entry.general.introduction.info.1=Why not try my sister mods §dManaCraft§r and §k§6Sausage's Factory§r? :)\nVisit my Github page below to learn more.\nhttps://github.com/Yaossg
+
+guide.sausage_core.entry.general.ingredient.info.0=SausageCore adds 2 kinds of Ingredient, which are ItemWildcard and OreFilter.\nAbout this technical part, visit the mod's Github page to learn more.
+guide.sausage_core.entry.general.ingredient.info.1=§lItemWildcard§r(sausage_core:item_wildcard) is literally minecraft:item, but with no tag of data, so it matches any metadata
+guide.sausage_core.entry.general.ingredient.info.2=§lOreFilter§r(sausage_core:ore_filter) matches ore dictionary according to the predicate. Predicates you can use are:\n  - startsWith\n  - endsWith\n  - contains\n  - matches\n  - equals\n  - equalsIgnoreCase
+
+guide.sausage_core.entry.general.world_type.info.0=SausageCore adds 2 world types, which are Buffet and CustomSize.\nIn the future a brand new type originally designed by Yaossg is coming. 
+guide.sausage_core.entry.general.world_type.info.1=§lBuffet§r is minimal (1.13) buffet world, you can select a biome, which covers the entire world.\nIn the customize page, the middle button is used to switch among mods(e.g. If a biome in Mod A is being selected currently, clicking the button will cause the first one in Mod B to be selected).
+guide.sausage_core.entry.general.world_type.info.2=§lCustomSize§r is a world type in which you can customize biome size(Default = 4, Large Biomes = 6).
+
+guide.sausage_core.entry.general.debugging.info.0=/data is modelled after 1.13's but query only, which displays with grammar highlight. Additionally, it works on Players.\nHere is an example(black characters below are white actually).\n\n§0{§bName§0: "§a168§0", §6Height§0: §61.68§cf§0}
+guide.sausage_core.entry.general.debugging.info.1=§lDebug Stick§r is a very handy tool to switch block states, query blocks' states and NBTs and entities' NBTs.\nshift + use in the open air to switch among modes.

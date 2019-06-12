@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.function.UnaryOperator;
 
 /**
- * This event is fired when a player uses a info card.
+ * This event is never fired
  * <br>
  * This event is not {@link Cancelable}.<br>
  * <br>
@@ -24,6 +24,7 @@ import java.util.function.UnaryOperator;
  * <br>
  * This event is fired on the {@link InfoCardEvent#INFO_CARD_BUS}.
  */
+@Deprecated
 public class InfoCardEvent extends PlayerEvent {
 	public static final EventBus INFO_CARD_BUS = new EventBus();
 
