@@ -43,5 +43,5 @@ guide.sausage_core.entry.general.world_type.info.0=SausageCore adds 2 world type
 guide.sausage_core.entry.general.world_type.info.1=§lBuffet§r is minimal (1.13) buffet world, you can select a biome, which covers the entire world.\nIn the customize page, the middle button is used to switch among mods(e.g. If a biome in Mod A is being selected currently, clicking the button will cause the first one in Mod B to be selected).
 guide.sausage_core.entry.general.world_type.info.2=§lCustomSize§r is a world type in which you can customize biome size(Default = 4, Large Biomes = 6).
 
-guide.sausage_core.entry.general.debugging.info.0=/data is modelled after 1.13's but query only, which displays with grammar highlight. Additionally, it works on Players.\nHere is an example(black characters below are white actually).\n\n§0{§bName§0: "§a168§0", §6Height§0: §61.68§cf§0}
+guide.sausage_core.entry.general.debugging.info.0=/data is modelled after 1.13's but query only, which displays with grammar highlight. Additionally, it works on Players.\nHere is an example: (black characters below are white actually)\n\n§0{§bName§0: "§aZYL§0", §6Height§0: §61.68§cf§0}
 guide.sausage_core.entry.general.debugging.info.1=§lDebug Stick§r is a very handy tool to switch block states, query blocks' states and NBTs and entities' NBTs.\nshift + use in the open air to switch among modes.
