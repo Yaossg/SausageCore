@@ -24,7 +24,7 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import sausage_core.api.common.InternalUse;
+import sausage_core.api.core.common.InternalUse;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

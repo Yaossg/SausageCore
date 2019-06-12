@@ -20,7 +20,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -35,9 +34,9 @@ import java.util.List;
 import java.util.Map;
 
 @GuideBook
-public class CoreGuide implements IGuideBook {
+public class SausageCoreGuide implements IGuideBook {
 
-	public CoreGuide() {
+	public SausageCoreGuide() {
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 
@@ -59,7 +58,7 @@ public class CoreGuide implements IGuideBook {
 
 	private void add(Map<ResourceLocation, EntryAbstract> entries, String category, String entry, ItemStack icon, int... indexes) {
 		List<IPage> pages = new ArrayList<>();
-		String name = String.join(".", "guide", SausageCore.MODID, "entry", category, entry);
+		String name = String.join(".", "guide", SausageCore.MODID, category, entry);
 		if(indexes.length == 0)
 			pages.add(new PageText(name + ".info"));
 		else for(int index : indexes)
@@ -72,6 +71,7 @@ public class CoreGuide implements IGuideBook {
 	@Override
 	public Book buildBook() {
 		ResourceLocation guide = new ResourceLocation(SausageCore.MODID, "guide");
+		List<CategoryAbstract> categories = new ArrayList<>();
 		Map<ResourceLocation, EntryAbstract> general = new LinkedHashMap<>();
 
 		add(general, "general", "introduction", new ItemStack(SausageCore.sausage), 0, 1);
@@ -79,9 +79,14 @@ public class CoreGuide implements IGuideBook {
 		add(general, "general", "world_type", new ItemStack(Blocks.GRASS), 0, 1, 2);
 		add(general, "general", "debugging", new ItemStack(SausageCore.debug_stick), 0, 1);
 
-		List<CategoryAbstract> categories = new ArrayList<>();
-		categories.add(new CategoryItemStack(general, "guide.sausage_core.category.general", new ItemStack(SausageCore.sausage)));
 
+		Map<ResourceLocation, EntryAbstract> second_chapter = new LinkedHashMap<>();
+		ItemStack paper = new ItemStack(Items.PAPER);
+
+		add(second_chapter, "second_chapter", "episode_1", paper, 1, 2);
+
+		categories.add(new CategoryItemStack(general, "guide.sausage_core.CATEGORY.general", new ItemStack(SausageCore.sausage)));
+		categories.add(new CategoryItemStack(second_chapter, "guide.sausage_core.CATEGORY.second_chapter", new ItemStack(Items.WRITABLE_BOOK)));
 		BookBinder binder = new BookBinder(guide);
 		binder.setGuideTitle("guide.sausage_core.title");
 		binder.setItemName("guide.sausage_core.title");
