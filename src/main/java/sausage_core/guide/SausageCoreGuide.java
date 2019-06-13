@@ -20,11 +20,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemHandlerHelper;
-import net.minecraftforge.oredict.OreIngredient;
 import sausage_core.SausageCore;
 
 import javax.annotation.Nonnull;
@@ -83,10 +81,10 @@ public class SausageCoreGuide implements IGuideBook {
 		Map<ResourceLocation, EntryAbstract> second_chapter = new LinkedHashMap<>();
 		ItemStack paper = new ItemStack(Items.PAPER);
 
-		add(second_chapter, "second_chapter", "episode_1", paper, 1, 2);
+		add(second_chapter, "chapter_2", "episode_1", paper, 0, 1, 2);
 
 		categories.add(new CategoryItemStack(general, "guide.sausage_core.CATEGORY.general", new ItemStack(SausageCore.sausage)));
-		categories.add(new CategoryItemStack(second_chapter, "guide.sausage_core.CATEGORY.second_chapter", new ItemStack(Items.WRITABLE_BOOK)));
+		categories.add(new CategoryItemStack(second_chapter, "guide.sausage_core.CATEGORY.chapter_2", new ItemStack(Items.WRITABLE_BOOK)));
 		BookBinder binder = new BookBinder(guide);
 		binder.setGuideTitle("guide.sausage_core.title");
 		binder.setItemName("guide.sausage_core.title");
@@ -99,14 +97,5 @@ public class SausageCoreGuide implements IGuideBook {
 	@Override
 	public void handleModel(ItemStack bookStack) {
 		GuideAPI.setModel(book, new ResourceLocation(SausageCore.MODID, "info_card"), "inventory");
-	}
-
-	@Override
-	public void handlePost(ItemStack bookStack) {
-		stack = bookStack;
-		GameRegistry.addShapedRecipe(new ResourceLocation(SausageCore.MODID, "sausage"), null,
-				new ItemStack(SausageCore.sausage), "mrm", "ror", "mrm",'m', Items.PORKCHOP, 'r', Items.SUGAR, 'o', Items.GUNPOWDER);
-		GameRegistry.addShapedRecipe(new ResourceLocation(SausageCore.MODID, "guide"), null,
-				stack, " x ","wow"," x ", 'x', Items.PAPER, 'o', SausageCore.sausage, 'w', new OreIngredient("dyeOrange"));
 	}
 }

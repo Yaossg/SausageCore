@@ -1,0 +1,23 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "XMX",
+    "MCM",
+    "XMX"
+  ],
+  "key": {
+    "C": {
+      "type": "forge:ore_dict",
+      "ore": "gunpowder"
+    },
+    "X": {
+      "item": "minecraft:porkchop"
+    },
+    "M": {
+      "item": "minecraft:sugar"
+    }
+  },
+  "result": {
+    "item": "sausage_core:sausage"
+  }
+}

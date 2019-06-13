@@ -22,10 +22,15 @@ sausage_core.debug_stick.mode.entity=Entity Mode
 commands.sausage_core.data.usage=/data block <x> <y> <z> Or /data entity <Entity>
 commands.sausage_core.data.success=Successfully queried NBT:
 
+advancement.sausage.root.title=Unhealthy Sausage!
+advancement.sausage.root.description=Make a deal with sausage or simply make a sausage
+advancement.sausage.guide.title=Hot Dog Leading!
+advancement.sausage.guide.description=You shall be our leader!
+
 guide.sausage_core.title=Book of the Hot dog
 
 guide.sausage_core.CATEGORY.general=General
-guide.sausage_core.CATEGORY.second_chapter=Second Chapter
+guide.sausage_core.CATEGORY.chapter_2=Chapter 2
 
 guide.sausage_core.general.introduction=Introduction
 guide.sausage_core.general.ingredient=Crafting Ingredients
@@ -46,6 +51,7 @@ guide.sausage_core.general.world_type.info.2=§lCustomSize§r is a world type in
 guide.sausage_core.general.debugging.info.0=/data is modelled after 1.13's but query only, which displays with grammar highlight. Additionally, it works on Players.\nHere is an example: (black characters below are white actually)\n\n§0{§bName§0: "§aZYL§0", §6Height§0: §61.68§cf§0}
 guide.sausage_core.general.debugging.info.1=§lDebug Stick§r is a very handy tool to switch block states, query blocks' states and NBTs and entities' NBTs.\nshift + use in the open air to switch among modes.
 
-guide.sausage_core.second_chapter.episode_1=Episode 1
-guide.sausage_core.second_chapter.episode_1.info.1=No translation for this currently. Toggle to CN-ZH to view the original text.
-guide.sausage_core.second_chapter.episode_1.info.2=For 800 years, Minecraft has been protected by Steve and Alex. But no one knows every four years two new warriors are chosen. Two freshmen to fight the forces of evil. You are Steve(or Alex). You are Minecraft Guardian!
+guide.sausage_core.chapter_2.episode_1=Episode 1
+guide.sausage_core.chapter_2.episode_1.info.0=§lContent§r\n1. Untitled\n2. Steve & Alex: 9th grade Guardian
+guide.sausage_core.chapter_2.episode_1.info.1=§lUntitled§r\nNo translation for this currently. Toggle to CN-ZH to view the original text.
+guide.sausage_core.chapter_2.episode_1.info.2=§lSteve & Alex: 9th grade Guardian§r\nFor 800 years, Minecraft has been protected by Steve and Alex. But no one knows every four years two new warriors are chosen. Two freshmen to fight the forces of evil. You are Steve(or Alex). You are Minecraft Guardian!

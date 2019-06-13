@@ -22,10 +22,15 @@ sausage_core.debug_stick.mode.entity=实体模式
 commands.sausage_core.data.usage=/data block <x> <y> <z> 或 /data entity <实体>
 commands.sausage_core.data.success=NBT查询成功：
 
+advancement.sausage.root.title=不健康的香肠！
+advancement.sausage.root.description=和香肠做交易，或者简单的做一个香肠
+advancement.sausage.guide.title=热狗领先！
+advancement.sausage.guide.description=你应该成为我们的领导者！
+
 guide.sausage_core.title=热狗之书
 
 guide.sausage_core.CATEGORY.general=概述
-guide.sausage_core.CATEGORY.second_chapter=第二章
+guide.sausage_core.CATEGORY.chapter_2=第二章
 
 guide.sausage_core.general.introduction=介绍
 guide.sausage_core.general.ingredient=合成配方
@@ -46,6 +51,7 @@ guide.sausage_core.general.world_type.info.2=§l自定义生物群系大小§r�
 guide.sausage_core.general.debugging.info.0=/data 模仿了 1.13 的 NBT 语法高亮，但是只能查询。此外，他还能在玩家身上工作\n下面有个例子：（下面的黑字实际上是白的）\n\n§0{§bName§0: "§aZYL§0", §6Height§0: §61.68§cf§0}
 guide.sausage_core.general.debugging.info.1=§l调试棒§r 是一个趁手的工具。他可以用来切换方块状态，查询方块状态和NBT，实体NBT。\n对着空气 shift + 使用 可以切换模式。
 
-guide.sausage_core.second_chapter.episode_1=第一集
-guide.sausage_core.second_chapter.episode_1.info.1=  盛水的水桶\n  吸水的海绵\n  流水的龙头\n  小鸡织布料\n  铁砧砸裂缝\n  熔炉一锅端
-guide.sausage_core.second_chapter.episode_1.info.2=八百年来，Minecraft 一直被 Steve 和 Alex 保护。但没人知道，每过四年，两个新的战士会被选中。两位新人同邪恶作斗争。你就是 Steve（或 Alex）。你就是 Minecraft 守护者！
+guide.sausage_core.chapter_2.episode_1=第一集
+guide.sausage_core.chapter_2.episode_1.info.0=§l目录§r\n1. 无题\n2. Steve & Alex：九年级守护者
+guide.sausage_core.chapter_2.episode_1.info.1=§l无题§r\n  盛水的水桶\n  吸水的海绵\n  流水的龙头\n  小鸡织布料\n  铁砧砸裂缝\n  熔炉一锅端
+guide.sausage_core.chapter_2.episode_1.info.2=§lSteve & Alex：九年级守护者§r\n八百年来，Minecraft 一直被 Steve 和 Alex 保护。但没人知道，每过四年，两个新的战士会被选中。两位新人同邪恶作斗争。你就是 Steve（或 Alex）。你就是 Minecraft 守护者！

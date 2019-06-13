@@ -1,0 +1,24 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    " X ",
+    "MCM",
+    " X "
+  ],
+  "key": {
+    "X": {
+      "type": "forge:ore_dict",
+      "ore": "paper"
+    },
+    "C": {
+      "item": "sausage_core:sausage"
+    },
+    "M": {
+      "type": "forge:ore_dict",
+      "ore": "dyeOrange"
+    }
+  },
+  "result": {
+    "item": "guideapi:sausage_core-guide"
+  }
+}

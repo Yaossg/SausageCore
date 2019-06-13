@@ -1,0 +1,24 @@
+{
+  "display": {
+    "icon": {
+      "item": "sausage_core:sausage"
+    },
+    "title": {
+      "translate": "advancement.sausage.root.title"
+    },
+    "description": {
+      "translate": "advancement.sausage.root.description"
+    },
+    "background": "sausage_core:textures/gui/advancements/backgrounds/grass_path_top.png"
+  },
+  "criteria": {
+    "get_sausage": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [{
+            "item": "sausage_core:sausage"
+        }]
+      }
+    }
+  }
+}
