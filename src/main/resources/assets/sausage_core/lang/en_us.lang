@@ -22,7 +22,7 @@ sausage_core.debug_stick.mode.entity=Entity Mode
 commands.sausage_core.data.usage=/data block <x> <y> <z> Or /data entity <Entity>
 commands.sausage_core.data.success=Successfully queried NBT:
 
-advancement.sausage.root.title=Unhealthy Sausage!
+advancement.sausage.root.title=SausageCore
 advancement.sausage.root.description=Make a deal with sausage or simply make a sausage
 advancement.sausage.guide.title=Hot Dog Leading!
 advancement.sausage.guide.description=You shall be our leader!
@@ -53,5 +53,5 @@ guide.sausage_core.general.debugging.info.1=§lDebug Stick§r is a very handy to
 
 guide.sausage_core.chapter_2.episode_1=Episode 1
 guide.sausage_core.chapter_2.episode_1.info.0=§lContent§r\n1. Untitled\n2. Steve & Alex: 9th grade Guardian
-guide.sausage_core.chapter_2.episode_1.info.1=§lUntitled§r\nNo translation for this currently. Toggle to CN-ZH to view the original text.
+guide.sausage_core.chapter_2.episode_1.info.1=§lUntitled§r\nNo translation for this page currently. Toggle to CN-ZH to view the original text.
 guide.sausage_core.chapter_2.episode_1.info.2=§lSteve & Alex: 9th grade Guardian§r\nFor 800 years, Minecraft has been protected by Steve and Alex. But no one knows every four years two new warriors are chosen. Two freshmen to fight the forces of evil. You are Steve(or Alex). You are Minecraft Guardian!

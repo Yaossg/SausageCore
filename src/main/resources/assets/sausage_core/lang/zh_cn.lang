@@ -22,7 +22,7 @@ sausage_core.debug_stick.mode.entity=实体模式
 commands.sausage_core.data.usage=/data block <x> <y> <z> 或 /data entity <实体>
 commands.sausage_core.data.success=NBT查询成功：
 
-advancement.sausage.root.title=不健康的香肠！
+advancement.sausage.root.title=SausageCore
 advancement.sausage.root.description=和香肠做交易，或者简单的做一个香肠
 advancement.sausage.guide.title=热狗领先！
 advancement.sausage.guide.description=你应该成为我们的领导者！
