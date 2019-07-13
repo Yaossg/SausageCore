@@ -24,7 +24,6 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import sausage_core.api.core.common.InternalUse;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -132,7 +131,6 @@ public final class SausageUtils {
 	 * sausage-private
 	 * only used in sausage's code
 	 */
-	@InternalUse
 	public static void loadingInformation(String name, String version, String modid) {
 		Logger logger = LogManager.getLogger(modid);
 		logger.info("{} {} is loading now", name, version);

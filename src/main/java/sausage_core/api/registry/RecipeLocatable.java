@@ -2,8 +2,8 @@ package sausage_core.api.registry;
 
 import net.minecraft.util.ResourceLocation;
 
-public class RecipeLocatable implements IRecipeLocatable {
-	private ResourceLocation location;
+public abstract class RecipeLocatable implements IRecipeLocatable {
+	protected ResourceLocation location;
 
 	@Override
 	public ResourceLocation getLocation() {

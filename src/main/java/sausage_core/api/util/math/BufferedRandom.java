@@ -22,6 +22,12 @@ public class BufferedRandom extends Random {
 		return new BufferedRandom();
 	}
 
+	public static BufferedRandom provide(long seed) {
+		BufferedRandom random = new BufferedRandom();
+		random.setSeed(seed);
+		return random;
+	}
+
 	public static BufferedRandom boxed(Random random) {
 		return random instanceof BufferedRandom ? (BufferedRandom) random : new BufferedRandom(random);
 	}

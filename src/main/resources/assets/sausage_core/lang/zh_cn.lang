@@ -37,10 +37,9 @@ guide.sausage_core.general.ingredient=合成配方
 guide.sausage_core.general.world_type=世界类型
 guide.sausage_core.general.debugging=调试
 
-guide.sausage_core.general.introduction.info.0=§l香肠核心§r是一个由 Yaossg 开发的mod，为玩家和开发者提供实用的小工具和库。其他任何 Yaossg 开发模组都依赖于它。\n访问模组的 Github 页面来了解更多技术性细节。\nhttps://github.com/Yaossg/SausageCore
+guide.sausage_core.general.introduction.info.0=§l香肠核心§r是一个由 Yaossg 开发的 mod，它为玩家和模组开发者提供了实用的工具。是其他任何 Yaossg 开发的模组的前置。\n访问它的 Github 页面来了解更多技术性细节。\nhttps://github.com/Yaossg/SausageCore
 guide.sausage_core.general.introduction.info.1=为什么不试试我的姊妹模组 §dManaCraft§r 和 §6Sausage's Factory§r? :)\n访问我的 Github 页面来了解更多。\nhttps://github.com/Yaossg
-
-guide.sausage_core.general.ingredient.info.0=SausageCore 添加了 2 种 Ingredient，ItemWildcard 和 OreFilter.\n关于这个技术性的部分，访问模组的 Github 页面来了解更多。
+guide.sausage_core.general.ingredient.info.0=SausageCore 添加了 2 种 Ingredient，ItemWildcard 和 OreFilter.\n关于这个技术性的部分，访问它的 Github 页面来了解更多。
 guide.sausage_core.general.ingredient.info.1=§lItemWildcard§r(sausage_core:item_wildcard) 就相当于原版的 minecraft:item，但是没有 data 标签，所以匹配任意的 metadata
 guide.sausage_core.general.ingredient.info.2=§lOreFilter§r(sausage_core:ore_filter)根据谓词匹配矿物辞典，可以使用以下谓词：\n  - startsWith\n  - endsWith\n  - contains\n  - matches\n  - equals\n  - equalsIgnoreCase
 
@@ -48,7 +47,7 @@ guide.sausage_core.general.world_type.info.0=SausageCore 加入了 2 种世界�
 guide.sausage_core.general.world_type.info.1=§l自选世界§r是低配版的(1.13)自选世界，可以选择一个生物群系，生成一个整个世界都是这个生物群系的世界。\n选择界面中间的按钮会在mod之间切（如目前是mod A的生物群系，点一下就切换到第一个mod B的生物群系）。
 guide.sausage_core.general.world_type.info.2=§l自定义生物群系大小§r是自定义生物群系大小的世界(默认 = 4，巨型生物群系 = 6)。
 
-guide.sausage_core.general.debugging.info.0=/data 模仿了 1.13 的 NBT 语法高亮，但是只能查询。此外，他还能在玩家身上工作\n下面有个例子：（下面的黑字实际上是白的）\n\n§0{§bName§0: "§aZYL§0", §6Height§0: §61.68§cf§0}
+guide.sausage_core.general.debugging.info.0=§l/data§r 模仿了 1.13 的 NBT 语法高亮，但是只能查询。此外，他还能在玩家身上工作\n下面有个例子：（下面的黑字实际上是白的）\n\n§0{§bName§0: "§aZYL§0", §6Height§0: §61.68§cf§0}
 guide.sausage_core.general.debugging.info.1=§l调试棒§r 是一个趁手的工具。他可以用来切换方块状态，查询方块状态和NBT，实体NBT。\n对着空气 shift + 使用 可以切换模式。
 
 guide.sausage_core.chapter_2.episode_1=第一集

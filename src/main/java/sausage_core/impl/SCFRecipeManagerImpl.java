@@ -105,15 +105,14 @@ public class SCFRecipeManagerImpl extends SCFRecipeManager {
 
 	public static <T> void loadEntries(Path where, Function<JsonObject, T> parser, Consumer<T> consumer) {
 		walkJson(where).forEach(path -> {
+			String file = where.relativize(path).toString();
+			file = file.substring(0, file.lastIndexOf(".json"));
+			ResourceLocation location = new ResourceLocation(where.getFileName().toString(), file);
 			try(BufferedReader reader = Files.newBufferedReader(path)) {
 				JsonElement json = JsonUtils.fromJson(GSON, reader, JsonElement.class);
-				String file = where.relativize(path).toString();
-				file = file.substring(0, file.lastIndexOf(".json"));
-				ResourceLocation location = new ResourceLocation(where.getFileName().toString(), file);
 				load(location, json, parser, consumer);
 			} catch(Exception e) {
-				logger.error("Unexpected Exception: ", e);
-				throw new RuntimeException(e);
+				logger.error("Failed to load the recipe: " + location, e);
 			}
 		});
 	}

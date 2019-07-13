@@ -8,6 +8,7 @@ import net.minecraft.world.World;
 import sausage_core.api.util.nbt.NBTs;
 
 import javax.annotation.concurrent.Immutable;
+import java.util.function.UnaryOperator;
 
 @Immutable
 public class DimensionalBlockPos {
@@ -49,6 +50,18 @@ public class DimensionalBlockPos {
 		buf.writeInt(pos.getX());
 		buf.writeInt(pos.getY());
 		buf.writeInt(pos.getZ());
+	}
+
+	public DimensionalBlockPos apply(UnaryOperator<BlockPos> operator) {
+		return new DimensionalBlockPos(dim, operator.apply(pos));
+	}
+
+	public DimensionalBlockPos within(World world) {
+		return within(world.provider.getDimension());
+	}
+
+	public DimensionalBlockPos within(int dim) {
+		return new DimensionalBlockPos(dim, pos);
 	}
 
 	@Override
