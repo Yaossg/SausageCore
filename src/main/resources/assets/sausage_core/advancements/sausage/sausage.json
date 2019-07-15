@@ -1,22 +1,22 @@
 {
   "display": {
     "icon": {
-      "item": "guideapi:sausage_core-guide"
+      "item": "sausage_core:sausage"
     },
     "title": {
-      "translate": "advancement.sausage.guide.title"
+      "translate": "advancement.sausage.sausage.title"
     },
     "description": {
-      "translate": "advancement.sausage.guide.description"
+      "translate": "advancement.sausage.sausage.description"
     }
   },
   "parent": "sausage_core:sausage/root",
   "criteria": {
-    "guide": {
+    "get_sausage": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [{
-            "item": "guideapi:sausage_core-guide"
+            "item": "sausage_core:sausage"
         }]
       }
     }

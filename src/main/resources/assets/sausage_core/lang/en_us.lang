@@ -22,10 +22,10 @@ sausage_core.debug_stick.mode.entity=Entity Mode
 commands.sausage_core.data.usage=/data block <x> <y> <z> Or /data entity <Entity>
 commands.sausage_core.data.success=Successfully queried NBT:
 
-advancement.sausage.root.title=SausageCore
-advancement.sausage.root.description=Make a deal with sausage or simply make a sausage
-advancement.sausage.guide.title=Hot Dog Leading!
-advancement.sausage.guide.description=You shall be our leader!
+advancement.sausage.root.title=SausageCore: Hot Dog Leading!
+advancement.sausage.root.description=You shall be our leader!
+advancement.sausage.sausage.title=From Sausage Brochure
+advancement.sausage.sausage.description=Make a deal with sausage or simply make a sausage
 
 guide.sausage_core.title=Book of the Hot dog
 

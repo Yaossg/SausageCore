@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "sausage_core:sausage"
+      "item": "guideapi:sausage_core-guide"
     },
     "title": {
       "translate": "advancement.sausage.root.title"
@@ -12,11 +12,11 @@
     "background": "sausage_core:textures/gui/advancements/backgrounds/grass_path_top.png"
   },
   "criteria": {
-    "get_sausage": {
+    "guide": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [{
-            "item": "sausage_core:sausage"
+            "item": "guideapi:sausage_core-guide"
         }]
       }
     }

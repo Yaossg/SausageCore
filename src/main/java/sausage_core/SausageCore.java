@@ -36,7 +36,8 @@ import java.util.ArrayList;
 @Mod(modid = SausageCore.MODID,
 		name = SausageCore.NAME,
 		version = SausageCore.VERSION,
-		acceptedMinecraftVersions = "1.12.2")
+		acceptedMinecraftVersions = "1.12.2",
+		dependencies = "required-after:guideapi")
 @Mod.EventBusSubscriber
 public class SausageCore {
 	public static final String MODID = "sausage_core";
