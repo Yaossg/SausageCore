@@ -44,7 +44,7 @@ public class SausageCore {
 	public static final String NAME = "SausageCore";
 	public static final String VERSION = "@version@";
 	public static Logger logger;
-	public static final IBRegistryManager manager = new IBRegistryManager(MODID, new CreativeTabs(MODID) {
+	public static final IBRegistryManager IB = new IBRegistryManager(MODID, new CreativeTabs(MODID) {
 		@Override
 		public ItemStack getTabIconItem() {
 			return new ItemStack(sausage);
@@ -58,9 +58,9 @@ public class SausageCore {
 		SausageUtils.loadingInformation(NAME, VERSION, MODID);
 		MinecraftForge.EVENT_BUS.register(AutoSyncConfig.class);
 		AutoSyncConfig.AUTO_SYNC_CONFIG.register(MODID);
-		sausage = manager.addItem("sausage", new ItemSausage());
-		debug_stick = manager.addItem("debug_stick", new ItemDebugStick());
-		manager.registerAll();
+		sausage = IB.addItem("sausage", new ItemSausage());
+		debug_stick = IB.addItem("debug_stick", new ItemDebugStick());
+		IB.registerAll();
 		new WorldTypeCustomSize();
 		new WorldTypeBuffet();
 	}
@@ -73,7 +73,7 @@ public class SausageCore {
 
 	@SubscribeEvent
 	public static void loadModels(ModelRegistryEvent event) {
-		manager.loadAllModel();
+		IB.loadAllModel();
 	}
 
 	@SideOnly(Side.CLIENT)

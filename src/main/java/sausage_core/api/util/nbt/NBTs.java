@@ -13,14 +13,11 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import sausage_core.api.util.common.SausageUtils;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.stream.*;
 
 import static net.minecraftforge.common.util.Constants.NBT.*;
 
@@ -311,6 +308,38 @@ public final class NBTs {
 		return entrySet(compound).stream();
 	}
 
+	public static IntStream stream(NBTTagByteArray array) {
+		IntStream.Builder builder = IntStream.builder();
+		for(byte b : raw(array)) builder.add(b);
+		return builder.build();
+	}
+
+	public static IntStream stream(NBTTagIntArray array) {
+		return Arrays.stream(raw(array));
+	}
+
+	public static LongStream stream(NBTTagLongArray array) {
+		return Arrays.stream(raw(array));
+	}
+
+	// Collectors
+
+	public static Collector<? extends NBTBase, ?, NBTTagList> toNBTList() {
+		return Collector.of(NBTTagList::new, NBTTagList::appendTag, (r1, r2) -> {
+			r2.forEach(r1::appendTag);
+			return r1;
+		});
+	}
+
+	public static <T> Collector<T, ?, NBTTagCompound>
+	toNBTCompound(Function<? super T, String> keyMapper, Function<? super T, ? extends NBTBase> valueMapper) {
+		return Collector.of(NBTTagCompound::new, (map, element) -> map.merge(NBTs.of(keyMapper.apply(element),
+				valueMapper.apply(element))), (r1, r2) -> {
+			r1.merge(r2);
+			return r1;
+		});
+	}
+
 	// following methods with 'OrCreate' never cause NPE
 
 	public static NBTTagCompound getOrCreateTag(ItemStack stack) {
@@ -329,6 +358,7 @@ public final class NBTs {
 	}
 
 	// following methods are for NBTs' highlight
+
 	private static final Pattern SIMPLE_VALUE = Pattern.compile("[A-Za-z0-9._+-]+");
 
 	private static String handleEscape(String p_193582_0_) {

@@ -32,15 +32,9 @@ public abstract class TileBase extends TileEntity {
 	}
 
 	protected void notifyClient() {
-		notifyClient(false);
-	}
-
-	protected void notifyClient(boolean notifyNeighbors) {
 		markDirty();
 		IBlockState state = world.getBlockState(pos);
 		world.notifyBlockUpdate(pos, state, state, 3);
-		if(notifyNeighbors)
-			world.notifyNeighborsOfStateChange(pos, state.getBlock(), true);
 	}
 
 	// following methods are overridden to rename their parameters

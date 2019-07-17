@@ -62,7 +62,7 @@ public class SausageCoreGuide implements IGuideBook {
 		BookBinder binder = new BookBinder(guide);
 		binder.setGuideTitle("guide.sausage_core.title");
 		binder.setItemName("guide.sausage_core.title");
-		binder.setCreativeTab(SausageCore.manager.tab);
+		binder.setCreativeTab(SausageCore.IB.tab);
 		binder.setSpawnWithBook();
 		categories.forEach(binder::addCategory);
 		return book = binder.build();

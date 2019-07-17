@@ -35,7 +35,7 @@ public class IBRegistryManager {
 	}
 
 	@Nonnull
-	private CreativeTabs nonnull_tab() {
+	public CreativeTabs nonnull_tab() {
 		return SausageUtils.nonnull(tab);
 	}
 
