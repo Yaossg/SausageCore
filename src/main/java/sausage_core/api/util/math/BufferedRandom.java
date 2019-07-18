@@ -7,6 +7,7 @@ import java.util.Random;
 
 /**
  * byte-saving and {@link java.util.Random} supported RNG
+ * TODO deprecate this for only a little performance optimization
  */
 public class BufferedRandom extends Random {
 	protected Random random; //instance to delegate

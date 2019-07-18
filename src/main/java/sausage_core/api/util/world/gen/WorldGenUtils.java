@@ -16,6 +16,7 @@ public final class WorldGenUtils {
 		return randomPos(random, chunkX, chunkZ, random.nextInt(maxY - minY) + minY);
 	}
 
+	@Deprecated
 	@Nonnull // since world#getBiome returns PLAINS as default value
 	public static Biome getBiome(World world, int chunkX, int chunkZ) {
 		return world.getBiome(new BlockPos(chunkX << 4, 0, chunkZ << 4));

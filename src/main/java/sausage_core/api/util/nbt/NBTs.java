@@ -324,7 +324,7 @@ public final class NBTs {
 
 	// Collectors
 
-	public static Collector<? extends NBTBase, ?, NBTTagList> toNBTList() {
+	public static <T extends NBTBase> Collector<T, ?, NBTTagList> toNBTList() {
 		return Collector.of(NBTTagList::new, NBTTagList::appendTag, (r1, r2) -> {
 			r2.forEach(r1::appendTag);
 			return r1;
@@ -333,8 +333,8 @@ public final class NBTs {
 
 	public static <T> Collector<T, ?, NBTTagCompound>
 	toNBTCompound(Function<? super T, String> keyMapper, Function<? super T, ? extends NBTBase> valueMapper) {
-		return Collector.of(NBTTagCompound::new, (map, element) -> map.merge(NBTs.of(keyMapper.apply(element),
-				valueMapper.apply(element))), (r1, r2) -> {
+		return Collector.of(NBTTagCompound::new, (map, element) -> map.merge(NBTs.of(
+				keyMapper.apply(element), valueMapper.apply(element))), (r1, r2) -> {
 			r1.merge(r2);
 			return r1;
 		});
