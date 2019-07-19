@@ -18,11 +18,11 @@ public interface IModdedRegistry<E> extends Iterable<E> {
 
 	@SuppressWarnings("unchecked")
 	default void registerAll(E... es) {
-		for(E e : es) register(e);
+		for (E e : es) register(e);
 	}
 
 	default void registerAll(Collection<E> es) {
-		for(E e : es) register(e);
+		for (E e : es) register(e);
 	}
 
 	@Override

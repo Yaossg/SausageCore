@@ -33,7 +33,7 @@ public class SausageCoreGuide implements IGuideBook {
 	private void add(Map<ResourceLocation, EntryAbstract> entries, String category, String entry, ItemStack icon, int size) {
 		List<IPage> pages = new ArrayList<>();
 		String name = String.join(".", "guide", SausageCore.MODID, category, entry);
-		for(int i = 0; i < size; ++i) {
+		for (int i = 0; i < size; ++i) {
 			pages.add(new PageText(name + ".info." + i));
 		}
 		entries.put(new ResourceLocation(category, entry),

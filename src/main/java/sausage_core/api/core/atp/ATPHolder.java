@@ -14,16 +14,16 @@ public class ATPHolder {
 	}
 
 	public boolean want(int value) {
-		if(amount >= value) return true;
-		for(IATPProvider provider : providers) {
+		if (amount >= value) return true;
+		for (IATPProvider provider : providers) {
 			amount += provider.provide(value - amount);
-			if(amount >= value) return true;
+			if (amount >= value) return true;
 		}
 		return false;
 	}
 
 	public int take(int value) {
-		if(amount >= value) {
+		if (amount >= value) {
 			amount -= value;
 			return value;
 		}

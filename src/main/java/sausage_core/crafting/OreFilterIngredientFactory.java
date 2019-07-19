@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 public class OreFilterIngredientFactory implements IIngredientFactory {
 	static BiPredicate<String, String> getBiPredicate(String predicate) {
-		switch(predicate) {
+		switch (predicate) {
 			case "startsWith":
 				return String::startsWith;
 			case "endsWith":

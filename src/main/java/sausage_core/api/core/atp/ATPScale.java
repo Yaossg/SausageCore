@@ -11,9 +11,9 @@ public class ATPScale implements IATPProvider {
 
 	@Override
 	public int provide(int goal) {
-		if(scale > 0)
+		if (scale > 0)
 			return underlying.provide((goal + scale - 1) / scale) * scale;
-		if(scale < 0)
+		if (scale < 0)
 			return underlying.provide(goal * -scale) / -scale;
 		return 0;
 	}

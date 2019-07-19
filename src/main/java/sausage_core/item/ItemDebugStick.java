@@ -46,10 +46,10 @@ public class ItemDebugStick extends Item {
 		BLOCK {
 			@Override
 			EnumActionResult onClickBlock(EntityPlayer player, World worldIn, BlockPos pos, EnumFacing facing, EnumHand hand) {
-				if(!worldIn.isRemote) {
+				if (!worldIn.isRemote) {
 					player.sendMessage(new TextComponentString("BlockState: " + worldIn.getBlockState(pos)));
 					TileEntity tileEntity = worldIn.getTileEntity(pos);
-					if(tileEntity != null) {
+					if (tileEntity != null) {
 						NBTTagCompound nbt = tileEntity.writeToNBT(new NBTTagCompound());
 						player.sendMessage(new TextComponentString("TileEntity: ").appendSibling(NBTs.highlight(nbt)));
 					}
@@ -60,7 +60,7 @@ public class ItemDebugStick extends Item {
 		ENTITY {
 			@Override
 			boolean onClickEntity(ItemStack stack, EntityPlayer playerIn, Entity target, EnumHand hand) {
-				if(!playerIn.world.isRemote) {
+				if (!playerIn.world.isRemote) {
 					NBTTagCompound nbt = target.serializeNBT();
 					playerIn.sendMessage(new TextComponentString("Entity: " + EntityList.getKey(target)));
 					playerIn.sendMessage(new TextComponentString("NBT: ").appendSibling(NBTs.highlight(nbt)));
@@ -112,7 +112,7 @@ public class ItemDebugStick extends Item {
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
 		ItemStack heldItem = playerIn.getHeldItem(handIn);
 		boolean sneaking = playerIn.isSneaking();
-		if(sneaking) {
+		if (sneaking) {
 			NBTTagInt mode = NBTs.getOrCreateSubTag(heldItem, "mode", NBTs.of(0));
 			int i = (mode.getInt() + 1) % Mode.values().length;
 			NBTs.setOrCreateSubTag(heldItem, "mode", NBTs.of(i));

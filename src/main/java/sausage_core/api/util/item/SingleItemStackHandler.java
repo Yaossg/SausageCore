@@ -16,7 +16,7 @@ public class SingleItemStackHandler extends ItemStackHandler implements IItemSta
 
 	@Override
 	public void setSize(int size) {
-		if(size != 1)
+		if (size != 1)
 			throw new UnsupportedOperationException();
 	}
 

@@ -22,16 +22,16 @@ public class MultiblockStructure {
 		int maxY = Integer.MIN_VALUE;
 		int minZ = Integer.MAX_VALUE;
 		int maxZ = Integer.MIN_VALUE;
-		for(BlockPos pos : blocks) {
-			if(pos.getX() < minX) minX = pos.getX();
-			if(pos.getX() > maxX) maxX = pos.getX();
-			if(pos.getY() < minY) minY = pos.getY();
-			if(pos.getY() > maxY) maxY = pos.getY();
-			if(pos.getZ() < minZ) minZ = pos.getZ();
-			if(pos.getZ() > maxZ) maxZ = pos.getZ();
-			if(pos.equals(master)) has = true;
+		for (BlockPos pos : blocks) {
+			if (pos.getX() < minX) minX = pos.getX();
+			if (pos.getX() > maxX) maxX = pos.getX();
+			if (pos.getY() < minY) minY = pos.getY();
+			if (pos.getY() > maxY) maxY = pos.getY();
+			if (pos.getZ() < minZ) minZ = pos.getZ();
+			if (pos.getZ() > maxZ) maxZ = pos.getZ();
+			if (pos.equals(master)) has = true;
 		}
-		if(!has) throw new IllegalArgumentException();
+		if (!has) throw new IllegalArgumentException();
 
 		dx = maxX + 1 - minX;
 		dy = maxY + 1 - minY;
@@ -40,5 +40,4 @@ public class MultiblockStructure {
 		min = new BlockPos(minX, minY, minZ);
 		max = new BlockPos(maxX, maxY, maxZ);
 	}
-
 }

@@ -44,18 +44,18 @@ public class BlockPosIterator extends AbstractIterator<BlockPos> {
 	private final int x2, y2, z2;
 
 	protected BlockPos computeNext() {
-		if(first) {
+		if (first) {
 			first = false;
 			return new BlockPos(x, y, z);
-		} else if(x == x2 && y == y2 && z == z2) {
+		} else if (x == x2 && y == y2 && z == z2) {
 			return endOfData();
 		} else {
-			if(x < x2) {
+			if (x < x2) {
 				++x;
-			} else if(y < y2) {
+			} else if (y < y2) {
 				x = x1;
 				++y;
-			} else if(z < z2) {
+			} else if (z < z2) {
 				x = x1;
 				y = y1;
 				++z;

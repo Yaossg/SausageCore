@@ -14,7 +14,6 @@ import net.minecraft.util.text.TextFormatting;
 import sausage_core.api.util.common.SausageUtils;
 
 import java.util.*;
-import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.*;
@@ -99,14 +98,14 @@ public final class NBTs {
 
 	public static NBTTagList of(Iterable<NBTBase> arg) {
 		NBTTagList list = new NBTTagList();
-		for(NBTBase each : arg)
+		for (NBTBase each : arg)
 			list.appendTag(each);
 		return list;
 	}
 
 	public static NBTTagList stringListOf(Iterable<String> arg) {
 		NBTTagList list = new NBTTagList();
-		for(String each : arg)
+		for (String each : arg)
 			list.appendTag(of(each));
 		return list;
 	}
@@ -133,91 +132,91 @@ public final class NBTs {
 
 	public static NBTTagCompound of(Map<String, NBTBase> arg) {
 		NBTTagCompound map = new NBTTagCompound();
-		for(Map.Entry<String, NBTBase> entry : arg.entrySet())
+		for (Map.Entry<String, NBTBase> entry : arg.entrySet())
 			map.setTag(entry.getKey(), entry.getValue());
 		return map;
 	}
 
 	public static NBTTagCompound stringMapOf(Map<String, String> arg) {
 		NBTTagCompound map = new NBTTagCompound();
-		for(Map.Entry<String, String> entry : arg.entrySet())
+		for (Map.Entry<String, String> entry : arg.entrySet())
 			map.setTag(entry.getKey(), of(entry.getValue()));
 		return map;
 	}
 
 	public static NBTTagList asList(byte... args) {
 		NBTTagList list = new NBTTagList();
-		for(byte each : args)
+		for (byte each : args)
 			list.appendTag(of(each));
 		return list;
 	}
 
 	public static NBTTagList asList(short... args) {
 		NBTTagList list = new NBTTagList();
-		for(short each : args)
+		for (short each : args)
 			list.appendTag(of(each));
 		return list;
 	}
 
 	public static NBTTagList asList(int... args) {
 		NBTTagList list = new NBTTagList();
-		for(int each : args)
+		for (int each : args)
 			list.appendTag(of(each));
 		return list;
 	}
 
 	public static NBTTagList asList(long... args) {
 		NBTTagList list = new NBTTagList();
-		for(long each : args)
+		for (long each : args)
 			list.appendTag(of(each));
 		return list;
 	}
 
 	public static NBTTagList asList(float... args) {
 		NBTTagList list = new NBTTagList();
-		for(float each : args)
+		for (float each : args)
 			list.appendTag(of(each));
 		return list;
 	}
 
 	public static NBTTagList asList(double... args) {
 		NBTTagList list = new NBTTagList();
-		for(double each : args)
+		for (double each : args)
 			list.appendTag(of(each));
 		return list;
 	}
 
 	public static NBTTagList asList(String... args) {
 		NBTTagList list = new NBTTagList();
-		for(String each : args)
+		for (String each : args)
 			list.appendTag(of(each));
 		return list;
 	}
 
 	public static NBTTagList asList(byte[]... args) {
 		NBTTagList list = new NBTTagList();
-		for(byte[] each : args)
+		for (byte[] each : args)
 			list.appendTag(of(each));
 		return list;
 	}
 
 	public static NBTTagList asList(int[]... args) {
 		NBTTagList list = new NBTTagList();
-		for(int[] each : args)
+		for (int[] each : args)
 			list.appendTag(of(each));
 		return list;
 	}
 
 	public static NBTTagList asList(long[]... args) {
 		NBTTagList list = new NBTTagList();
-		for(long[] each : args)
+		for (long[] each : args)
 			list.appendTag(of(each));
 		return list;
 	}
 
 	public static NBTTagList asList(NBTBase... args) {
 		NBTTagList list = new NBTTagList();
-		for(NBTBase each : args)
+		for (NBTBase each : args)
 			list.appendTag(each);
 		return list;
 	}
@@ -225,7 +224,7 @@ public final class NBTs {
 	@SafeVarargs
 	public static <T> NBTTagList asList(Function<T, ? extends NBTBase> function, T... args) {
 		NBTTagList list = new NBTTagList();
-		for(T each : args)
+		for (T each : args)
 			list.appendTag(function.apply(each));
 		return list;
 	}
@@ -310,7 +309,7 @@ public final class NBTs {
 
 	public static IntStream stream(NBTTagByteArray array) {
 		IntStream.Builder builder = IntStream.builder();
-		for(byte b : raw(array)) builder.add(b);
+		for (byte b : raw(array)) builder.add(b);
 		return builder.build();
 	}
 
@@ -343,7 +342,7 @@ public final class NBTs {
 	// following methods with 'OrCreate' never cause NPE
 
 	public static NBTTagCompound getOrCreateTag(ItemStack stack) {
-		if(!stack.hasTagCompound()) stack.setTagCompound(new NBTTagCompound());
+		if (!stack.hasTagCompound()) stack.setTagCompound(new NBTTagCompound());
 		return SausageUtils.nonnull(stack.getTagCompound());
 	}
 
@@ -353,12 +352,11 @@ public final class NBTs {
 
 	public static <T extends NBTBase> T getOrCreateSubTag(ItemStack stack, String name, T def) {
 		NBTTagCompound tag = getOrCreateTag(stack);
-		if(!tag.hasKey(name)) tag.setTag(name, def);
+		if (!tag.hasKey(name)) tag.setTag(name, def);
 		return SausageUtils.rawtype(tag.getTag(name));
 	}
 
 	// following methods are for NBTs' highlight
-
 	private static final Pattern SIMPLE_VALUE = Pattern.compile("[A-Za-z0-9._+-]+");
 
 	private static String handleEscape(String p_193582_0_) {
@@ -371,9 +369,9 @@ public final class NBTs {
 	private static final Style KEY_STYLE = new Style().setColor(TextFormatting.AQUA);
 
 	public static ITextComponent highlight(NBTBase nbt) {
-		if(nbt instanceof NBTPrimitive) return highlight((NBTPrimitive) nbt);
+		if (nbt instanceof NBTPrimitive) return highlight((NBTPrimitive) nbt);
 		ITextComponent ret = new TextComponentString("");
-		switch(nbt.getId()) {
+		switch (nbt.getId()) {
 			case TAG_STRING:
 				ret.appendText("\"");
 				String raw = nbt.toString();
@@ -383,8 +381,8 @@ public final class NBTs {
 			case TAG_LIST:
 				ret.appendText("[");
 				NBTTagList list = (NBTTagList) nbt;
-				for(int i = 0; i < list.tagCount(); ++i) {
-					if(i != 0) ret.appendText(", ");
+				for (int i = 0; i < list.tagCount(); ++i) {
+					if (i != 0) ret.appendText(", ");
 					ret.appendSibling(highlight(list.get(i)));
 				}
 				ret.appendText("]");
@@ -394,8 +392,8 @@ public final class NBTs {
 				Collection<String> collection = compound.getKeySet();
 				ret.appendText("{");
 				boolean first = true;
-				for(String s : collection) {
-					if(!first) ret.appendText(", ");
+				for (String s : collection) {
+					if (!first) ret.appendText(", ");
 					first = false;
 					ret.appendSibling(new TextComponentString(handleEscape(s)).setStyle(KEY_STYLE));
 					ret.appendText(": ");
@@ -414,7 +412,7 @@ public final class NBTs {
 	private static ITextComponent handleArrays(NBTBase nbt) {
 		ITextComponent ret = new TextComponentString("[");
 		String type = "";
-		switch(nbt.getId()) {
+		switch (nbt.getId()) {
 			case TAG_BYTE_ARRAY:
 				type = "B";
 				break;
@@ -427,11 +425,11 @@ public final class NBTs {
 		}
 		ret.appendSibling(new TextComponentString(type).setStyle(LITERAL_STYLE));
 		ret.appendText("; ");
-		switch(nbt.getId()) {
+		switch (nbt.getId()) {
 			case TAG_BYTE_ARRAY: {
 				byte[] raw = raw((NBTTagByteArray) nbt);
-				for(int i = 0; i < raw.length; ++i) {
-					if(i != 0) ret.appendText(", ");
+				for (int i = 0; i < raw.length; ++i) {
+					if (i != 0) ret.appendText(", ");
 					ret.appendSibling(new TextComponentString(String.valueOf(raw[i])).setStyle(DIGITS_STYLE))
 							.appendSibling(new TextComponentString(type).setStyle(LITERAL_STYLE));
 				}
@@ -439,16 +437,16 @@ public final class NBTs {
 			break;
 			case TAG_INT_ARRAY: {
 				int[] raw = raw((NBTTagIntArray) nbt);
-				for(int i = 0; i < raw.length; ++i) {
-					if(i != 0) ret.appendText(", ");
+				for (int i = 0; i < raw.length; ++i) {
+					if (i != 0) ret.appendText(", ");
 					ret.appendSibling(new TextComponentString(String.valueOf(raw[i])).setStyle(DIGITS_STYLE));
 				}
 			}
 			break;
 			case TAG_LONG_ARRAY: {
 				long[] raw = raw((NBTTagLongArray) nbt);
-				for(int i = 0; i < raw.length; ++i) {
-					if(i != 0) ret.appendText(", ");
+				for (int i = 0; i < raw.length; ++i) {
+					if (i != 0) ret.appendText(", ");
 					ret.appendSibling(new TextComponentString(String.valueOf(raw[i])).setStyle(DIGITS_STYLE))
 							.appendSibling(new TextComponentString(type).setStyle(LITERAL_STYLE));
 				}
@@ -460,7 +458,7 @@ public final class NBTs {
 
 	private static ITextComponent highlight(NBTPrimitive base) {
 		String value = "", suffix = "";
-		switch(base.getId()) {
+		switch (base.getId()) {
 			case TAG_BYTE:
 				value = String.valueOf(base.getByte());
 				suffix = "b";

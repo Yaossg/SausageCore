@@ -28,8 +28,8 @@ public final class OreDicts {
 	public static List<String> partsOf(String ore) {
 		int begin = 0, end = 0;
 		List<String> parts = new ArrayList<>();
-		while(end < ore.length()) {
-			while(++end < ore.length()
+		while (end < ore.length()) {
+			while (++end < ore.length()
 					&& Character.isLowerCase(ore.charAt(end))) ;
 			parts.add(ore.substring(begin, end));
 			begin = end;

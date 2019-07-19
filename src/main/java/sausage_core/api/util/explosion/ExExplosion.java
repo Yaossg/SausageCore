@@ -63,10 +63,10 @@ public final class ExExplosion extends Explosion {
 
 	public void doExplosionA() {
 		Set<BlockPos> set = Sets.newHashSet();
-		for(int i = 0; i < 16; ++i)
-			for(int j = 0; j < 16; ++j)
-				for(int k = 0; k < 16; ++k)
-					if(i == 0 || i == 15 || j == 0 || j == 15 || k == 0 || k == 15) {
+		for (int i = 0; i < 16; ++i)
+			for (int j = 0; j < 16; ++j)
+				for (int k = 0; k < 16; ++k)
+					if (i == 0 || i == 15 || j == 0 || j == 15 || k == 0 || k == 15) {
 						double dx = i / 7.5 - 1;
 						double dy = j / 7.5 - 1;
 						double dz = k / 7.5 - 1;
@@ -78,17 +78,17 @@ public final class ExExplosion extends Explosion {
 						double y_affected = y;
 						double z_affected = z;
 
-						for(float power = size * (0.7F + random.nextFloat(12) * 0.6F);
-						    power > 0; power -= 0.225F) {
+						for (float power = size * (0.7F + random.nextFloat(12) * 0.6F);
+						     power > 0; power -= 0.225F) {
 							BlockPos pos = new BlockPos(x_affected, y_affected, z_affected);
 							IBlockState state = world.getBlockState(pos);
 
-							if(!air.test(state)) {
+							if (!air.test(state)) {
 								float resistance = exploder != null ? exploder.getExplosionResistance(this, world, pos, state) : state.getBlock().getExplosionResistance(world, pos, null, this);
 								power -= (resistance + 0.3F) * 0.3F;
 							}
 
-							if(power > 0 && (exploder == null || exploder.canExplosionDestroyBlock(this, world, pos, state, power)))
+							if (power > 0 && (exploder == null || exploder.canExplosionDestroyBlock(this, world, pos, state, power)))
 								set.add(pos);
 
 							x_affected += dx * 0.3;
@@ -98,7 +98,7 @@ public final class ExExplosion extends Explosion {
 					}
 
 		affectedBlockPositions.addAll(set);
-		if(!hurtEntity) return;
+		if (!hurtEntity) return;
 		float power = size * 2;
 		int left = MathHelper.floor(x - power - 1);
 		int right = MathHelper.floor(x + power + 1);
@@ -109,17 +109,17 @@ public final class ExExplosion extends Explosion {
 		List<Entity> list = world.getEntitiesWithinAABBExcludingEntity(exploder, new AxisAlignedBB(left, down, front, right, up, back));
 		net.minecraftforge.event.ForgeEventFactory.onExplosionDetonate(world, this, list, power);
 		Vec3d vec3d = new Vec3d(x, y, z);
-		for(Entity entity : list)
-			if(!entity.isImmuneToExplosions()) {
+		for (Entity entity : list)
+			if (!entity.isImmuneToExplosions()) {
 				double effect = entity.getDistance(x, y, z) / power;
 
-				if(effect <= 1) {
+				if (effect <= 1) {
 					double dx = entity.posX - x;
 					double dy = entity.posY + entity.getEyeHeight() - y;
 					double dz = entity.posZ - z;
 					double length = MathHelper.sqrt(dx * dx + dy * dy + dz * dz);
 
-					if(length != 0) {
+					if (length != 0) {
 						dx = dx / length;
 						dy = dy / length;
 						dz = dz / length;
@@ -128,17 +128,17 @@ public final class ExExplosion extends Explosion {
 						entity.attackEntityFrom(DamageSource.causeExplosionDamage(this), (float) ((density * density + density) / 2 * 7 * power + 1));
 						double motion = density;
 
-						if(entity instanceof EntityLivingBase)
+						if (entity instanceof EntityLivingBase)
 							motion = EnchantmentProtection.getBlastDamageReduction((EntityLivingBase) entity, density);
 
 						entity.motionX += dx * motion;
 						entity.motionY += dy * motion;
 						entity.motionZ += dz * motion;
 
-						if(entity instanceof EntityPlayer) {
+						if (entity instanceof EntityPlayer) {
 							EntityPlayer player = (EntityPlayer) entity;
 
-							if(!player.isSpectator() && (!player.isCreative() || !player.capabilities.isFlying))
+							if (!player.isSpectator() && (!player.isCreative() || !player.capabilities.isFlying))
 								playerKnockbackMap.put(player, new Vec3d(dx * density, dy * density, dz * density));
 						}
 					}
@@ -150,16 +150,16 @@ public final class ExExplosion extends Explosion {
 	public void doExplosionB(boolean spawnParticles) {
 		spawnParticles = spawnParticles && this.spawnParticles;
 		world.playSound(null, x, y, z, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 4.0F, (1 + (random.nextFloat(12) - random.nextFloat(12)) * 0.2F) * 0.7F);
-		if(spawnParticles)
-			if(size >= 2 && damagesTerrain)
+		if (spawnParticles)
+			if (size >= 2 && damagesTerrain)
 				world.spawnParticle(EnumParticleTypes.EXPLOSION_HUGE, x, y, z, 1, 0, 0);
 			else world.spawnParticle(EnumParticleTypes.EXPLOSION_LARGE, x, y, z, 1, 0, 0);
 
-		if(damagesTerrain) for(BlockPos pos : affectedBlockPositions) {
+		if (damagesTerrain) for (BlockPos pos : affectedBlockPositions) {
 			IBlockState state = world.getBlockState(pos);
 			Block block = state.getBlock();
 
-			if(spawnParticles) {
+			if (spawnParticles) {
 				double rx = ((float) pos.getX() + random.nextFloat(12));
 				double ry = ((float) pos.getY() + random.nextFloat(12));
 				double rz = ((float) pos.getZ() + random.nextFloat(12));
@@ -179,25 +179,25 @@ public final class ExExplosion extends Explosion {
 				world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, rx, ry, rz, dx, dy, dz);
 			}
 
-			if(!air.test(state)) {
-				if(block.canDropFromExplosion(this))
+			if (!air.test(state)) {
+				if (block.canDropFromExplosion(this))
 					block.dropBlockAsItemWithChance(world, pos, world.getBlockState(pos), 1 / size, 0);
 
 				block.onBlockExploded(world, pos, this);
 			}
 
-			if(!air.test(state)) {
+			if (!air.test(state)) {
 				world.setBlockState(pos, fill);
 			}
 		}
 
-		if(causesFire && !world.isRemote) for(BlockPos pos : affectedBlockPositions)
-			if(air.test(world.getBlockState(pos)) && !air.test(world.getBlockState(pos.down())) && random.nextInt(3) == 0)
+		if (causesFire && !world.isRemote) for (BlockPos pos : affectedBlockPositions)
+			if (air.test(world.getBlockState(pos)) && !air.test(world.getBlockState(pos.down())) && random.nextInt(3) == 0)
 				world.setBlockState(pos, fire);
 	}
 
 	public ExExplosion apply() {
-		if(!net.minecraftforge.event.ForgeEventFactory.onExplosionStart(world, this)) {
+		if (!net.minecraftforge.event.ForgeEventFactory.onExplosionStart(world, this)) {
 			doExplosionA();
 			doExplosionB(FMLCommonHandler.instance().getSide() == Side.CLIENT);
 		}
@@ -296,7 +296,7 @@ public final class ExExplosion extends Explosion {
 		}
 
 		public ExExplosion build() {
-			if(initPos && initSize)
+			if (initPos && initSize)
 				return new ExExplosion(world, entity, x, y, z, size, causesFire, damagesTerrain, hurtEntity, spawnParticles, fire, fill, air);
 			throw new IllegalStateException("ExExplosion.Builder: pos and size are required");
 		}

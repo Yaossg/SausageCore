@@ -33,7 +33,7 @@ public class GUICreateCustomSize extends GuiScreen {
 	}
 
 	protected void actionPerformed(GuiButton button) {
-		switch(button.id) {
+		switch (button.id) {
 			case 0:
 				createWorldGui.chunkProviderSettingsJson = field.getText();
 				mc.displayGuiScreen(createWorldGui);
@@ -48,7 +48,7 @@ public class GUICreateCustomSize extends GuiScreen {
 	protected void keyTyped(char typedChar, int keyCode) {
 		field.textboxKeyTyped(typedChar, keyCode);
 		size = Opts.parseInt(field.getText()).orElse(0);
-		if(keyCode == 28 || keyCode == 156)
+		if (keyCode == 28 || keyCode == 156)
 			actionPerformed(this.buttonList.get(0));
 	}
 

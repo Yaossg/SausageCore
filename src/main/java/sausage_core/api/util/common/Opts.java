@@ -28,7 +28,7 @@ public class Opts {
 	public static OptionalInt parseInt(String s) {
 		try {
 			return OptionalInt.of(Integer.parseInt(s));
-		} catch(NumberFormatException e) {
+		} catch (NumberFormatException e) {
 			return OptionalInt.empty();
 		}
 	}
@@ -36,7 +36,7 @@ public class Opts {
 	public static OptionalLong parseLong(String s) {
 		try {
 			return OptionalLong.of(Long.parseLong(s));
-		} catch(NumberFormatException e) {
+		} catch (NumberFormatException e) {
 			return OptionalLong.empty();
 		}
 	}
@@ -44,7 +44,7 @@ public class Opts {
 	public static OptionalDouble parseDouble(String s) {
 		try {
 			return OptionalDouble.of(Double.parseDouble(s));
-		} catch(NumberFormatException e) {
+		} catch (NumberFormatException e) {
 			return OptionalDouble.empty();
 		}
 	}

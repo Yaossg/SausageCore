@@ -11,7 +11,7 @@ public class AutoSyncConfig {
 
 	@SubscribeEvent
 	public static void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
-		if(AUTO_SYNC_CONFIG.contains(event.getModID()::equals))
+		if (AUTO_SYNC_CONFIG.contains(event.getModID()::equals))
 			ConfigManager.sync(event.getModID(), Config.Type.INSTANCE);
 	}
 }

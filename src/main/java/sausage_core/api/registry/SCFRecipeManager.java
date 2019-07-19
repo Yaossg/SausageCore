@@ -21,10 +21,10 @@ public abstract class SCFRecipeManager {
 	private static SCFRecipeManager INSTANCE;
 
 	public static SCFRecipeManager instance() {
-		if(INSTANCE == null) {
+		if (INSTANCE == null) {
 			try {
 				INSTANCE = (SCFRecipeManager) Class.forName("sausage_core.impl.SCFRecipeManagerImpl").getField("IMPL").get(null);
-			} catch(Exception e) {
+			} catch (Exception e) {
 				logger.fatal("Failed to find a SCFRecipeManager", e);
 				throw new RuntimeException(e);
 			}
@@ -41,7 +41,7 @@ public abstract class SCFRecipeManager {
 	}
 
 	public static <T> SCFRecipeType<T> where(ResourceLocation name) {
-		if(!instance().types.containsKey(name)) throw new NoSuchElementException(name + " has never registered!");
+		if (!instance().types.containsKey(name)) throw new NoSuchElementException(name + " has never registered!");
 		return SausageUtils.rawtype(instance().types.get(name));
 	}
 

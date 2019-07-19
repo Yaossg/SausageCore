@@ -6,7 +6,7 @@ public interface IEnumCyclic<E extends Enum<E> & IEnumCyclic<E>> extends IEnum {
 	default E offset(int i) {
 		E e = getEnum();
 		E[] values = e.getDeclaringClass().getEnumConstants();
-		while(i < 0) i += values.length;
+		while (i < 0) i += values.length;
 		return values[(e.ordinal() + i) % values.length];
 	}
 
@@ -21,7 +21,7 @@ public interface IEnumCyclic<E extends Enum<E> & IEnumCyclic<E>> extends IEnum {
 	default E next(Predicate<E> predicate) {
 		E e = getEnum();
 		predicate = predicate.negate();
-		while(predicate.test(e = e.next())) ;
+		while (predicate.test(e = e.next())) ;
 		return e;
 	}
 
@@ -33,7 +33,7 @@ public interface IEnumCyclic<E extends Enum<E> & IEnumCyclic<E>> extends IEnum {
 	default E previous(Predicate<E> predicate) {
 		E e = getEnum();
 		predicate = predicate.negate();
-		while(predicate.test(e = e.previous())) ;
+		while (predicate.test(e = e.previous())) ;
 		return e;
 	}
 

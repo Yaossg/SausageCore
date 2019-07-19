@@ -12,7 +12,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public final class LazyOptional<T> {
 	private final Supplier<T> supplier;
 	private AtomicReference<T> resolved;
-
 	private static final LazyOptional<Void> EMPTY = new LazyOptional<>(null);
 
 	public static <T> LazyOptional<T> empty() {
@@ -32,9 +31,9 @@ public final class LazyOptional<T> {
 	}
 
 	private T resolve() {
-		if(resolved != null)
+		if (resolved != null)
 			return resolved.get();
-		if(supplier != null)
+		if (supplier != null)
 			return (resolved = new AtomicReference<>(checkNotNull(
 					supplier.get(), "Supplier must not return null value"))).get();
 		return null;
@@ -49,25 +48,24 @@ public final class LazyOptional<T> {
 	}
 
 	public T get() {
-		if(!isPresent()) throw new NoSuchElementException();
+		if (!isPresent()) throw new NoSuchElementException();
 		return resolve();
 	}
 
 	public void ifPresent(Consumer<? super T> consumer) {
 		checkNotNull(consumer);
-		if(isPresent())
+		if (isPresent())
 			consumer.accept(get());
 	}
 
 	public void ifPresentElse(Consumer<? super T> consumer, Runnable runnable) {
 		checkNotNull(consumer);
 		checkNotNull(runnable);
-		if(isPresent())
+		if (isPresent())
 			consumer.accept(get());
 		else
 			runnable.run();
 	}
-
 
 	public <U> LazyOptional<U> map(Function<? super T, ? extends U> mapper) {
 		checkNotNull(mapper);
@@ -79,7 +77,6 @@ public final class LazyOptional<T> {
 		T value = resolve(); // To keep the non-null contract we have to evaluate right now
 		return value != null && predicate.test(value) ? of(() -> value) : empty();
 	}
-
 
 	public LazyOptional<T> orLazy(Supplier<T> other) {
 		return isPresent() ? this : of(other);
@@ -98,9 +95,8 @@ public final class LazyOptional<T> {
 	}
 
 	public <X extends Throwable> T orThrow(Supplier<? extends X> supplier) throws X {
-		if(isPresent())
+		if (isPresent())
 			return get();
 		throw supplier.get();
 	}
-
 }

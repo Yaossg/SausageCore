@@ -63,14 +63,14 @@ public class WorldGenBuilder {
 
 	public IWorldGenWrapper build() {
 		return (random, world, pos) -> {
-			if(atBiome.test(world.getBiome(pos))
+			if (atBiome.test(world.getBiome(pos))
 					&& atDimensionA.test(world.provider.getDimension())
 					&& atDimensionB.test(world.provider.getDimensionType())) {
 				pos = offsetAll.apply(random, pos);
 				double chance = times.applyAsDouble(random);
-				do if(random.nextFloat() < chance)
+				do if (random.nextFloat() < chance)
 					wrapper.generate(random, world, offsetEach.apply(random, pos));
-				while(--chance > 0);
+				while (--chance > 0);
 			}
 		};
 	}

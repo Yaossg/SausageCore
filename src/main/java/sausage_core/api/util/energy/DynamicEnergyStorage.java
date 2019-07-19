@@ -77,9 +77,9 @@ public abstract class DynamicEnergyStorage extends BasicEnergyStorage implements
 
 	@Override
 	protected void onEnergyChanged(int changes) {
-		if(getReceiveRatio() > 0)
+		if (getReceiveRatio() > 0)
 			setMaxReceive(Math.min(receiveUpperLimit, (int) ((getMaxEnergyStored() - getEnergyStored()) * getReceiveRatio() * getReceiveEfficiency())));
-		if(getExtractRatio() > 0)
+		if (getExtractRatio() > 0)
 			setMaxExtract(Math.max(extractLowerLimit, (int) (getEnergyStored() * getExtractRatio() / getExtractEfficiency())));
 	}
 

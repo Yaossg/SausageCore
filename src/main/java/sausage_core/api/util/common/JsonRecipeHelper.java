@@ -28,23 +28,23 @@ public class JsonRecipeHelper {
 
 		Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemName));
 
-		if(item == null)
+		if (item == null)
 			throw new JsonSyntaxException("Unknown item '" + itemName + "'");
 
-		if(item.getHasSubtypes() && !json.has("data"))
+		if (item.getHasSubtypes() && !json.has("data"))
 			throw new JsonParseException("Missing data for item '" + itemName + "'");
 
-		if(json.has("nbt")) {
+		if (json.has("nbt")) {
 			try {
 				JsonElement element = json.get("nbt");
 				NBTTagCompound nbt;
-				if(element.isJsonObject())
+				if (element.isJsonObject())
 					nbt = JsonToNBT.getTagFromJson(GSON.toJson(element));
 				else
 					nbt = JsonToNBT.getTagFromJson(element.getAsString());
 
 				NBTTagCompound tmp = new NBTTagCompound();
-				if(nbt.hasKey("ForgeCaps")) {
+				if (nbt.hasKey("ForgeCaps")) {
 					tmp.setTag("ForgeCaps", nbt.getTag("ForgeCaps"));
 					nbt.removeTag("ForgeCaps");
 				}
@@ -55,7 +55,7 @@ public class JsonRecipeHelper {
 				tmp.setInteger("Damage", JsonUtils.getInt(json, "data", 0));
 
 				return new ItemStack(tmp);
-			} catch(NBTException e) {
+			} catch (NBTException e) {
 				throw new JsonSyntaxException("Invalid NBT Entry: " + e.toString());
 			}
 		}
@@ -67,10 +67,10 @@ public class JsonRecipeHelper {
 
 		Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemName));
 
-		if(item == null)
+		if (item == null)
 			throw new JsonSyntaxException("Unknown item '" + itemName + "'");
 
-		if(item.getHasSubtypes() && !json.has("data"))
+		if (item.getHasSubtypes() && !json.has("data"))
 			throw new JsonParseException("Missing data for item '" + itemName + "'");
 
 		return new ItemStack(item, 1, JsonUtils.getInt(json, "data", 0));
@@ -88,17 +88,17 @@ public class JsonRecipeHelper {
 	private static final Gson GSON = new GsonBuilder().disableHtmlEscaping().create();
 
 	public static FluidStack getFluidStackNBT(JsonObject json) {
-		if(json.has("nbt")) {
+		if (json.has("nbt")) {
 			try {
 				int amount = JsonUtils.getInt(json, "amount");
 				JsonElement element = json.get("nbt");
 				NBTTagCompound nbt;
-				if(element.isJsonObject())
+				if (element.isJsonObject())
 					nbt = JsonToNBT.getTagFromJson(GSON.toJson(element));
 				else
 					nbt = JsonToNBT.getTagFromJson(element.getAsString());
 				return new FluidStack(getFluid(json.get("fluid")), amount, nbt);
-			} catch(NBTException e) {
+			} catch (NBTException e) {
 				throw new JsonSyntaxException("Invalid NBT Entry: " + e.toString());
 			}
 		}

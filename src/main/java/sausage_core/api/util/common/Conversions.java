@@ -41,16 +41,16 @@ public final class Conversions {
 
 	public static String stack2string(ItemStack stack) {
 		StringBuilder builder = new StringBuilder();
-		if(stack.getCount() > 1) {
+		if (stack.getCount() > 1) {
 			builder.append(stack.getCount());
 			builder.append('*');
 		}
 		builder.append(stack.getItem().getRegistryName());
-		if(stack.getHasSubtypes() || stack.isItemStackDamageable()) {
+		if (stack.getHasSubtypes() || stack.isItemStackDamageable()) {
 			builder.append(':');
 			builder.append(stack.getMetadata());
 		}
-		if(stack.hasTagCompound()) {
+		if (stack.hasTagCompound()) {
 			builder.append(stack.getTagCompound());
 		}
 		return builder.toString();
@@ -79,9 +79,9 @@ public final class Conversions {
 	 * Restore TE's NBTs from stack
 	 */
 	public static void stack2TE(ItemStack stack, TileEntity tileEntity) {
-		if(tileEntity == null || block(stack.getItem()) != tileEntity.getBlockType()) return;
+		if (tileEntity == null || block(stack.getItem()) != tileEntity.getBlockType()) return;
 		NBTTagCompound tile = stack.getSubCompound("tile");
-		if(tile != null) {
+		if (tile != null) {
 			tile = tile.copy();
 			tile.setString("id", ForgeHooks.getRegistryName(tileEntity.getClass()));
 			BlockPos pos = tileEntity.getPos();

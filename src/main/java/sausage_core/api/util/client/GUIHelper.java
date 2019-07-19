@@ -27,7 +27,7 @@ public abstract class GUIHelper {
 
 	@SideOnly(Side.CLIENT)
 	public static void drawCenteredString(GuiContainer guiContainer, FontRenderer renderer, String string, int y, int color, boolean shadow) {
-		if(shadow)
+		if (shadow)
 			guiContainer.drawCenteredString(renderer, string, guiContainer.getXSize() / 2, y, color);
 		else
 			renderer.drawString(string, (guiContainer.getXSize() - renderer.getStringWidth(string)) / 2, y, color);

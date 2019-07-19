@@ -40,7 +40,7 @@ public class GUICreateBuffetWorld extends GuiScreen {
 	}
 
 	protected void actionPerformed(GuiButton button) {
-		switch(button.id) {
+		switch (button.id) {
 			case 0:
 				createWorldGui.chunkProviderSettingsJson = String.valueOf(biome);
 				mc.displayGuiScreen(createWorldGui);
@@ -62,14 +62,14 @@ public class GUICreateBuffetWorld extends GuiScreen {
 
 	private void nextModID() {
 		String modid = getBiomeID().getResourceDomain();
-		for(int i = biome + 1; i < WorldTypeBuffet.BIOMES.size(); ++i) {
-			if(!WorldTypeBuffet.BIOMES.get(i).getRegistryName().getResourceDomain().equals(modid)) {
+		for (int i = biome + 1; i < WorldTypeBuffet.BIOMES.size(); ++i) {
+			if (!WorldTypeBuffet.BIOMES.get(i).getRegistryName().getResourceDomain().equals(modid)) {
 				biome = i;
 				return;
 			}
 		}
-		for(int i = 0; i < biome; ++i) {
-			if(!WorldTypeBuffet.BIOMES.get(i).getRegistryName().getResourceDomain().equals(modid)) {
+		for (int i = 0; i < biome; ++i) {
+			if (!WorldTypeBuffet.BIOMES.get(i).getRegistryName().getResourceDomain().equals(modid)) {
 				biome = i;
 				return;
 			}
@@ -77,12 +77,12 @@ public class GUICreateBuffetWorld extends GuiScreen {
 	}
 
 	private void nextBiome() {
-		if(++biome >= WorldTypeBuffet.BIOMES.size())
+		if (++biome >= WorldTypeBuffet.BIOMES.size())
 			biome = 0;
 	}
 
 	private void prevBiome() {
-		if(--biome < 0)
+		if (--biome < 0)
 			biome = WorldTypeBuffet.BIOMES.size() - 1;
 	}
 

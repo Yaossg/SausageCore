@@ -30,16 +30,16 @@ public interface IEnumGUIHandler extends IEnum {
 		@Nullable
 		@Override
 		public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-			for(IEnumGUIHandler value : values)
-				if(ID == value.ID()) return value.getServer(player, world, new BlockPos(x, y, z));
+			for (IEnumGUIHandler value : values)
+				if (ID == value.ID()) return value.getServer(player, world, new BlockPos(x, y, z));
 			return null;
 		}
 
 		@Nullable
 		@Override
 		public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-			for(IEnumGUIHandler value : values)
-				if(ID == value.ID()) return value.getClient(player, world, new BlockPos(x, y, z));
+			for (IEnumGUIHandler value : values)
+				if (ID == value.ID()) return value.getClient(player, world, new BlockPos(x, y, z));
 			return null;
 		}
 	}

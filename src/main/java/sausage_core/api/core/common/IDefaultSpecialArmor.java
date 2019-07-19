@@ -31,7 +31,7 @@ public interface IDefaultSpecialArmor extends ISpecialArmor {
 		}
 
 		public static EnumArmorType fromEquipmentSlot(EntityEquipmentSlot equipmentSlot) {
-			switch(equipmentSlot) {
+			switch (equipmentSlot) {
 				case FEET:
 					return FEET;
 				case LEGS:
@@ -90,7 +90,7 @@ public interface IDefaultSpecialArmor extends ISpecialArmor {
 	 * this implementation call the vanilla method
 	 */
 	default void damageArmor(EntityLivingBase entity, @Nonnull ItemStack stack, DamageSource source, int damage, EnumArmorType armorType) {
-		if(stack.attemptDamageItem(damage, entity.getRNG(), entity instanceof EntityPlayerMP ? ((EntityPlayerMP) entity) : null))
+		if (stack.attemptDamageItem(damage, entity.getRNG(), entity instanceof EntityPlayerMP ? ((EntityPlayerMP) entity) : null))
 			onArmorBroken(entity, stack, source, damage, armorType);
 	}
 

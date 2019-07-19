@@ -54,14 +54,14 @@ public class ItemCustomBucket extends Item {
 		ItemStack stack = player.getHeldItem(hand);
 
 		// milk we set active and return success, drinking code is done elsewhere
-		if(isMilk(stack)) {
+		if (isMilk(stack)) {
 			player.setActiveHand(hand);
 			return new ActionResult<>(EnumActionResult.SUCCESS, stack);
 		}
 
 		// just call the event for all logic
 		ActionResult<ItemStack> ret = ForgeEventFactory.onBucketUse(player, world, stack, rayTrace(world, player, !hasFluid(stack)));
-		if(ret != null) return ret;
+		if (ret != null) return ret;
 
 		return ActionResult.newResult(EnumActionResult.PASS, stack);
 	}
@@ -69,21 +69,21 @@ public class ItemCustomBucket extends Item {
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void onBucketEvent(FillBucketEvent event) {
 		// event was already handled
-		if(event.getResult() != DEFAULT) return;
+		if (event.getResult() != DEFAULT) return;
 
 		// ensure its our item
 		ItemStack stack = event.getEmptyBucket();
-		if(stack.getItem() != this) return;
+		if (stack.getItem() != this) return;
 
 		// validate ray trace
 		RayTraceResult target = event.getTarget();
-		if(target == null || target.typeOfHit != RayTraceResult.Type.BLOCK) return;
+		if (target == null || target.typeOfHit != RayTraceResult.Type.BLOCK) return;
 
 		// make sure we have permission
 		World world = event.getWorld();
 		BlockPos pos = target.getBlockPos();
 		EntityPlayer player = event.getEntityPlayer();
-		if(!world.isBlockModifiable(player, pos)) {
+		if (!world.isBlockModifiable(player, pos)) {
 			event.setCanceled(true);
 			return;
 		}
@@ -91,26 +91,26 @@ public class ItemCustomBucket extends Item {
 		// if we clicked a cauldron, try that first
 		IBlockState state = world.getBlockState(pos);
 		ItemStack result = null;
-		if(state.getBlock() == Blocks.CAULDRON && !player.isSneaking() && canFit(FluidRegistry.WATER)) {
+		if (state.getBlock() == Blocks.CAULDRON && !player.isSneaking() && canFit(FluidRegistry.WATER)) {
 			result = interactWithCauldron(event, player, world, pos, state, stack);
 
 			// deny means cauldron is not right state to fill
-			if(event.getResult() == DENY) return;
+			if (event.getResult() == DENY) return;
 		}
 
 		// if the cauldron passed or there was no cauldron, try placing normal fluids
-		if(result == null) if(hasFluid(stack)) {
+		if (result == null) if (hasFluid(stack)) {
 			// check permissions
-			if(!player.canPlayerEdit(pos, target.sideHit, stack)) {
+			if (!player.canPlayerEdit(pos, target.sideHit, stack)) {
 				event.setCanceled(true);
 				return;
 			}
 
 			BlockPos targetPos = pos.offset(target.sideHit);
-			if(!isMilk(stack)) result = tryPlaceFluid(stack, player, world, targetPos);
+			if (!isMilk(stack)) result = tryPlaceFluid(stack, player, world, targetPos);
 		} else result = tryFillBucket(stack, player, world, pos, target.sideHit);
 
-		if(result != null) {
+		if (result != null) {
 			event.setResult(ALLOW);
 			event.setFilledBucket(result);
 		} else event.setResult(DENY);
@@ -123,7 +123,7 @@ public class ItemCustomBucket extends Item {
 		FluidActionResult result = FluidUtil.tryPickUpFluid(single, player, world, pos, side);
 
 		// if it worked, return that
-		if(result.isSuccess()) return result.getResult();
+		if (result.isSuccess()) return result.getResult();
 		return null;
 	}
 
@@ -131,9 +131,9 @@ public class ItemCustomBucket extends Item {
 		stack = stack.copy();
 		FluidStack fluidStack = getFluid(stack);
 		FluidActionResult result = FluidUtil.tryPlaceFluid(player, player.getEntityWorld(), pos, stack, fluidStack);
-		if(result.isSuccess()) {
+		if (result.isSuccess()) {
 			// water and lava place non-flowing for some reason
-			if(fluidStack.getFluid() == FluidRegistry.WATER || fluidStack.getFluid() == FluidRegistry.LAVA) {
+			if (fluidStack.getFluid() == FluidRegistry.WATER || fluidStack.getFluid() == FluidRegistry.LAVA) {
 				IBlockState state = world.getBlockState(pos);
 				world.neighborChanged(pos, state.getBlock(), pos);
 			}
@@ -148,12 +148,12 @@ public class ItemCustomBucket extends Item {
 		int level = state.getValue(BlockCauldron.LEVEL);
 
 		// if we have a fluid, try filling
-		if(!hasFluid(stack)) {
+		if (!hasFluid(stack)) {
 			// if empty, try emptying
-			if(level == 3) {
+			if (level == 3) {
 				// empty cauldron logic
-				if(player != null) player.addStat(StatList.CAULDRON_USED);
-				if(!world.isRemote) Blocks.CAULDRON.setWaterLevel(world, pos, state, 0);
+				if (player != null) player.addStat(StatList.CAULDRON_USED);
+				if (!world.isRemote) Blocks.CAULDRON.setWaterLevel(world, pos, state, 0);
 				world.playSound(null, pos, SoundEvents.ITEM_BUCKET_FILL, SoundCategory.BLOCKS, 1f, 1f);
 
 				return withFluid(FluidRegistry.WATER);
@@ -161,11 +161,11 @@ public class ItemCustomBucket extends Item {
 
 			// deny so it stops here
 			event.setResult(DENY);
-		} else if(getFluid(stack).getFluid() == FluidRegistry.WATER) {
-			if(level < 3) {
+		} else if (getFluid(stack).getFluid() == FluidRegistry.WATER) {
+			if (level < 3) {
 				// fill cauldron logic
-				if(player != null) player.addStat(StatList.CAULDRON_FILLED);
-				if(!world.isRemote) Blocks.CAULDRON.setWaterLevel(world, pos, state, 3);
+				if (player != null) player.addStat(StatList.CAULDRON_FILLED);
+				if (!world.isRemote) Blocks.CAULDRON.setWaterLevel(world, pos, state, 3);
 				world.playSound(null, pos, SoundEvents.ITEM_BUCKET_EMPTY, SoundCategory.BLOCKS, 1f, 1f);
 
 				// return empty bucket
@@ -196,14 +196,14 @@ public class ItemCustomBucket extends Item {
 	@Override
 	@Nullable
 	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entityLiving) {
-		if(!isMilk(stack)) return stack;
+		if (!isMilk(stack)) return stack;
 
-		if(entityLiving instanceof EntityPlayer && !((EntityPlayer) entityLiving).isCreative())
+		if (entityLiving instanceof EntityPlayer && !((EntityPlayer) entityLiving).isCreative())
 			stack = getEmptyBucket();
 
-		if(!worldIn.isRemote) entityLiving.curePotionEffects(MILK_BUCKET);
+		if (!worldIn.isRemote) entityLiving.curePotionEffects(MILK_BUCKET);
 
-		if(entityLiving instanceof EntityPlayer)
+		if (entityLiving instanceof EntityPlayer)
 			((EntityPlayer) entityLiving).addStat(StatList.getObjectUseStats(this));
 
 		return stack;
@@ -212,12 +212,12 @@ public class ItemCustomBucket extends Item {
 	@Override
 	public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase target, EnumHand hand) {
 		// only work if the bucket is empty and right clicking a cow
-		if(!hasFluid(stack) && target instanceof EntityCow && !player.isCreative() && canMilkFit()) {
+		if (!hasFluid(stack) && target instanceof EntityCow && !player.isCreative() && canMilkFit()) {
 			player.playSound(SoundEvents.ENTITY_COW_MILK, 1f, 1f);
 
 			// modify items
 			// because the action expects mutating the item stack
-			if(stack.getCount() == 1) stack.setItemDamage(1);
+			if (stack.getCount() == 1) stack.setItemDamage(1);
 			else {
 				stack.shrink(1);
 				ItemHandlerHelper.giveItemToPlayer(player, getMilkBucket());
@@ -239,7 +239,7 @@ public class ItemCustomBucket extends Item {
 	@Override
 	public int getItemBurnTime(ItemStack stack) {
 		FluidStack fluid = getFluid(stack);
-		if(fluid != null && fluid.getFluid() == FluidRegistry.LAVA) return 20000;
+		if (fluid != null && fluid.getFluid() == FluidRegistry.LAVA) return 20000;
 		return 0;
 	}
 
@@ -264,24 +264,24 @@ public class ItemCustomBucket extends Item {
 	@Override
 	public String getItemStackDisplayName(ItemStack stack) {
 		String name = "item." + getRegistryName().toString().replace(":", ".");
-		if(isMilk(stack)) return I18n.format(name + ".milk.name");
+		if (isMilk(stack)) return I18n.format(name + ".milk.name");
 		FluidStack fluidStack = getFluid(stack);
-		if(fluidStack == null) return I18n.format(name + ".empty.name");
+		if (fluidStack == null) return I18n.format(name + ".empty.name");
 		return I18n.format(name + ".name", fluidStack.getLocalizedName());
 	}
 
 	@Override
 	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems) {
-		if(isInCreativeTab(tab)) {
+		if (isInCreativeTab(tab)) {
 			// empty
 			subItems.add(getEmptyBucket());
 			// milk
-			if(canMilkFit())
+			if (canMilkFit())
 				subItems.add(getMilkBucket());
 			// add all fluids that the bucket can be filled with
 			// skip milk if registered since we add it manually whether it is a fluid or not
-			for(Fluid fluid : FluidRegistry.getRegisteredFluids().values())
-				if(!fluid.getName().equals("milk") && canFit(fluid)) subItems.add(withFluid(fluid));
+			for (Fluid fluid : FluidRegistry.getRegisteredFluids().values())
+				if (!fluid.getName().equals("milk") && canFit(fluid)) subItems.add(withFluid(fluid));
 		}
 	}
 
@@ -310,9 +310,9 @@ public class ItemCustomBucket extends Item {
 
 		@Override
 		public int fill(FluidStack resource, boolean doFill) {
-			if(container.getCount() != 1 || resource == null || resource.amount < Fluid.BUCKET_VOLUME || outer.hasFluid(container) || !canFillFluidType(resource))
+			if (container.getCount() != 1 || resource == null || resource.amount < Fluid.BUCKET_VOLUME || outer.hasFluid(container) || !canFillFluidType(resource))
 				return 0;
-			if(doFill) setFluid(resource);
+			if (doFill) setFluid(resource);
 			return Fluid.BUCKET_VOLUME;
 		}
 	}
@@ -326,9 +326,9 @@ public class ItemCustomBucket extends Item {
 
 	public FluidStack getFluid(ItemStack container) {
 		// milk logic, if milk is registered we use that basically
-		if(isMilk(container)) return FluidRegistry.getFluidStack("milk", Fluid.BUCKET_VOLUME);
+		if (isMilk(container)) return FluidRegistry.getFluidStack("milk", Fluid.BUCKET_VOLUME);
 		NBTTagCompound tags = container.getTagCompound();
-		if(tags != null) return FluidStack.loadFluidStackFromNBT(tags.getCompoundTag(TAG_FLUIDS));
+		if (tags != null) return FluidStack.loadFluidStackFromNBT(tags.getCompoundTag(TAG_FLUIDS));
 
 		return null;
 	}
@@ -338,7 +338,7 @@ public class ItemCustomBucket extends Item {
 	 * true due to milk buckets
 	 */
 	public boolean hasFluid(ItemStack container) {
-		if(isMilk(container)) return true;
+		if (isMilk(container)) return true;
 		return getFluid(container) != null;
 	}
 
@@ -348,7 +348,7 @@ public class ItemCustomBucket extends Item {
 
 	public ItemStack withFluid(Fluid fluid) {
 		ItemStack stack = getEmptyBucket();
-		if(!canFit(fluid))
+		if (!canFit(fluid))
 			return stack;
 		NBTTagCompound tag = new NBTTagCompound();
 		tag.setTag(TAG_FLUIDS, new FluidStack(fluid, Fluid.BUCKET_VOLUME).writeToNBT(new NBTTagCompound()));

@@ -28,7 +28,7 @@ public abstract class TileBase extends TileEntity {
 
 	@Override
 	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
-		if(network) readFromNBT(pkt.getNbtCompound());
+		if (network) readFromNBT(pkt.getNbtCompound());
 	}
 
 	protected void notifyClient() {

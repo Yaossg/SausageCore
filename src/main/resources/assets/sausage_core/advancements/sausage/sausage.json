@@ -15,9 +15,11 @@
     "get_sausage": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
-        "items": [{
+        "items": [
+          {
             "item": "sausage_core:sausage"
-        }]
+          }
+        ]
       }
     }
   }

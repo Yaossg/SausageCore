@@ -58,12 +58,12 @@ public final class IngredientStack implements Predicate<ItemStack> {
 
 	private static OptionalInt seekCount(JsonElement json) {
 		OptionalInt count = OptionalInt.empty();
-		if(json.isJsonArray()) {
-			for(JsonElement element : json.getAsJsonArray()) {
-				if(element.isJsonObject()) {
+		if (json.isJsonArray()) {
+			for (JsonElement element : json.getAsJsonArray()) {
+				if (element.isJsonObject()) {
 					JsonObject object = element.getAsJsonObject();
-					if("minecraft:empty".equals(JsonUtils.getString(object, "type", "minecraft:item"))) {
-						if(object.has("count")) {
+					if ("minecraft:empty".equals(JsonUtils.getString(object, "type", "minecraft:item"))) {
+						if (object.has("count")) {
 							checkState(!count.isPresent(), "multi-defined count in one ingredient stack");
 							count = OptionalInt.of(object.getAsInt());
 						}
@@ -71,9 +71,9 @@ public final class IngredientStack implements Predicate<ItemStack> {
 				}
 			}
 		}
-		if(json.isJsonObject()) {
+		if (json.isJsonObject()) {
 			JsonObject object = json.getAsJsonObject();
-			if(object.has("count"))
+			if (object.has("count"))
 				count = OptionalInt.of(JsonUtils.getInt(object, "count"));
 		}
 		return count;

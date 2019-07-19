@@ -56,15 +56,15 @@ public final class SausageUtils {
 	 * all of pre-advancements will be given at the same time
 	 */
 	public static void giveAdvancement(Entity player, String modid, String... path) {
-		if(player.getServer() != null && player instanceof EntityPlayerMP) {
+		if (player.getServer() != null && player instanceof EntityPlayerMP) {
 			EntityPlayerMP playerMP = (EntityPlayerMP) player;
 			String joined = String.join("/", path);
 			Advancement advancement = player.getServer().getAdvancementManager()
 					.getAdvancement(new ResourceLocation(modid, joined));
 			checkNotNull(advancement, "Unable to find such an advancement: %s:%s", modid, joined);
 			AdvancementProgress progress = playerMP.getAdvancements().getProgress(advancement);
-			if(!progress.isDone())
-				for(String s : progress.getRemaningCriteria())
+			if (!progress.isDone())
+				for (String s : progress.getRemaningCriteria())
 					playerMP.getAdvancements().grantCriterion(advancement, s);
 		}
 	}
@@ -76,7 +76,7 @@ public final class SausageUtils {
 		String name = tileEntityClass.getSimpleName();
 		int index = name.indexOf("TileEntity");
 		int sub = "TileEntity".length();
-		if(index < 0) {
+		if (index < 0) {
 			index = name.indexOf("Tile");
 			sub = "Tile".length();
 		}
@@ -97,7 +97,7 @@ public final class SausageUtils {
 
 	@SafeVarargs
 	public static void registerTileEntities(String modid, Class<? extends TileEntity>... classes) {
-		for(Class<? extends TileEntity> clazz : classes) registerTileEntity(modid, clazz);
+		for (Class<? extends TileEntity> clazz : classes) registerTileEntity(modid, clazz);
 	}
 
 	/**
@@ -106,7 +106,7 @@ public final class SausageUtils {
 	public static Stream<ItemStack> getAllItems() {
 		return Streams.stream(ForgeRegistries.ITEMS)
 				.flatMap(item -> {
-					if(item.getHasSubtypes()) {
+					if (item.getHasSubtypes()) {
 						NonNullList<ItemStack> subtypes = NonNullList.create();
 						item.getSubItems(CreativeTabs.SEARCH, subtypes);
 						return subtypes.stream();
@@ -141,13 +141,13 @@ public final class SausageUtils {
 		URI uri;
 		try {
 			uri = clazz.getResource(meta).toURI();
-			switch(uri.getScheme()) {
+			switch (uri.getScheme()) {
 				case "file":
 					return Optional.of(Paths.get(uri));
 				case "jar":
 					return Optional.of(FileSystems.newFileSystem(uri, Collections.emptyMap()).getPath(meta));
 			}
-		} catch(Exception e) {
+		} catch (Exception e) {
 			// NO-OP
 		}
 		return Optional.empty();
@@ -181,17 +181,17 @@ public final class SausageUtils {
 	 * @throws IllegalArgumentException if camel is not a valid name
 	 */
 	public static String camelToUnderlined(String camel) {
-		if(camel.isEmpty()) return "";
+		if (camel.isEmpty()) return "";
 		checkArgument(IDENTIFIER.matcher(camel).matches(), "Invalid Name: %s", camel);
 		int underlines = 0;
-		while(camel.charAt(underlines) == '_') ++underlines;
+		while (camel.charAt(underlines) == '_') ++underlines;
 		String _s = Strings.repeat("_", underlines);
 		camel = camel.substring(underlines);
-		if(camel.matches(UPPERS.pattern()))
+		if (camel.matches(UPPERS.pattern()))
 			return _s + camel.toLowerCase();
 		StringBuilder builder = new StringBuilder(camel);
 		Matcher matcher = UPPERS.matcher(camel);
-		for(int offset = 0; matcher.find(); ) {
+		for (int offset = 0; matcher.find(); ) {
 			String group = matcher.group();
 			String replacement = group.length() > 1
 					? "_" + group.substring(0, group.length() - 1).toLowerCase()
@@ -200,8 +200,8 @@ public final class SausageUtils {
 			builder.replace(matcher.start() + offset, matcher.end() + offset, replacement);
 			offset += group.length() > 1 ? 2 : 1;
 		}
-		if(camel.matches(UPPER_TAIL.pattern())) builder.deleteCharAt(builder.lastIndexOf("_"));
-		if(builder.charAt(0) == '_') builder.deleteCharAt(0);
+		if (camel.matches(UPPER_TAIL.pattern())) builder.deleteCharAt(builder.lastIndexOf("_"));
+		if (builder.charAt(0) == '_') builder.deleteCharAt(0);
 		return _s + builder.toString();
 	}
 
@@ -238,7 +238,7 @@ public final class SausageUtils {
 		bus.register(new Object() {
 			@SubscribeEvent
 			public void on(T t) {
-				if(clazz.isInstance(t))
+				if (clazz.isInstance(t))
 					consumer.accept(t);
 			}
 		});

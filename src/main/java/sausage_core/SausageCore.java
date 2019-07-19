@@ -57,7 +57,6 @@ public class SausageCore {
 		logger = event.getModLog();
 		SausageUtils.loadingInformation(NAME, VERSION, MODID);
 		MinecraftForge.EVENT_BUS.register(AutoSyncConfig.class);
-		AutoSyncConfig.AUTO_SYNC_CONFIG.register(MODID);
 		sausage = IB.addItem("sausage", new ItemSausage());
 		debug_stick = IB.addItem("debug_stick", new ItemDebugStick());
 		IB.registerAll();
@@ -86,7 +85,7 @@ public class SausageCore {
 		 */
 		@SubscribeEvent
 		public static void onRender(RenderGameOverlayEvent.Pre event) {
-			if(event.getType() == RenderGameOverlayEvent.ElementType.ALL)
+			if (event.getType() == RenderGameOverlayEvent.ElementType.ALL)
 				GuiIngameForge.renderFood = !GuiIngameForge.renderHealthMount;
 		}
 	}
@@ -98,7 +97,7 @@ public class SausageCore {
 
 	@SubscribeEvent
 	public static void onMissingMappings(RegistryEvent.MissingMappings<Item> event) {
-		for(RegistryEvent.MissingMappings.Mapping<Item> entry : event.getAllMappings())
-			if(entry.key.toString().equals("sausage_core:info_card")) entry.ignore();
+		for (RegistryEvent.MissingMappings.Mapping<Item> entry : event.getAllMappings())
+			if (entry.key.toString().equals("sausage_core:info_card")) entry.ignore();
 	}
 }

@@ -26,7 +26,7 @@ public class PortableItemStackHandler extends ItemStackHandler implements Iterab
 
 	public PortableItemStackHandler(IItemHandler handler) {
 		super(handler.getSlots());
-		for(int i = 0; i < handler.getSlots(); ++i) stacks.set(i, handler.getStackInSlot(i));
+		for (int i = 0; i < handler.getSlots(); ++i) stacks.set(i, handler.getStackInSlot(i));
 	}
 
 	@Override
@@ -37,9 +37,9 @@ public class PortableItemStackHandler extends ItemStackHandler implements Iterab
 	private List<IItemStackSlotView> view = null;
 
 	public List<IItemStackSlotView> view() {
-		if(view == null) {
+		if (view == null) {
 			List<IItemStackSlotView> list = new ArrayList<>(stacks.size());
-			for(int i = 0; i < stacks.size(); ++i) list.add(new ItemStackSlotView(this, i));
+			for (int i = 0; i < stacks.size(); ++i) list.add(new ItemStackSlotView(this, i));
 			view = Collections.unmodifiableList(list);
 		}
 		return view;

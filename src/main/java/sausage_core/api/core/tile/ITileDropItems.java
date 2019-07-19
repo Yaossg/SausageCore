@@ -23,8 +23,8 @@ public interface ITileDropItems {
 
 	default NonNullList<ItemStack> getDrops() {
 		NonNullList<ItemStack> drops = NonNullList.create();
-		for(IItemHandler handler : getItemStackHandlers())
-			for(int i = 0; i < handler.getSlots(); i++)
+		for (IItemHandler handler : getItemStackHandlers())
+			for (int i = 0; i < handler.getSlots(); i++)
 				drops.add(handler.getStackInSlot(i));
 		Collections.addAll(drops, getItemStacks());
 		return drops;
@@ -35,7 +35,7 @@ public interface ITileDropItems {
 	}
 
 	static void dropAll(@Nullable TileEntity tileEntity) {
-		if(tileEntity instanceof ITileDropItems) {
+		if (tileEntity instanceof ITileDropItems) {
 			((ITileDropItems) tileEntity).getDrops()
 					.stream()
 					.filter(drop -> !drop.isEmpty())

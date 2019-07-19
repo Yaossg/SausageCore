@@ -15,9 +15,11 @@
     "guide": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
-        "items": [{
+        "items": [
+          {
             "item": "guideapi:sausage_core-guide"
-        }]
+          }
+        ]
       }
     }
   }

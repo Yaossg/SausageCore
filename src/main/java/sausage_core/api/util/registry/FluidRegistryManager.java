@@ -65,9 +65,9 @@ public class FluidRegistryManager {
 		fluids.forEach((fluid, function) -> {
 			fluid.setUnlocalizedName(modid + "." + fluid.getName());
 			FluidRegistry.registerFluid(fluid);
-			if(FluidRegistry.isUniversalBucketEnabled())
+			if (FluidRegistry.isUniversalBucketEnabled())
 				FluidRegistry.registerFluid(fluid);
-			if(function != NOOP)
+			if (function != NOOP)
 				inner.addBlock(fluid.getName(), fluid.setBlock(function.apply(fluid)).getBlock());
 		});
 		inner.registerAll();

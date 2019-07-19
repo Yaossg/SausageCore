@@ -36,13 +36,13 @@ public class CommandData extends CommandBase {
 
 	@Override
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-		if(args.length < 2) throw new WrongUsageException("commands.sausage_core.data.usage");
+		if (args.length < 2) throw new WrongUsageException("commands.sausage_core.data.usage");
 		EntityPlayerMP player = getCommandSenderAsPlayer(sender);
 		String mode = args[0];
 		args = ArrayUtils.remove(args, 0);
-		switch(mode) {
+		switch (mode) {
 			case "block": {
-				if(args.length > 3) throw new WrongUsageException("commands.sausage_core.data.usage");
+				if (args.length > 3) throw new WrongUsageException("commands.sausage_core.data.usage");
 				BlockPos pos = parseBlockPos(sender, args, 0, false);
 				World world = sender.getEntityWorld();
 				if (!world.isBlockLoaded(pos)) throw new CommandException("commands.blockdata.outOfWorld");
@@ -51,12 +51,14 @@ public class CommandData extends CommandBase {
 				NBTTagCompound nbt = tileentity.writeToNBT(new NBTTagCompound());
 				player.sendMessage(new TextComponentTranslation("commands.sausage_core.data.success"));
 				player.sendMessage(NBTs.highlight(nbt));
-			} break;
+			}
+			break;
 			case "entity": {
-				if(args.length > 1) throw new WrongUsageException("commands.sausage_core.data.usage");
+				if (args.length > 1) throw new WrongUsageException("commands.sausage_core.data.usage");
 				player.sendMessage(new TextComponentTranslation("commands.sausage_core.data.success"));
 				player.sendMessage(NBTs.highlight(entityToNBT(getEntity(server, sender, args[0]))));
-			} break;
+			}
+			break;
 			default:
 				throw new WrongUsageException("commands.sausage_core.data.usage");
 		}
@@ -64,12 +66,14 @@ public class CommandData extends CommandBase {
 
 	@Override
 	public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
-		if(args.length == 1) return getListOfStringsMatchingLastWord(args, "block", "entity");
+		if (args.length == 1) return getListOfStringsMatchingLastWord(args, "block", "entity");
 		String mode = args[0];
 		args = ArrayUtils.remove(args, 0);
-		switch(mode) {
-			case "entity": return getListOfStringsMatchingLastWord(args, server.getOnlinePlayerNames());
-			case "block": if(args.length > 0 && args.length <= 3) return getTabCompletionCoordinate(args, 0, targetPos);
+		switch (mode) {
+			case "entity":
+				return getListOfStringsMatchingLastWord(args, server.getOnlinePlayerNames());
+			case "block":
+				if (args.length > 0 && args.length <= 3) return getTabCompletionCoordinate(args, 0, targetPos);
 		}
 		return Collections.emptyList();
 	}

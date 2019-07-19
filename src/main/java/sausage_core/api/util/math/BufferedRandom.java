@@ -42,8 +42,8 @@ public class BufferedRandom extends Random {
 
 	@Override
 	public synchronized void setSeed(long seed) {
-		if(seed != 0) {
-			if(random == null) {
+		if (seed != 0) {
+			if (random == null) {
 				random = this;
 				super.setSeed(seed);
 			} else
@@ -59,12 +59,12 @@ public class BufferedRandom extends Random {
 
 	@Override
 	public int next(int bits) {
-		if(bits == 0)
+		if (bits == 0)
 			return bits;
-		if(left == 0)
+		if (left == 0)
 			allocate();
 		int ret = 0;
-		if(bits > left) {
+		if (bits > left) {
 			bits -= left;
 			ret = buffer << bits;
 			allocate();
@@ -82,11 +82,11 @@ public class BufferedRandom extends Random {
 
 	@Override
 	public int nextInt(int bound) {
-		if(bound <= 0)
+		if (bound <= 0)
 			throw new IllegalArgumentException("bound must be positive");
-		if(bound == 1)
+		if (bound == 1)
 			return 0;
-		if(bound == 2)
+		if (bound == 2)
 			return next(1);
 		return nextIntInternal(bound);
 	}
@@ -95,7 +95,7 @@ public class BufferedRandom extends Random {
 		int p2 = IntMath.ceilingPowerOfTwo(bound);
 		int bits = IntMath.log2(p2, RoundingMode.UNNECESSARY);
 		int r = next(bits);
-		if(r >= bound) {
+		if (r >= bound) {
 			int r2 = next(bits) + r - bound;
 			r = (int) ((bound / (2.0f * p2 - bound)) * r2);
 		}
@@ -119,7 +119,7 @@ public class BufferedRandom extends Random {
 	private float nextG;
 
 	public synchronized float nextFloatGaussian() {
-		if(hasNextG) {
+		if (hasNextG) {
 			hasNextG = false;
 			return nextG;
 		} else {
@@ -128,7 +128,7 @@ public class BufferedRandom extends Random {
 				v1 = 2 * nextFloat() - 1; // between -1 and 1
 				v2 = 2 * nextFloat() - 1; // between -1 and 1
 				s = v1 * v1 + v2 * v2;
-			} while(s >= 1 || s == 0);
+			} while (s >= 1 || s == 0);
 			float multiplier = (float) Math.sqrt(-2 * StrictMath.log(s) / s);
 			nextG = v2 * multiplier;
 			hasNextG = true;

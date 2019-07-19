@@ -20,8 +20,8 @@ public class PluginLoader {
 
 	public void execute() {
 		plugins.asMap().forEach((modid, plugins) -> {
-			if(Loader.isModLoaded(modid))
-				for(String plugin : plugins)
+			if (Loader.isModLoaded(modid))
+				for (String plugin : plugins)
 					execute(modid, plugin);
 		});
 	}
@@ -31,12 +31,12 @@ public class PluginLoader {
 		Logger logger = LogManager.getLogger(owner);
 		try {
 			pluginCore = (PluginCore) Class.forName(plugin).newInstance();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			logger.error("Failed to create an instance of plugin for " + modid, e);
 			return;
 		}
 		String pluginModid = pluginCore.get();
-		if(!pluginModid.equals(modid)) {
+		if (!pluginModid.equals(modid)) {
 			logger.warn("The plugin({})'s modid({}) is different from what it registered({})", plugin, pluginModid, modid);
 			return;
 		}
