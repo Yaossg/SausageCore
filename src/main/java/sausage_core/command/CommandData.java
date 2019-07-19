@@ -42,7 +42,7 @@ public class CommandData extends CommandBase {
 		args = ArrayUtils.remove(args, 0);
 		switch (mode) {
 			case "block": {
-				if (args.length > 3) throw new WrongUsageException("commands.sausage_core.data.usage");
+				if (args.length != 3) throw new WrongUsageException("commands.sausage_core.data.usage");
 				BlockPos pos = parseBlockPos(sender, args, 0, false);
 				World world = sender.getEntityWorld();
 				if (!world.isBlockLoaded(pos)) throw new CommandException("commands.blockdata.outOfWorld");
@@ -54,7 +54,7 @@ public class CommandData extends CommandBase {
 			}
 			break;
 			case "entity": {
-				if (args.length > 1) throw new WrongUsageException("commands.sausage_core.data.usage");
+				if (args.length != 1) throw new WrongUsageException("commands.sausage_core.data.usage");
 				player.sendMessage(new TextComponentTranslation("commands.sausage_core.data.success"));
 				player.sendMessage(NBTs.highlight(entityToNBT(getEntity(server, sender, args[0]))));
 			}

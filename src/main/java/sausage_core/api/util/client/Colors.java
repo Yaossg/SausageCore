@@ -1,5 +1,7 @@
 package sausage_core.api.util.client;
 
+import java.lang.reflect.Field;
+
 /**
  * The list of standard 148 SVG colors
  * <p>Including 139 different colors with 9 alias:
@@ -749,4 +751,13 @@ public final class Colors {
 	 * <div style="border:1px solid black;width:40px;height:20px;background-color:#9ACD32;float:right;margin: 0 10px 0 0"></div>
 	 */
 	public static final int YELLOW_GREEN = 0xFF9ACD32;
+
+	public static int getByToken(String token) {
+		try {
+			Field[] fields = Colors.class.getFields();
+			return fields[token.hashCode() % fields.length].getInt(null);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 }
