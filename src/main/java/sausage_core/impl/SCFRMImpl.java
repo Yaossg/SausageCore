@@ -20,8 +20,8 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-public class SCFRecipeManagerImpl extends SCFRecipeManager {
-	public static final SCFRecipeManagerImpl IMPL = new SCFRecipeManagerImpl();
+public class SCFRMImpl extends SCFRecipeManager {
+	public static final SCFRMImpl IMPL = new SCFRMImpl();
 	private Path configRoot;
 
 	private static void writeMetadata(Path metadata, String version, String description) throws IOException {

@@ -16,7 +16,7 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
-public class JsonRecipeHelper {
+public final class JsonRecipeHelper {
 	private static final JsonContext MINECRAFT = new JsonContext("minecraft");
 
 	public static Ingredient getIngredient(JsonElement json) {

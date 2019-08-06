@@ -8,7 +8,7 @@ import java.util.OptionalInt;
 import java.util.OptionalLong;
 
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-public class Opts {
+public final class Opts {
 	public static Optional<String> opt(String string) {
 		return string.isEmpty() ? Optional.empty() : Optional.of(string);
 	}

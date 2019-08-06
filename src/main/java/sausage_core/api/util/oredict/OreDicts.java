@@ -15,11 +15,6 @@ public final class OreDicts {
 		return Arrays.stream(OreDictionary.getOreIDs(stack)).mapToObj(OreDictionary::getOreName);
 	}
 
-	@Deprecated
-	public static boolean startsWith(ItemStack stack, String prefix) {
-		return names(stack).anyMatch(s -> s.startsWith(prefix));
-	}
-
 	public static Optional<ItemStack> getOre(String name) {
 		NonNullList<ItemStack> ores = OreDictionary.getOres(name);
 		return ores.isEmpty() ? Optional.empty() : Optional.of(ores.get(0));

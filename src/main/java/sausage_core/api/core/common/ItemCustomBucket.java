@@ -228,7 +228,6 @@ public class ItemCustomBucket extends Item {
 		return false;
 	}
 
-
 	/* Item stack properties */
 
 	@Override

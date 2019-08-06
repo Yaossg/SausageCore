@@ -23,7 +23,7 @@ public abstract class SCFRecipeManager {
 	public static SCFRecipeManager instance() {
 		if (INSTANCE == null) {
 			try {
-				INSTANCE = (SCFRecipeManager) Class.forName("sausage_core.impl.SCFRecipeManagerImpl").getField("IMPL").get(null);
+				INSTANCE = (SCFRecipeManager) Class.forName("sausage_core.impl.SCFRMImpl").getField("IMPL").get(null);
 			} catch (Exception e) {
 				logger.fatal("Failed to find a SCFRecipeManager", e);
 				throw new RuntimeException(e);

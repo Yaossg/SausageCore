@@ -1,4 +1,4 @@
-package sausage_core.api.util.registry;
+package sausage_core.api.core.registry;
 
 import java.lang.reflect.Array;
 import java.util.*;

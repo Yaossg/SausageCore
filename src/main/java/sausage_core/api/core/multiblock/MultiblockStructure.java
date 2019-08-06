@@ -1,10 +1,12 @@
 package sausage_core.api.core.multiblock;
 
+import com.google.common.annotations.Beta;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.List;
 
+@Beta
 public class MultiblockStructure {
 	public final BlockPos master;
 	public final List<BlockPos> blocks;

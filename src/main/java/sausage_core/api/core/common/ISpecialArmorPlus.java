@@ -10,9 +10,9 @@ import net.minecraftforge.common.ISpecialArmor;
 
 import javax.annotation.Nonnull;
 
-public interface IDefaultSpecialArmor extends ISpecialArmor {
+public interface ISpecialArmorPlus extends ISpecialArmor {
 	/**
-	 * from Forge's TO-DO item
+	 * From Forge's TO-DO item
 	 */
 	enum EnumArmorType {
 		HEAD(EntityEquipmentSlot.HEAD),
@@ -31,18 +31,7 @@ public interface IDefaultSpecialArmor extends ISpecialArmor {
 		}
 
 		public static EnumArmorType fromEquipmentSlot(EntityEquipmentSlot equipmentSlot) {
-			switch (equipmentSlot) {
-				case FEET:
-					return FEET;
-				case LEGS:
-					return LEGS;
-				case CHEST:
-					return CHEST;
-				case HEAD:
-					return HEAD;
-				default:
-					throw new IllegalArgumentException("invalid equipmentSlot: " + equipmentSlot);
-			}
+			return valueOf(equipmentSlot.getName().toUpperCase());
 		}
 
 		public int toSlot() {
@@ -71,7 +60,7 @@ public interface IDefaultSpecialArmor extends ISpecialArmor {
 
 	/**
 	 * {@inheritDoc}
-	 * all damage will apply on {@link IDefaultSpecialArmor#damageArmor(EntityLivingBase, ItemStack, DamageSource, int, int)} instead of vanilla
+	 * all damage will apply on {@link ISpecialArmorPlus#damageArmor(EntityLivingBase, ItemStack, DamageSource, int, int)} instead of vanilla
 	 */
 	default ArmorProperties getProperties(EntityLivingBase player, @Nonnull ItemStack armor, DamageSource source, double damage, EnumArmorType armorType) {
 		return new ArmorProperties(0, 1, Integer.MAX_VALUE);

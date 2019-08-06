@@ -1,4 +1,4 @@
-package sausage_core.api.util.registry;
+package sausage_core.api.core.registry;
 
 import net.minecraft.util.NonNullList;
 

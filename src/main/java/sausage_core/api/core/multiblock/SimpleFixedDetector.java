@@ -8,6 +8,7 @@ import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import sausage_core.api.util.common.LazyOptional;
+import sausage_core.api.util.function.IRotatableBSPredicate;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,25 +17,25 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class SimpleFixedDetector implements IMultiBlockDetector {
-	private final List<Map<BlockPos, IBlockStatePredicate>> matchers = new ArrayList<>(12);
+	private final List<Map<BlockPos, IRotatableBSPredicate>> matchers = new ArrayList<>(12);
 
-	public SimpleFixedDetector(Map<BlockPos, IBlockStatePredicate> matcher) {
+	public SimpleFixedDetector(Map<BlockPos, IRotatableBSPredicate> matcher) {
 		for (Rotation rotation : Rotation.values())
 			matchers.add(translate(matcher, rotation));
 	}
 
-	private Map<BlockPos, IBlockStatePredicate> translate(Map<BlockPos, IBlockStatePredicate> matcher, Rotation rotation) {
-		Map<BlockPos, IBlockStatePredicate> map = new HashMap<>();
-		for (Map.Entry<BlockPos, IBlockStatePredicate> entry : matcher.entrySet())
+	private Map<BlockPos, IRotatableBSPredicate> translate(Map<BlockPos, IRotatableBSPredicate> matcher, Rotation rotation) {
+		Map<BlockPos, IRotatableBSPredicate> map = new HashMap<>();
+		for (Map.Entry<BlockPos, IRotatableBSPredicate> entry : matcher.entrySet())
 			map.put(entry.getKey().rotate(rotation), entry.getValue().rotate(rotation));
 		return map;
 	}
 
 	@Override
 	public LazyOptional<MultiblockStructure> detect(IBlockAccess world, BlockPos master) {
-		for (Map<BlockPos, IBlockStatePredicate> matcher : matchers) {
+		for (Map<BlockPos, IRotatableBSPredicate> matcher : matchers) {
 			boolean matched = true;
-			for (Map.Entry<BlockPos, IBlockStatePredicate> entry : matcher.entrySet()) {
+			for (Map.Entry<BlockPos, IRotatableBSPredicate> entry : matcher.entrySet()) {
 				if (!entry.getValue().test(world.getBlockState(master.add(entry.getKey())))) {
 					matched = false;
 					break;
@@ -48,15 +49,15 @@ public class SimpleFixedDetector implements IMultiBlockDetector {
 		return LazyOptional.empty();
 	}
 
-	public static PatternBuilder patternBuilder(IBlockStatePredicate master) {
+	public static PatternBuilder patternBuilder(IRotatableBSPredicate master) {
 		return new PatternBuilder(master);
 	}
 
 	public static class PatternBuilder {
 		private Int2ObjectMap<String[]> layers = new Int2ObjectArrayMap<>();
-		private Char2ObjectMap<IBlockStatePredicate> mappings = new Char2ObjectArrayMap<>();
+		private Char2ObjectMap<IRotatableBSPredicate> mappings = new Char2ObjectArrayMap<>();
 
-		public PatternBuilder(IBlockStatePredicate master) {
+		public PatternBuilder(IRotatableBSPredicate master) {
 			mappings.put('M', master);
 		}
 
@@ -65,7 +66,7 @@ public class SimpleFixedDetector implements IMultiBlockDetector {
 			return this;
 		}
 
-		public PatternBuilder mapping(char ch, IBlockStatePredicate state) {
+		public PatternBuilder mapping(char ch, IRotatableBSPredicate state) {
 			if (ch == ' ' || mappings.containsKey(ch)) throw new IllegalArgumentException();
 			mappings.put(ch, state);
 			return this;
@@ -85,7 +86,7 @@ public class SimpleFixedDetector implements IMultiBlockDetector {
 				}
 			}
 			if (!masterFound) throw new IllegalArgumentException();
-			Map<BlockPos, IBlockStatePredicate> map = new HashMap<>();
+			Map<BlockPos, IRotatableBSPredicate> map = new HashMap<>();
 			for (Int2ObjectMap.Entry<String[]> entry : layers.int2ObjectEntrySet()) {
 				int y = entry.getIntKey();
 				String[] layer = entry.getValue();
@@ -93,7 +94,7 @@ public class SimpleFixedDetector implements IMultiBlockDetector {
 					for (int x = 0; x < layer[z].length(); ++x) {
 						char key = layer[z].charAt(x);
 						if (key == ' ') continue;
-						IBlockStatePredicate state = mappings.get(key);
+						IRotatableBSPredicate state = mappings.get(key);
 						map.put(new BlockPos(x - masterX, y, z - masterZ), state);
 					}
 				}

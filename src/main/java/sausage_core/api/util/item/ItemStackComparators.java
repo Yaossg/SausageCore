@@ -3,14 +3,14 @@ package sausage_core.api.util.item;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import sausage_core.api.util.common.IEqualityComparator;
-import sausage_core.api.util.common.IIntEqualityComparator;
+import sausage_core.api.util.function.IEqualityComparator;
+import sausage_core.api.util.function.IIntEqualityComparator;
 
 import java.util.Objects;
 import java.util.function.IntPredicate;
 import java.util.function.Predicate;
 
-public class ItemStackComparators {
+public final class ItemStackComparators {
 	public static final Builder ITEM_EQUAL_BUILDER = builder().anyCount().anyNBT();
 	public static final IEqualityComparator<ItemStack>
 			IS_ITEM_EQUAL = ItemStack::isItemEqual,

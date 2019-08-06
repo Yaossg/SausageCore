@@ -1,85 +1,67 @@
 package sausage_core.api.util.registry;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.ItemMeshDefinition;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.block.statemap.StateMapperBase;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import sausage_core.api.core.client.FluidStateMapper;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Function;
 
-import static sausage_core.api.util.common.Conversions.To.item;
+import static sausage_core.api.util.common.Conversions.To.block;
 
-public class FluidRegistryManager {
-	@SideOnly(Side.CLIENT)
-	private static final class StateMapper extends StateMapperBase implements ItemMeshDefinition {
-		private final ModelResourceLocation location;
+public final class FluidRegistryManager implements IRegistryManager {
+	final IBRegistryManager inner;
+	final List<Fluid> fluids = new ArrayList<>();
 
-		private StateMapper(ResourceLocation location) {
-			this.location = new ModelResourceLocation(location, "fluid");
-		}
-
-		@Override
-		public ModelResourceLocation getModelLocation(ItemStack stack) {
-			return location;
-		}
-
-		@Override
-		protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
-			return location;
-		}
+	private static void loadBlockModel(Item item) {
+		loadBlockModelClient(item);
 	}
 
-	public final String modid;
-	final IBRegistryManager inner;
-	final Map<Fluid, Function<Fluid, Block>> fluids = new HashMap<>();
+	@SideOnly(Side.CLIENT)
+	private static void loadBlockModelClient(Item item) {
+		Block block = block(item);
+		FluidStateMapper mapper = new FluidStateMapper(block.getRegistryName());
+		ModelLoader.setCustomMeshDefinition(item, mapper);
+		ModelLoader.setCustomStateMapper(block, mapper);
+	}
 
 	public FluidRegistryManager(String modid) {
-		this.modid = modid;
-		this.inner = new IBRegistryManager(modid);
+		inner = new IBRegistryManager(modid);
 	}
 
-	private static final Function NOOP = Function.identity();
-
-	@SuppressWarnings("unchecked")
-	public <T extends Fluid> T addFluid(T fluid) {
-		fluids.put(fluid, NOOP);
+	public <T extends Fluid> T register(T fluid) {
+		FluidRegistry.registerFluid(fluid);
+		if (FluidRegistry.isUniversalBucketEnabled())
+			FluidRegistry.addBucketForFluid(fluid);
 		return fluid;
 	}
 
-	public <T extends Fluid> T addFluid(T fluid, Function<Fluid, Block> function) {
-		fluids.put(fluid, function);
+	public <T extends Fluid> T register(T fluid, Function<Fluid, Block> function) {
+		Block block = function.apply(register(fluid));
+		inner.addBlock(fluid.setBlock(block).getName(), block, FluidRegistryManager::loadBlockModel);
 		return fluid;
 	}
 
-	public void register() {
-		fluids.forEach((fluid, function) -> {
-			fluid.setUnlocalizedName(modid + "." + fluid.getName());
-			FluidRegistry.registerFluid(fluid);
-			if (FluidRegistry.isUniversalBucketEnabled())
-				FluidRegistry.registerFluid(fluid);
-			if (function != NOOP)
-				inner.addBlock(fluid.getName(), fluid.setBlock(function.apply(fluid)).getBlock());
-		});
-		inner.registerAll();
+	public <T extends Fluid> T registerOnlyBlock(T fluid, Function<Fluid, Block> function) {
+		Block block = function.apply(register(fluid));
+		inner.addOnlyBlock(fluid.setBlock(block).getName(), block);
+		return fluid;
 	}
 
-	@SideOnly(Side.CLIENT)
-	public void loadModel() {
-		inner.blocks.forEach(block -> {
-			StateMapper mapper = new StateMapper(block.getRegistryName());
-			ModelLoader.setCustomMeshDefinition(item(block), mapper);
-			ModelLoader.setCustomStateMapper(block, mapper);
-		});
+	@Override
+	public String modid() {
+		return inner.modid;
+	}
+
+	@Override
+	public Class<?>[] types() {
+		return new Class[] {Fluid.class, Block.class, Item.class};
 	}
 }
 

@@ -3,11 +3,11 @@ package sausage_core.api.util.item;
 import com.google.common.collect.Collections2;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
-import sausage_core.api.util.common.IEqualityComparator;
+import sausage_core.api.util.function.IEqualityComparator;
 
 import java.util.List;
 
-public class ItemStackMatches {
+public final class ItemStackMatches {
 	public static NonNullList<ItemStack> merge(List<ItemStack> stacks) {
 		PortableItemStackHandler handler = new PortableItemStackHandler(stacks.size());
 		for (ItemStack stack : stacks) {

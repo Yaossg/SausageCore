@@ -23,7 +23,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -43,14 +42,6 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public final class SausageUtils {
-	/**
-	 * for {@link net.minecraft.block.Block#setLightLevel(float)},
-	 * convert integer light level to float one.
-	 */
-	public static float lightLevelOf(int level) {
-		return level / 16f;
-	}
-
 	/**
 	 * give an advancement to player,
 	 * all of pre-advancements will be given at the same time
@@ -101,9 +92,9 @@ public final class SausageUtils {
 	}
 
 	/**
-	 * @return all items in the game, including all subtypes
+	 * @return all itemstacks in the game, including all subtypes
 	 */
-	public static Stream<ItemStack> getAllItems() {
+	public static Stream<ItemStack> allItemStacks() {
 		return Streams.stream(ForgeRegistries.ITEMS)
 				.flatMap(item -> {
 					if (item.getHasSubtypes()) {
@@ -118,23 +109,13 @@ public final class SausageUtils {
 	}
 
 	/**
-	 * @return all blocks in the game, including every states
+	 * @return all blockstates in the game, including all valid ones
 	 */
-	static Stream<IBlockState> getAllBlocks() {
+	public static Stream<IBlockState> allBlockStates() {
 		return Streams.stream(ForgeRegistries.BLOCKS)
 				.map(Block::getBlockState)
 				.map(BlockStateContainer::getValidStates)
 				.flatMap(Collection::stream);
-	}
-
-	/**
-	 * sausage-private
-	 * only used in sausage's code
-	 */
-	public static void loadingInformation(String name, String version, String modid) {
-		Logger logger = LogManager.getLogger(modid);
-		logger.info("{} {} is loading now", name, version);
-		logger.warn("If you find any bug, please create a new issue on github.com/Yaossg/{} ", name);
 	}
 
 	public static Optional<Path> getPath(Class<?> clazz, String meta) {
@@ -234,13 +215,22 @@ public final class SausageUtils {
 		return t;
 	}
 
-	public static <T extends Event> void register(EventBus bus, Class<T> clazz, Consumer<T> consumer) {
+	public static <E extends Event> void register(EventBus bus, Class<E> clazz, Consumer<E> consumer) {
 		bus.register(new Object() {
 			@SubscribeEvent
-			public void on(T t) {
-				if (clazz.isInstance(t))
-					consumer.accept(t);
+			public void on(E event) {
+				if (clazz.isInstance(event))
+					consumer.accept(event);
 			}
 		});
+	}
+
+	public static String toString(ItemStack stack) {
+		if (stack == ItemStack.EMPTY)
+			return "ItemStack.EMPTY";
+		String base = String.format("%s@%d", stack.getItem().getRegistryName(), stack.getMetadata());
+		if (stack.getCount() > 1) base = stack.getCount() + "*" + base;
+		if (stack.getTagCompound() != null) base += stack.getTagCompound();
+		return base;
 	}
 }

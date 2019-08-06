@@ -34,9 +34,9 @@ public class GUICreateBuffetWorld extends GuiScreen {
 		title = I18n.format("generator.sausage_core.buffet.title");
 		buttonList.add(new GuiButton(0, width / 2 - 155, height - 28, 150, 20, I18n.format("gui.done")));
 		buttonList.add(new GuiButton(1, width / 2 + 5, height - 28, 150, 20, I18n.format("gui.cancel")));
-		buttonList.add(text = new GuiButton(10, width / 2 - 100, height / 2 - 20, 200, 20, getDisplayBiome()));
-		buttonList.add(new GuiButton(2, width / 2 - 125, height / 2 - 20, 20, 20, "<"));
-		buttonList.add(new GuiButton(3, width / 2 + 105, height / 2 - 20, 20, 20, ">"));
+		buttonList.add(text = new GuiButton(10, width / 2 - 130, height / 2 - 20, 260, 20, getDisplayBiome()));
+		buttonList.add(new GuiButton(2, width / 2 - 155, height / 2 - 20, 20, 20, "<"));
+		buttonList.add(new GuiButton(3, width / 2 + 135, height / 2 - 20, 20, 20, ">"));
 	}
 
 	protected void actionPerformed(GuiButton button) {

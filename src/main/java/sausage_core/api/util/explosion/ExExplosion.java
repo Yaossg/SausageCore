@@ -13,10 +13,7 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.*;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -55,10 +52,6 @@ public final class ExExplosion extends Explosion {
 				^ fire.hashCode() ^ fill.hashCode()
 				^ (long) air.hashCode() << 32
 				^ world.getWorldTime();
-	}
-
-	public static Builder builder(World world) {
-		return new Builder(world);
 	}
 
 	public void doExplosionA() {
@@ -204,13 +197,12 @@ public final class ExExplosion extends Explosion {
 		return this;
 	}
 
+	public static Builder builder() {
+		return new Builder();
+	}
+
 	public static class Builder {
-		private final World world;
 		private Entity entity = null;
-		private boolean initPos = false;
-		private double x = 0;
-		private double y = 0;
-		private double z = 0;
 		private boolean initSize = false;
 		private float size = 0;
 		private boolean causesFire = false;
@@ -220,34 +212,6 @@ public final class ExExplosion extends Explosion {
 		private IBlockState fill = Blocks.AIR.getDefaultState();
 		private IBlockState fire = Blocks.FIRE.getDefaultState();
 		private Predicate<IBlockState> air = state -> state.getMaterial() == Material.AIR;
-
-		private Builder(World world) {
-			this.world = world;
-		}
-
-		public Builder at(BlockPos pos) {
-			x = pos.getX() + 0.5;
-			y = pos.getY() + 0.5;
-			z = pos.getZ() + 0.5;
-			initPos = true;
-			return this;
-		}
-
-		public Builder at(Vec3d vec3d) {
-			x = vec3d.x;
-			y = vec3d.y;
-			z = vec3d.z;
-			initPos = true;
-			return this;
-		}
-
-		public Builder at(double x, double y, double z) {
-			this.x = x;
-			this.y = y;
-			this.z = z;
-			initPos = true;
-			return this;
-		}
 
 		public Builder by(Entity entity) {
 			this.entity = entity;
@@ -295,8 +259,16 @@ public final class ExExplosion extends Explosion {
 			return this;
 		}
 
-		public ExExplosion build() {
-			if (initPos && initSize)
+		public ExExplosion build(World world, Vec3i pos) {
+			return build(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
+		}
+
+		public ExExplosion build(World world, Vec3d vec3d) {
+			return build(world, vec3d.x, vec3d.y, vec3d.z);
+		}
+
+		public ExExplosion build(World world, double x, double y, double z) {
+			if (initSize)
 				return new ExExplosion(world, entity, x, y, z, size, causesFire, damagesTerrain, hurtEntity, spawnParticles, fire, fill, air);
 			throw new IllegalStateException("ExExplosion.Builder: pos and size are required");
 		}

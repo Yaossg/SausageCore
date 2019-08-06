@@ -2,9 +2,9 @@ package sausage_core.api.registry;
 
 import com.google.gson.JsonObject;
 import net.minecraft.util.ResourceLocation;
+import sausage_core.api.core.registry.IModdedRegistry;
+import sausage_core.api.core.registry.SimpleRegistry;
 import sausage_core.api.util.common.SausageUtils;
-import sausage_core.api.util.registry.IModdedRegistry;
-import sausage_core.api.util.registry.SimpleRegistry;
 
 import java.nio.file.Path;
 import java.util.HashMap;
