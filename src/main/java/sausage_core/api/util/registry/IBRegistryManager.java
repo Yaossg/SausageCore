@@ -51,7 +51,7 @@ public final class IBRegistryManager implements IRegistryManager {
 	}
 
 	public <T extends Item> T addItem(String name, T item, IItemML iml) {
-		items.put(item.setUnlocalizedName(modid + "." + name).setRegistryName(name).setCreativeTab(tab), iml);
+		items.put(item.setTranslationKey(modid + "." + name).setRegistryName(name).setCreativeTab(tab), iml);
 		return item;
 	}
 
@@ -60,7 +60,7 @@ public final class IBRegistryManager implements IRegistryManager {
 	}
 
 	public <T extends Block> T addOnlyBlock(String name, T block) {
-		blocks.add(block.setUnlocalizedName(modid + "." + name).setRegistryName(name).setCreativeTab(tab));
+		blocks.add(block.setTranslationKey(modid + "." + name).setRegistryName(name).setCreativeTab(tab));
 		return block;
 	}
 

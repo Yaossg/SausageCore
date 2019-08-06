@@ -60,7 +60,7 @@ public class SCFRMImpl extends SCFRecipeManager {
 	@SuppressWarnings("unchecked")
 	private void load(ResourceLocation name, SCFRecipeType type) {
 		String modid = type.owner();
-		Path domain = configRoot.resolve(modid).resolve(name.getResourcePath());
+		Path domain = configRoot.resolve(modid).resolve(name.getPath());
 		getDefaults(name).forEach((by, start) -> {
 			Path where = domain.resolve(by);
 			if (Files.notExists(where)) {

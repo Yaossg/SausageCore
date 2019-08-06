@@ -156,7 +156,7 @@ public interface IPotionTypeLoader {
 		return potions -> {
 			checkArgument(potions.length == 1);
 			Potion potion = potions[0];
-			String name = potion.getRegistryName().getResourcePath();
+			String name = potion.getRegistryName().getPath();
 			PotionType base = new PotionTypeModID(new PotionEffect(potion, baseDuration)).setRegistryName(name);
 			Set<Runnable> set = new HashSet<>();
 			set.add(() -> PotionHelper.addMix(PotionTypes.AWKWARD, ingredient.get(), base));

@@ -32,6 +32,6 @@ public class SCFRecipeType<T> {
 	}
 
 	public String owner() {
-		return SausageUtils.nonnull(name.getResourceDomain());
+		return SausageUtils.nonnull(name.getNamespace());
 	}
 }

@@ -17,7 +17,7 @@ public class ItemGroup extends CreativeTabs {
 	}
 
 	@Override
-	public ItemStack getTabIconItem() {
+	public ItemStack createIcon() {
 		return supplier.get();
 	}
 

@@ -61,15 +61,15 @@ public class GUICreateBuffetWorld extends GuiScreen {
 	}
 
 	private void nextModID() {
-		String modid = getBiomeID().getResourceDomain();
+		String modid = getBiomeID().getNamespace();
 		for (int i = biome + 1; i < WorldTypeBuffet.BIOMES.size(); ++i) {
-			if (!WorldTypeBuffet.BIOMES.get(i).getRegistryName().getResourceDomain().equals(modid)) {
+			if (!WorldTypeBuffet.BIOMES.get(i).getRegistryName().getNamespace().equals(modid)) {
 				biome = i;
 				return;
 			}
 		}
 		for (int i = 0; i < biome; ++i) {
-			if (!WorldTypeBuffet.BIOMES.get(i).getRegistryName().getResourceDomain().equals(modid)) {
+			if (!WorldTypeBuffet.BIOMES.get(i).getRegistryName().getNamespace().equals(modid)) {
 				biome = i;
 				return;
 			}

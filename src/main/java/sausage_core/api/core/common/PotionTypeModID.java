@@ -16,6 +16,6 @@ public class PotionTypeModID extends PotionType {
 	public String getNamePrefixed(String p_185174_1_) {
 		String s = super.getNamePrefixed(p_185174_1_);
 		int i = s.indexOf("effect") + "effect".length();
-		return s.substring(0, i + 1) + getRegistryName().getResourceDomain() + s.substring(i);
+		return s.substring(0, i + 1) + getRegistryName().getNamespace() + s.substring(i);
 	}
 }
