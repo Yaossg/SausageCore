@@ -20,21 +20,20 @@ import java.util.function.Function;
 
 import static sausage_core.api.util.common.SausageUtils.nonnull;
 
-public final class IBRegistryManager implements IRegistryManager {
-	final String modid;
+public final class IBRegistryManager extends RegistryManagerBase {
 	public final CreativeTabs tab;
-	final Map<Item, IItemML> items = new HashMap<>();
-	final Map<Item, IItemCM> icms = new HashMap<>();
-	final List<Block> blocks = new ArrayList<>();
-	final Map<Block, IBlockCM> bcms = new HashMap<>();
+	private final List<Item> items = new ArrayList<>();
+	private final List<Runnable> tasks = new ArrayList<>();
+	private final Map<Item, IItemCM> icms = new IdentityHashMap<>();
+	private final List<Block> blocks = new ArrayList<>();
+	private final Map<Block, IBlockCM> bcms = new IdentityHashMap<>();
 
 	public IBRegistryManager(String modid) {
 		this(modid, null);
-		AutoCall.When.checkState();
 	}
 
 	public IBRegistryManager(String modid, CreativeTabs tab) {
-		this.modid = modid;
+		super(modid, true);
 		this.tab = tab;
 	}
 
@@ -51,7 +50,8 @@ public final class IBRegistryManager implements IRegistryManager {
 	}
 
 	public <T extends Item> T addItem(String name, T item, IItemML iml) {
-		items.put(item.setTranslationKey(modid + "." + name).setRegistryName(name).setCreativeTab(tab), iml);
+		items.add(item.setTranslationKey(modid + "." + name).setRegistryName(name).setCreativeTab(tab));
+		tasks.add(iml.bind(item));
 		return item;
 	}
 
@@ -78,7 +78,9 @@ public final class IBRegistryManager implements IRegistryManager {
 
 	public <T extends Block> T addBlock(String name, T block, Function<? super T, ItemBlock> itemBlockFactory, IItemML iml) {
 		addOnlyBlock(name, block);
-		items.put(itemBlockFactory.apply(block).setRegistryName(nonnull(block.getRegistryName())), iml);
+		Item itemBlock = itemBlockFactory.apply(block).setRegistryName(nonnull(block.getRegistryName()));
+		items.add(itemBlock);
+		tasks.add(iml.bind(itemBlock));
 		return block;
 	}
 
@@ -96,13 +98,13 @@ public final class IBRegistryManager implements IRegistryManager {
 	private static final Set<Runnable> R = new HashSet<>();
 	private void register() {
 		blocks.forEach(ForgeRegistries.BLOCKS::register);
-		items.keySet().forEach(ForgeRegistries.ITEMS::register);
+		items.forEach(ForgeRegistries.ITEMS::register);
 	}
 
 	@AutoCall(when = AutoCall.When.LOAD_MODEL, side = Side.CLIENT)
 	private static final Set<Runnable> LM = new HashSet<>();
 	private void loadModel() {
-		items.forEach((item, iml) -> iml.loadModel(item));
+		tasks.forEach(Runnable::run);
 	}
 
 	@AutoCall(when = AutoCall.When.INIT, side = Side.CLIENT)
@@ -118,15 +120,5 @@ public final class IBRegistryManager implements IRegistryManager {
 		ItemColors ic = Minecraft.getMinecraft().getItemColors();
 		icms.forEach((item, icm) -> ic.registerItemColorHandler(icm::colorMultiplier, item));
 		bcms.forEach((block, bcm) -> ic.registerItemColorHandler(bcm::colorMultiplier, block));
-	}
-
-	@Override
-	public String modid() {
-		return modid;
-	}
-
-	@Override
-	public Class<?>[] types() {
-		return new Class[] {Item.class, Block.class};
 	}
 }

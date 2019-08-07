@@ -20,6 +20,7 @@ import java.util.function.Supplier;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
+@FunctionalInterface
 public interface IPotionTypeLoader {
 	Pair<PotionType[], Runnable> loadPotionType(Potion... potions);
 

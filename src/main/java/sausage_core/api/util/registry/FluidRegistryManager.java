@@ -9,15 +9,12 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import sausage_core.api.core.client.FluidStateMapper;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Function;
 
 import static sausage_core.api.util.common.Conversions.To.block;
 
-public final class FluidRegistryManager implements IRegistryManager {
-	final IBRegistryManager inner;
-	final List<Fluid> fluids = new ArrayList<>();
+public final class FluidRegistryManager extends RegistryManagerBase {
+	private final IBRegistryManager inner;
 
 	private static void loadBlockModel(Item item) {
 		loadBlockModelClient(item);
@@ -32,6 +29,7 @@ public final class FluidRegistryManager implements IRegistryManager {
 	}
 
 	public FluidRegistryManager(String modid) {
+		super(modid, false);
 		inner = new IBRegistryManager(modid);
 	}
 
@@ -52,16 +50,6 @@ public final class FluidRegistryManager implements IRegistryManager {
 		Block block = function.apply(register(fluid));
 		inner.addOnlyBlock(fluid.setBlock(block).getName(), block);
 		return fluid;
-	}
-
-	@Override
-	public String modid() {
-		return inner.modid;
-	}
-
-	@Override
-	public Class<?>[] types() {
-		return new Class[] {Fluid.class, Block.class, Item.class};
 	}
 }
 

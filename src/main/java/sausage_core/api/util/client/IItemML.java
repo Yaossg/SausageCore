@@ -13,6 +13,10 @@ import static sausage_core.api.util.common.SausageUtils.nonnull;
 public interface IItemML {
 	void loadModel(Item item);
 
+	default Runnable bind(Item item) {
+		return () -> loadModel(item);
+	}
+
 	static void loadDefaultedModel(Item item) {
 		loadVariantModel(item, 0, "inventory");
 	}

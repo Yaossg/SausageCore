@@ -11,13 +11,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public final class PotionRegistryManager implements IRegistryManager {
-	final String modid;
-	final List<Runnable> tasks = new ArrayList<>();
+public final class PotionRegistryManager extends RegistryManagerBase {
+	private final List<Runnable> tasks = new ArrayList<>();
 
 	public PotionRegistryManager(String modid) {
-		this.modid = modid;
-		AutoCall.When.checkState();
+		super(modid, true);
 	}
 
 	public Potion register(String name, Potion potion) {
@@ -40,15 +38,5 @@ public final class PotionRegistryManager implements IRegistryManager {
 	private static final Set<Runnable> L = new HashSet<>();
 	private void load() {
 		tasks.forEach(Runnable::run);
-	}
-
-	@Override
-	public String modid() {
-		return modid;
-	}
-
-	@Override
-	public Class<?>[] types() {
-		return new Class[] {Potion.class, PotionType.class};
 	}
 }
