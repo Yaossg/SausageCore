@@ -321,7 +321,7 @@ public class ItemCustomBucket extends Item {
 		return new FluidCustomBucketWrapper(stack);
 	}
 
-	/* Utils */
+	// Utils
 
 	public FluidStack getFluid(ItemStack container) {
 		// milk logic, if milk is registered we use that basically
