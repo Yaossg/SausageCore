@@ -10,7 +10,7 @@ public final class SoundRegistryManager extends RegistryManagerBase {
 	}
 
 	public SoundEvent register(String name) {
-		ResourceLocation soundName = newIdentifier(name);
+		ResourceLocation soundName = new ResourceLocation(modid, name);
 		SoundEvent soundEvent = new SoundEvent(soundName);
 		ForgeRegistries.SOUND_EVENTS.register(soundEvent.setRegistryName(soundName));
 		return soundEvent;

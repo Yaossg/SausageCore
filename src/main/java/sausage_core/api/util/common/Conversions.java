@@ -16,6 +16,8 @@ import static sausage_core.api.util.common.Conversions.To.block;
  * Conversions among {@link Item}, {@link Block}, {@link ItemStack} and {@link IBlockState}
  */
 public final class Conversions {
+	private Conversions() {}
+
 	private static Item block2item(Block block) {
 		return Item.getItemFromBlock(block);
 	}

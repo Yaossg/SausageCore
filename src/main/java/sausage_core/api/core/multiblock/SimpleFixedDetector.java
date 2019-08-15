@@ -16,6 +16,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * Fixed sized and pattern structure detector
+ * The usage is very similar to {@link net.minecraft.block.state.pattern.BlockPattern}
+ * but much more faster than that so there's no need to worry about efficiency
+ * */
 public class SimpleFixedDetector implements IMultiBlockDetector {
 	private final List<Map<BlockPos, IRotatableBSPredicate>> matchers = new ArrayList<>(12);
 

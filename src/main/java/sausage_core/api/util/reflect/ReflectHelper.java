@@ -1,7 +1,5 @@
 package sausage_core.api.util.reflect;
 
-import org.apache.commons.lang3.ClassUtils;
-
 import java.lang.reflect.Field;
 
 import static org.apache.commons.lang3.ArrayUtils.toPrimitive;
@@ -11,6 +9,7 @@ import static sausage_core.api.util.common.SausageUtils.rawtype;
  * Purified Simplified {@link net.minecraftforge.fml.relauncher.ReflectionHelper}
  * */
 public final class ReflectHelper {
+	private ReflectHelper() {}
 	public static Field getAccessibleField(Class<?> clazz, String name)
 			throws NoSuchFieldException {
 		Field f = clazz.getDeclaredField(name);
@@ -30,25 +29,23 @@ public final class ReflectHelper {
 
 	public static Object toPrimitiveArray(Object array) {
 		if (array == null) return null;
-		Class<?> ct = array.getClass().getComponentType();
-		Class<?> pt = ClassUtils.wrapperToPrimitive(ct);
-		switch (EnumPrimitive.match(pt)) {
-			case BOOLEAN:
-				return toPrimitive((Boolean[]) array);
-			case BYTE:
-				return toPrimitive((Byte[]) array);
-			case CHAR:
-				return toPrimitive((Character[]) array);
-			case SHORT:
-				return toPrimitive((Short[]) array);
-			case INT:
-				return toPrimitive((Integer[]) array);
-			case LONG:
-				return toPrimitive((Long[]) array);
-			case FLOAT:
-				return toPrimitive((Float[]) array);
-			case DOUBLE:
-				return toPrimitive((Double[]) array);
+		Class<?> clazz = array.getClass();
+		if (clazz == Byte[].class) {
+			return toPrimitive((Byte[]) array);
+		} else if (clazz == Character[].class) {
+			return toPrimitive((Character[]) array);
+		} else if (clazz == Double[].class) {
+			return toPrimitive((Double[]) array);
+		} else if (clazz == Float[].class) {
+			return toPrimitive((Float[]) array);
+		} else if (clazz == Integer[].class) {
+			return toPrimitive((Integer[]) array);
+		} else if (clazz == Long[].class) {
+			return toPrimitive((Long[]) array);
+		} else if (clazz == Short[].class) {
+			return toPrimitive((Short[]) array);
+		} else if (clazz == Boolean[].class) {
+			return toPrimitive((Boolean[]) array);
 		}
 		return array;
 	}

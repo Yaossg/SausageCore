@@ -22,9 +22,9 @@ sausage_core.debug_stick.mode.entity=实体模式
 commands.sausage_core.data.usage=/data block <x> <y> <z> 或 /data entity <实体>
 commands.sausage_core.data.success=NBT查询成功：
 
-advancement.sausage.root.title=SausageCore：热狗领先！
-advancement.sausage.root.description=你应该成为我们的领导者！
-advancement.sausage.sausage.title=来自香肠的小册子
+advancement.sausage.root.title=SausageCore
+advancement.sausage.root.description=核心香肠：来自香肠的小册子
+advancement.sausage.sausage.title=不健康的选择
 advancement.sausage.sausage.description=和香肠做交易，或者简单的做一个香肠
 
 guide.sausage_core.title=热狗之书
@@ -38,7 +38,7 @@ guide.sausage_core.general.world_type=世界类型
 guide.sausage_core.general.debugging=调试
 
 guide.sausage_core.general.introduction.info.0=§l香肠核心§r是一个由 Yaossg 开发的 mod，它为玩家和模组开发者提供了实用的工具。是其他任何 Yaossg 开发的模组的前置。\n访问它的 Github 页面（WIP）来了解更多技术性细节。\n
-guide.sausage_core.general.introduction.info.1=为什么不试试我的姊妹模组 §dManaCraft§r 和 §6Sausage's Factory§r? :)\n访问我的 Github 页面（WIP）来了解更多。\n
+guide.sausage_core.general.introduction.info.1=为什么不试试我的姊妹模组 §dManaCraft§r 和 §6Sausage's Factory§r 系列? :)\n§cOpenCapacitor§r 即将到来！\n访问我的 Github 页面（WIP）来了解更多。\n
 guide.sausage_core.general.ingredient.info.0=SausageCore 添加了 2 种 Ingredient，ItemWildcard 和 OreFilter.\n关于这个技术性的部分，访问它的 Github 页面（WIP）来了解更多。
 guide.sausage_core.general.ingredient.info.1=§lItemWildcard§r（sausage_core:item_wildcard） 就相当于原版的 minecraft:item，但是没有 data 标签，所以匹配任意的 metadata
 guide.sausage_core.general.ingredient.info.2=§lOreFilter§r（sausage_core:ore_filter）根据谓词匹配矿物辞典，可以使用以下谓词：\n  - startsWith\n  - endsWith\n  - contains\n  - matches\n  - equals\n  - equalsIgnoreCase
@@ -51,6 +51,7 @@ guide.sausage_core.general.debugging.info.0=§l/data§r 模仿了 1.13 的 NBT �
 guide.sausage_core.general.debugging.info.1=§l调试棒§r 是一个趁手的工具。他可以用来切换方块状态，查询方块状态和NBT，实体NBT。\n对着空气 shift + 使用 可以切换模式。
 
 guide.sausage_core.chapter_2.episode_1=第一集
-guide.sausage_core.chapter_2.episode_1.info.0=§l目录§r\n1. 无题\n2. Steve & Alex：九年级守护者
-guide.sausage_core.chapter_2.episode_1.info.1=§l无题§r\n  盛水的水桶\n  吸水的海绵\n  流水的龙头\n  小鸡织布料\n  铁砧砸裂缝\n  熔炉一锅端
-guide.sausage_core.chapter_2.episode_1.info.2=§lSteve & Alex：九年级守护者§r\n八百年来，Minecraft 一直被 Steve 和 Alex 保护。但没人知道，每过四年，两个新的战士会被选中。两位新人同邪恶作斗争。你就是 Steve（或 Alex）。你就是 Minecraft 守护者！
+guide.sausage_core.chapter_2.episode_1.info.0=§l目录§r\n1. 前言\n2. 无题\n3. Steve & Alex：九年级守护者
+guide.sausage_core.chapter_2.episode_1.info.1=§l前言§r\n香肠核心：热狗领先！\n你应该成为我们的领导者！
+guide.sausage_core.chapter_2.episode_1.info.2=§l无题§r\n  盛水的水桶\n  吸水的海绵\n  流水的龙头\n  小鸡织布料\n  铁砧砸裂缝\n  熔炉一锅端
+guide.sausage_core.chapter_2.episode_1.info.3=§lSteve & Alex：九年级守护者§r\n八百年来，Minecraft 一直被 Steve 和 Alex 保护。但没人知道，每过四年，两个新的战士会被选中。两位新人同邪恶作斗争。你就是 Steve（或 Alex）。你就是 Minecraft 守护者！

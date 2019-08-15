@@ -35,8 +35,10 @@ import javax.annotation.Nullable;
 import static net.minecraftforge.fml.common.eventhandler.Event.Result.*;
 
 /**
- * Fork from <code>knightminer.ceramics.items.ItemClayBucket</code>
- */
+ * Custom universal bucket (including milk one)
+ * Copied and edited from <code>knightminer.ceramics.items.ItemClayBucket</code>
+ * @author KnightMiner Yaossg
+ * */
 public class ItemCustomBucket extends Item {
 	public static final String TAG_FLUIDS = "fluids";
 	public static final ItemStack MILK_BUCKET = new ItemStack(Items.MILK_BUCKET);
@@ -47,7 +49,7 @@ public class ItemCustomBucket extends Item {
 		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(this, DispenseFluidContainer.getInstance());
 	}
 
-	/* Bucket behavior */
+	// Bucket behavior
 
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
@@ -179,17 +181,15 @@ public class ItemCustomBucket extends Item {
 		return null;
 	}
 
-	/* Milk bucket logic */
+	// Milk bucket logic
 
 	@Override
 	public EnumAction getItemUseAction(ItemStack stack) {
-		// milk has drinking animation
 		return isMilk(stack) ? EnumAction.DRINK : EnumAction.NONE;
 	}
 
 	@Override
 	public int getMaxItemUseDuration(ItemStack stack) {
-		// milk requires drinking time
 		return isMilk(stack) ? 32 : 0;
 	}
 
@@ -228,7 +228,7 @@ public class ItemCustomBucket extends Item {
 		return false;
 	}
 
-	/* Item stack properties */
+	// Item stack properties
 
 	@Override
 	public int getItemStackLimit(ItemStack stack) {
@@ -362,6 +362,8 @@ public class ItemCustomBucket extends Item {
 	public ItemStack getMilkBucket() {
 		return canMilkFit() ? new ItemStack(this, 1, 1) : getEmptyBucket();
 	}
+
+	// Properties
 
 	/**
 	 * Returns whether the bucket can take this fluid

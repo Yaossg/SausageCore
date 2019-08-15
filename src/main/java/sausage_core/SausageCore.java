@@ -15,7 +15,6 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.apache.logging.log4j.Logger;
 import sausage_core.api.annotation.AutoCall;
 import sausage_core.api.annotation.InjectLogger;
@@ -27,10 +26,6 @@ import sausage_core.impl.SCASMImpl;
 import sausage_core.impl.SCFRMImpl;
 import sausage_core.item.ItemDebugStick;
 import sausage_core.item.ItemSausage;
-import sausage_core.world.WorldTypeBuffet;
-import sausage_core.world.WorldTypeCustomSize;
-
-import java.util.ArrayList;
 
 /**
  * @author Yaossg
@@ -58,8 +53,6 @@ public class SausageCore {
 		MinecraftForge.EVENT_BUS.register(AutoSyncConfig.class);
 		sausage = IB.addItem("sausage", new ItemSausage());
 		debug_stick = IB.addItem("debug_stick", new ItemDebugStick());
-		new WorldTypeCustomSize();
-		new WorldTypeBuffet();
 		SCASMImpl.call(AutoCall.When.PRE_INIT);
 	}
 
@@ -70,7 +63,6 @@ public class SausageCore {
 
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
-		WorldTypeBuffet.BIOMES = new ArrayList<>(ForgeRegistries.BIOMES.getValuesCollection());
 		SCFRMImpl.IMPL.load();
 		SCASMImpl.call(AutoCall.When.POST_INIT);
 	}

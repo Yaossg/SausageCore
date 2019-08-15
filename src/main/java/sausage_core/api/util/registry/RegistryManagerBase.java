@@ -11,6 +11,7 @@ public abstract class RegistryManagerBase {
 		if (requireAutoCall) AutoCall.When.checkState();
 	}
 
+	@Deprecated
 	public final ResourceLocation newIdentifier(String path) {
 		return new ResourceLocation(modid, path);
 	}

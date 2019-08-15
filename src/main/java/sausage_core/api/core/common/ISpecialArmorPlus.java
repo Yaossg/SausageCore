@@ -12,7 +12,7 @@ import javax.annotation.Nonnull;
 
 public interface ISpecialArmorPlus extends ISpecialArmor {
 	/**
-	 * From Forge's TO-DO item
+	 * From Forge's TO-DO item to avoid magic numbers
 	 */
 	enum EnumArmorType {
 		HEAD(EntityEquipmentSlot.HEAD),

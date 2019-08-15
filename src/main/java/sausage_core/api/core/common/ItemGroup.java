@@ -32,7 +32,7 @@ public class ItemGroup extends CreativeTabs {
 	}
 
 	/**
-	 * You don't need this to override anything else
+	 * You don't need this to override everything else
 	 * @see #addRelevantEnchantmentTypes(EnumEnchantmentType...)
 	 * */
 	@Deprecated

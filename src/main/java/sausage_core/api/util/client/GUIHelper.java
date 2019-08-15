@@ -10,6 +10,7 @@ import sausage_core.api.util.common.SausageUtils;
 
 @SideOnly(Side.CLIENT)
 public final class GUIHelper {
+	private GUIHelper() {}
 	public static ResourceLocation getTexture(String modid, String... path) {
 		return new ResourceLocation(modid, "textures/gui/" + String.join("/", path) + ".png");
 	}

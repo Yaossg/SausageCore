@@ -8,6 +8,7 @@ import java.util.stream.Stream;
 
 /**
  * A simple registry interface designed for modders
+ * Actually designed for a {@link Collection} underlying
  */
 public interface IModdedRegistry<E> extends Iterable<E> {
 	Collection<E> view();

@@ -2,6 +2,7 @@ package sausage_core.api.core.plugin;
 
 import java.util.function.Supplier;
 
+@Deprecated
 public abstract class PluginCore implements Runnable, Supplier<String> {
 	protected final String modid;
 

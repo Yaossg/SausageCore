@@ -11,6 +11,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 /**
  * Simple implementation for {@link IModdedRegistry}
+ * The underlying collection is {@link List} so that the registration order wll be kept
  */
 public class SimpleRegistry<E> implements IModdedRegistry<E> {
 	private final List<E> entries = NonNullList.create();

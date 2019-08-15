@@ -11,6 +11,7 @@ import java.util.function.IntPredicate;
 import java.util.function.Predicate;
 
 public final class ItemStackComparators {
+	private ItemStackComparators() {}
 	public static final Builder ITEM_EQUAL_BUILDER = builder().anyCount().anyNBT();
 	public static final IEqualityComparator<ItemStack>
 			IS_ITEM_EQUAL = ItemStack::isItemEqual,

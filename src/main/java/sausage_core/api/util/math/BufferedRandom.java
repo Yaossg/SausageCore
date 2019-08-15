@@ -10,6 +10,7 @@ import java.util.Random;
  * WARNING: Going to deprecate this for only a little performance optimization
  * Being final to avoid further development.
  */
+@Deprecated
 public final class BufferedRandom extends Random {
 	protected Random random; //instance to delegate
 	protected int buffer = 0;

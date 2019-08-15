@@ -9,6 +9,7 @@ import net.minecraft.village.MerchantRecipe;
 import static sausage_core.api.util.common.Conversions.To.stack;
 
 public final class VillagerTrades {
+	private VillagerTrades() {}
 	public static EntityVillager.ITradeList item2gem(ItemStack item, int min, int max) {
 		return item2gem(item, new EntityVillager.PriceInfo(min, max));
 	}

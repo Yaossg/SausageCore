@@ -6,6 +6,7 @@ import net.minecraft.util.math.MathHelper;
 import java.util.Random;
 
 public final class WorldGenUtils {
+	private WorldGenUtils() {}
 	public static BlockPos randomPos(Random random, int chunkX, int chunkZ, int y) {
 		return new BlockPos((chunkX << 4) + random.nextInt(16), y, (chunkZ << 4) + random.nextInt(16));
 	}

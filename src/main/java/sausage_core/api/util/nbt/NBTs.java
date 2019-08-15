@@ -7,10 +7,12 @@ import it.unimi.dsi.fastutil.ints.IntList;
 import it.unimi.dsi.fastutil.longs.LongList;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.*;
+import net.minecraft.util.ReportedException;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.common.util.Constants;
 import sausage_core.api.util.common.SausageUtils;
 
 import java.util.*;
@@ -21,6 +23,7 @@ import java.util.stream.*;
 import static net.minecraftforge.common.util.Constants.NBT.*;
 
 public final class NBTs {
+	private NBTs() {}
 
 	// following methods convert raw data to NBTs
 
@@ -267,13 +270,23 @@ public final class NBTs {
 		return arg.getIntArray();
 	}
 
+	// LongArray Support
+
 	public static long[] raw(NBTTagLongArray arg) {
 		return arg.data; //AT
 	}
 
-	public static Stream<NBTBase> stream(NBTTagList list) {
-		return Streams.stream(list);
+	public static long[] getLongArray(NBTTagCompound compound, String key) {
+		try {
+			if (compound.hasKey(key, Constants.NBT.TAG_LONG_ARRAY))
+				return ((NBTTagLongArray) compound.getTag(key)).data;
+		} catch (ClassCastException e) {
+			throw new ReportedException(compound.createCrashReport(key, 11, e)); //AT
+		}
+		return new long[0];
 	}
+
+	// convert between Java Collection Frame and NBTs
 
 	public static List<NBTBase> list(NBTTagList list) {
 		return stream(list).collect(Collectors.toList());
@@ -283,16 +296,8 @@ public final class NBTs {
 		return compound.getKeySet();
 	}
 
-	public static Stream<String> keys(NBTTagCompound compound) {
-		return keySet(compound).stream();
-	}
-
 	public static Map<String, NBTBase> map(NBTTagCompound compound) {
 		return keys(compound).collect(Collectors.toMap(Function.identity(), compound::getTag));
-	}
-
-	public static Stream<NBTBase> values(NBTTagCompound compound) {
-		return keys(compound).map(compound::getTag);
 	}
 
 	public static List<NBTBase> valueList(NBTTagCompound compound) {
@@ -303,8 +308,11 @@ public final class NBTs {
 		return map(compound).entrySet();
 	}
 
-	public static Stream<Map.Entry<String, NBTBase>> entries(NBTTagCompound compound) {
-		return entrySet(compound).stream();
+
+	// Stream API support
+
+	public static Stream<NBTBase> stream(NBTTagList list) {
+		return Streams.stream(list);
 	}
 
 	public static IntStream stream(NBTTagByteArray array) {
@@ -319,6 +327,18 @@ public final class NBTs {
 
 	public static LongStream stream(NBTTagLongArray array) {
 		return Arrays.stream(raw(array));
+	}
+
+	public static Stream<String> keys(NBTTagCompound compound) {
+		return keySet(compound).stream();
+	}
+
+	public static Stream<NBTBase> values(NBTTagCompound compound) {
+		return keys(compound).map(compound::getTag);
+	}
+
+	public static Stream<Map.Entry<String, NBTBase>> entries(NBTTagCompound compound) {
+		return entrySet(compound).stream();
 	}
 
 	// Collectors

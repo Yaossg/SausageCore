@@ -1,5 +1,7 @@
 package sausage_core.api.util.common;
 
+import jdk.nashorn.internal.ir.annotations.Immutable;
+
 import java.util.NoSuchElementException;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
@@ -9,6 +11,7 @@ import java.util.function.Supplier;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+@Immutable
 public final class LazyOptional<T> {
 	private final Supplier<T> supplier;
 	private AtomicReference<T> resolved;

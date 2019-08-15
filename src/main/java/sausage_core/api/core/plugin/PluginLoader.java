@@ -6,6 +6,7 @@ import net.minecraftforge.fml.common.Loader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+@Deprecated
 public class PluginLoader {
 	protected final Multimap<String, String> plugins = MultimapBuilder.hashKeys().hashSetValues().build();
 	protected final String owner;

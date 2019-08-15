@@ -8,7 +8,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import sausage_core.api.util.common.Opts;
-import sausage_core.world.WorldTypeBuffet;
+
+import static sausage_core.world.WorldTypeBuffet.BIOMES;
 
 @SideOnly(Side.CLIENT)
 public class GUICreateBuffetWorld extends GuiScreen {
@@ -18,7 +19,7 @@ public class GUICreateBuffetWorld extends GuiScreen {
 	private GuiButton text;
 
 	public ResourceLocation getBiomeID() {
-		return WorldTypeBuffet.BIOMES.get(biome).getRegistryName();
+		return BIOMES.get(biome).getRegistryName();
 	}
 
 	public String getDisplayBiome() {
@@ -62,14 +63,14 @@ public class GUICreateBuffetWorld extends GuiScreen {
 
 	private void nextModID() {
 		String modid = getBiomeID().getNamespace();
-		for (int i = biome + 1; i < WorldTypeBuffet.BIOMES.size(); ++i) {
-			if (!WorldTypeBuffet.BIOMES.get(i).getRegistryName().getNamespace().equals(modid)) {
+		for (int i = biome + 1; i < BIOMES.size(); ++i) {
+			if (!BIOMES.get(i).getRegistryName().getNamespace().equals(modid)) {
 				biome = i;
 				return;
 			}
 		}
 		for (int i = 0; i < biome; ++i) {
-			if (!WorldTypeBuffet.BIOMES.get(i).getRegistryName().getNamespace().equals(modid)) {
+			if (!BIOMES.get(i).getRegistryName().getNamespace().equals(modid)) {
 				biome = i;
 				return;
 			}
@@ -77,13 +78,13 @@ public class GUICreateBuffetWorld extends GuiScreen {
 	}
 
 	private void nextBiome() {
-		if (++biome >= WorldTypeBuffet.BIOMES.size())
+		if (++biome >= BIOMES.size())
 			biome = 0;
 	}
 
 	private void prevBiome() {
 		if (--biome < 0)
-			biome = WorldTypeBuffet.BIOMES.size() - 1;
+			biome = BIOMES.size() - 1;
 	}
 
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {

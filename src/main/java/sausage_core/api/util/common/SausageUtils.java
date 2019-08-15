@@ -42,6 +42,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public final class SausageUtils {
+	private SausageUtils() {}
 	/**
 	 * give an advancement to player,
 	 * all of pre-advancements will be given at the same time
@@ -215,6 +216,10 @@ public final class SausageUtils {
 		return t;
 	}
 
+	/**
+	 * Register an event subscriber with @SubscribeEvent(priority = EventPriority.NORMAL, receiveCanceled = false)
+	 * Make simple subscriber registration easier
+	 * */
 	public static <E extends Event> void register(EventBus bus, Class<E> clazz, Consumer<E> consumer) {
 		bus.register(new Object() {
 			@SubscribeEvent
@@ -225,6 +230,12 @@ public final class SausageUtils {
 		});
 	}
 
+	/**
+	 * Returns a friendly string for an item stack
+	 * "ItemStack.EMPTY" if empty
+	 * (amount*)      namespace:path@metadata({nbt})
+	 * (optional if 1)                       (optional if null)
+	 * */
 	public static String toString(ItemStack stack) {
 		if (stack == ItemStack.EMPTY)
 			return "ItemStack.EMPTY";

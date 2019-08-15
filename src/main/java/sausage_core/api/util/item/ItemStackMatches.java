@@ -8,6 +8,7 @@ import sausage_core.api.util.function.IEqualityComparator;
 import java.util.List;
 
 public final class ItemStackMatches {
+	private ItemStackMatches() {}
 	public static NonNullList<ItemStack> merge(List<ItemStack> stacks) {
 		PortableItemStackHandler handler = new PortableItemStackHandler(stacks.size());
 		for (ItemStack stack : stacks) {

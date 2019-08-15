@@ -54,7 +54,7 @@ public class SausageCoreGuide implements IGuideBook {
 
 		Map<ResourceLocation, EntryAbstract> chapter_2 = new LinkedHashMap<>();
 
-		add(chapter_2, "chapter_2", "episode_1", new ItemStack(Items.PAPER), 3);
+		add(chapter_2, "chapter_2", "episode_1", new ItemStack(Items.PAPER), 4);
 
 		categories.add(new CategoryItemStack(general, "guide.sausage_core.CATEGORY.general", new ItemStack(SausageCore.sausage)));
 		categories.add(new CategoryItemStack(chapter_2, "guide.sausage_core.CATEGORY.chapter_2", new ItemStack(Items.WRITABLE_BOOK)));

@@ -12,6 +12,7 @@ import java.lang.reflect.Field;
  * <p>More colors are coming soon
  */
 public final class Colors {
+	private Colors() {}
 	/**
 	 * The color alice_blue with an RGB value of #F0F8FF
 	 * <div style="border:1px solid black;width:40px;height:20px;background-color:#F0F8FF;float:right;margin: 0 10px 0 0"></div>

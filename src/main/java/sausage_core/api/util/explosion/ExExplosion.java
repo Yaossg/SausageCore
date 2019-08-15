@@ -18,10 +18,10 @@ import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
-import sausage_core.api.util.math.BufferedRandom;
+import sausage_core.api.util.math.XORShiftRNG;
 
-import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import java.util.function.Predicate;
 
@@ -31,7 +31,7 @@ public final class ExExplosion extends Explosion {
 	private final IBlockState fire;
 	private final IBlockState fill;
 	private final Predicate<IBlockState> air;
-	private final BufferedRandom random;
+	private final Random random;
 
 	public ExExplosion(World worldIn, Entity entityIn,
 	                   double x, double y, double z, float size,
@@ -43,15 +43,7 @@ public final class ExExplosion extends Explosion {
 		this.fire = fire;
 		this.fill = fill;
 		this.air = air;
-		random = BufferedRandom.provide(seed());
-	}
-
-	private long seed() {
-		return (Arrays.hashCode(new double[]{x, y, z, size})
-				| (long) Arrays.hashCode(new boolean[]{causesFire, damagesTerrain, hurtEntity, spawnParticles}) << 32)
-				^ fire.hashCode() ^ fill.hashCode()
-				^ (long) air.hashCode() << 32
-				^ world.getWorldTime();
+		random = new XORShiftRNG();
 	}
 
 	public void doExplosionA() {
@@ -71,7 +63,7 @@ public final class ExExplosion extends Explosion {
 						double y_affected = y;
 						double z_affected = z;
 
-						for (float power = size * (0.7F + random.nextFloat(12) * 0.6F);
+						for (float power = size * (0.7F + random.nextFloat() * 0.6F);
 						     power > 0; power -= 0.225F) {
 							BlockPos pos = new BlockPos(x_affected, y_affected, z_affected);
 							IBlockState state = world.getBlockState(pos);
@@ -142,7 +134,7 @@ public final class ExExplosion extends Explosion {
 	@Override
 	public void doExplosionB(boolean spawnParticles) {
 		spawnParticles = spawnParticles && this.spawnParticles;
-		world.playSound(null, x, y, z, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 4.0F, (1 + (random.nextFloat(12) - random.nextFloat(12)) * 0.2F) * 0.7F);
+		world.playSound(null, x, y, z, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 4.0F, (1 + (random.nextFloat() - random.nextFloat()) * 0.2F) * 0.7F);
 		if (spawnParticles)
 			if (size >= 2 && damagesTerrain)
 				world.spawnParticle(EnumParticleTypes.EXPLOSION_HUGE, x, y, z, 1, 0, 0);
@@ -153,9 +145,9 @@ public final class ExExplosion extends Explosion {
 			Block block = state.getBlock();
 
 			if (spawnParticles) {
-				double rx = ((float) pos.getX() + random.nextFloat(12));
-				double ry = ((float) pos.getY() + random.nextFloat(12));
-				double rz = ((float) pos.getZ() + random.nextFloat(12));
+				double rx = ((float) pos.getX() + random.nextFloat());
+				double ry = ((float) pos.getY() + random.nextFloat());
+				double rz = ((float) pos.getZ() + random.nextFloat());
 				double dx = rx - x;
 				double dy = ry - y;
 				double dz = rz - z;
@@ -164,7 +156,7 @@ public final class ExExplosion extends Explosion {
 				dy = dy / length;
 				dz = dz / length;
 				double power = 0.5D / (length / size + 0.1D);
-				power = power * (random.nextFloat(12) * random.nextFloat(12) + 0.3F);
+				power = power * (random.nextFloat() * random.nextFloat() + 0.3F);
 				dx = dx * power;
 				dy = dy * power;
 				dz = dz * power;
@@ -203,7 +195,6 @@ public final class ExExplosion extends Explosion {
 
 	public static class Builder {
 		private Entity entity = null;
-		private boolean initSize = false;
 		private float size = 0;
 		private boolean causesFire = false;
 		private boolean damagesTerrain = false;
@@ -220,7 +211,6 @@ public final class ExExplosion extends Explosion {
 
 		public Builder sizeOf(float size) {
 			this.size = size;
-			initSize = true;
 			return this;
 		}
 
@@ -268,9 +258,7 @@ public final class ExExplosion extends Explosion {
 		}
 
 		public ExExplosion build(World world, double x, double y, double z) {
-			if (initSize)
-				return new ExExplosion(world, entity, x, y, z, size, causesFire, damagesTerrain, hurtEntity, spawnParticles, fire, fill, air);
-			throw new IllegalStateException("ExExplosion.Builder: pos and size are required");
+			return new ExExplosion(world, entity, x, y, z, size, causesFire, damagesTerrain, hurtEntity, spawnParticles, fire, fill, air);
 		}
 	}
 }

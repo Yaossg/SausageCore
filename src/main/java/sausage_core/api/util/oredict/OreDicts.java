@@ -11,6 +11,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 public final class OreDicts {
+	private OreDicts() {}
 	public static Stream<String> names(ItemStack stack) {
 		return Arrays.stream(OreDictionary.getOreIDs(stack)).mapToObj(OreDictionary::getOreName);
 	}

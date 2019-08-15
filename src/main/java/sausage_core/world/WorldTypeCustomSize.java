@@ -10,9 +10,11 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import sausage_core.SausageCore;
+import sausage_core.api.annotation.LoadClass;
 import sausage_core.api.core.common.WorldTypeModID;
 import sausage_core.gui.GUICreateCustomSize;
 
+@LoadClass(construct = true, when = LoadClass.When.INIT)
 public class WorldTypeCustomSize extends WorldTypeModID {
 	public WorldTypeCustomSize() {
 		super(SausageCore.MODID, "customSize");

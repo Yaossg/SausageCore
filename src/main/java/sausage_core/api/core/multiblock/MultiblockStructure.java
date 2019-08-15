@@ -6,6 +6,12 @@ import net.minecraft.util.math.BlockPos;
 
 import java.util.List;
 
+/**
+ * Everything here might change in the future
+ * It is safe to check the presence of objects of this type
+ * @see sausage_core.api.util.common.LazyOptional
+ * Please use with care otherwise
+ * */
 @Beta
 public class MultiblockStructure {
 	public final BlockPos master;
